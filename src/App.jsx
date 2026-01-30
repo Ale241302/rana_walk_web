@@ -1,37 +1,32 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Menu, X, ChevronRight, Shield, Activity, Zap, Droplets,
   ShoppingCart, ArrowRight, Check, Mail, MapPin, Linkedin,
   Instagram, Facebook, ArrowLeft, Info, HelpCircle, FileText,
   Star, Users, Globe, Award, ShieldCheck, Beaker, Trash,
-  Sparkles, RefreshCw, AlertCircle
+  Sparkles, RefreshCw, AlertCircle, Cpu, Layers, Handshake
 } from 'lucide-react';
 
 /**
  * RANA WALK® - Ecosistema de Biomimetismo Podal
- * Versión: ESTRUCTURA INTEGRAL FINAL (Sistemas Biomecánicos)
+ * Versión: WEB INTEGRADA COMPLETA (AI-READY)
  */
-// Gemini API Integration
+
+// --- GEMINI API INTEGRATION ---
 const callGemini = async (userPrompt) => {
-  const apiKey = "AIzaSyBmO6qTow7RVhNv9QTgQM0PkdEoPTV_tf0"; // Runtime provided key
+  const apiKey = "AIzaSyBmO6qTow7RVhNv9QTgQM0PkdEoPTV_tf0"; // Key existente
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
   const systemPrompt = `
-      Eres el Consultor Biomecánico Experto de Rana Walk®. 
-      Tu misión es recomendar uno de nuestros 4 sistemas biomecánicos basados en la necesidad del usuario.
-      
-      Sistemas disponibles:
-      1. GOLIATH: Enfocado en alta carga e impacto repetitivo. Ideal para botas industriales y trabajo pesado.
-      2. VELOX: Perfil mínimo para calzado de vestir o ajustado. Prioriza dinamismo y retorno de energía.
-      3. ORBIS: Confort diario y equilibrio postural para caminatas urbanas.
-      4. LEOPARD: Estabilidad adaptable con perfiles de arco específicos para terrenos irregulares.
-
-      Instrucciones técnicas:
-      - Usa un tono de Biomimetismo profesional.
-      - Habla de "carga", "impacto" y "espacio interno".
-      - NO uses lenguaje médico-clínico (evita "ortopédico", "clínica", "paciente").
-      - Responde siempre en español.
-    `;
+    Eres el Consultor Biomecánico Experto de Rana Walk®.
+    Tu misión es recomendar uno de nuestros 4 sistemas biomecánicos (GOLIATH, VELOX, ORBIS, LEOPARD) basados en la necesidad del usuario.
+    
+    Instrucciones técnicas:
+    - Usa un tono de Biomimetismo profesional (Ingeniería, Carga, Impacto).
+    - NO uses lenguaje médico-clínico.
+    - Basa tus respuestas en las siguientes variables: Impacto, Carga y Espacio Interno.
+    - Responde siempre en español.
+  `;
 
   const payload = {
     contents: [{
@@ -39,66 +34,56 @@ const callGemini = async (userPrompt) => {
     }]
   };
 
-  const fetchWithRetry = async (retries = 5, delay = 1000) => {
-    try {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
-      const data = await res.json();
-      return data.candidates?.[0]?.content?.parts?.[0]?.text;
-    } catch (err) {
-      if (retries > 0) {
-        await new Promise(resolve => setTimeout(resolve, delay));
-        return fetchWithRetry(retries - 1, delay * 2);
-      }
-      throw err;
-    }
-  };
-
-  setIsLoading(true);
-  setError(null);
   try {
-    const result = await fetchWithRetry();
-    setResponse(result);
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
+    const data = await res.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text;
   } catch (err) {
-    setError("No se pudo conectar con el consultor. Inténtalo de nuevo.");
-  } finally {
-    setIsLoading(false);
+    throw err;
   }
 };
 
-// --- DATA: SISTEMAS BIOMECÁNICOS ---
+// --- DATA: SISTEMAS BIOMECÁNICOS (ENRIQUECIDA CON PDF) ---
 const systemsData = [
   {
     id: 'goliath',
-    name: 'GOLIATH',
+    name: 'GOLIATH®',
     ref: 'HIGH-LOAD-SYS',
     tagline: 'Soporte estructural para alta carga',
     shortDesc: 'Diseñado para escenarios donde el cuerpo está sometido a altas cargas, impacto repetitivo y jornadas prolongadas.',
     color: 'bg-slate-800',
     accent: '#1e293b',
+    textAccent: 'text-slate-800',
     image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800',
-    fullDescription: 'GOLIATH es el sistema biomecánico diseñado para escenarios donde el cuerpo está sometido a altas cargas, impacto repetitivo y jornadas prolongadas. Su prioridad es la estabilidad estructural sostenida.',
-    whatIs: 'Un sistema biomecánico orientado a trabajo exigente y actividades de alta demanda física. Mantiene soporte y forma bajo carga prolongada, evitando el colapso común.',
-    useCases: ['Jornadas laborales prolongadas de pie', 'Trabajo en superficies duras', 'Actividades con impacto repetitivo'],
-    userProfile: 'Personas expuestas a carga elevada que necesitan soporte consistente durante todo el día.',
-    technologies: ['leapcore', 'poron', 'nanospread'],
-    howItWorks: [
-      { tech: 'LeapCore™', func: 'Soporte estructural y resistencia al colapso.' },
-      { tech: 'PORON® XRD®', func: 'Absorción de impacto en zonas críticas.' },
-      { tech: 'NanoSpread™', func: 'Gestión de humedad en uso intensivo.' }
-    ],
-    // Enhanced Data from PDF
-    bioMimicry: 'Emula la estructura ósea de grandes mamíferos terrestres, distribuyendo toneladas de presión sin colapsar.',
+
+    // PDF Content
+    bioMimicry: 'Inspirado en la arquitectura de los gigantes. Emula la estructura ósea de grandes mamíferos terrestres, distribuyendo toneladas de presión sin colapsar.',
+    fullDescription: 'GOLIATH® actúa como un cimiento sólido para el cuerpo humano en entornos de máxima exigencia. Mientras otros materiales se comprimen y pierden función, este sistema mantiene su arquitectura bajo presión extrema.',
+
     scenario: 'Alta carga, impacto repetitivo y jornadas intensivas (+12h) en superficies duras.',
     sensation: 'Soporte firme, sólido y de máxima protección. No es una almohada, es un cimiento.',
-    technicalSpecs: 'Chasis LeapCore™ de alta densidad + Protección de impacto certificado PORON® XRD®.',
-    aiReadySummary: { impact: '10/10 (PORON® XRD®)', load: '10/10 (LeapCore™)', space: 'Gran Volumen', tech: 'LeapCore™ + PORON® XRD®' },
+
+    technologies: ['leapcore', 'poron', 'nanospread', 'arch'],
+    techSpecs: [
+      { name: 'LeapCore™', role: 'Chasis estructural que emula el soporte óseo.' },
+      { name: 'PORON® XRD®', role: 'Escudo de reacción instantánea ante impactos.' },
+      { name: 'Arch Support', role: 'Exoesqueleto rígido para máxima transferencia.' }
+    ],
+
+    aiReadySummary: {
+      impact: '10/10 (PORON® XRD®)',
+      load: '10/10 (LeapCore™)',
+      space: 'Gran Volumen',
+      tech: 'LeapCore™ + PORON® XRD®'
+    },
+
+    userProfile: 'Operarios industriales, policías, personal de rescate o usuarios de peso elevado que requieren estabilidad inquebrantable.',
     bestFootwear: 'Botas de trabajo, calzado industrial, táctico o de seguridad.',
-    whatIsNot: ['No es un sistema blando de amortiguación', 'No es una solución médica', 'No es para calzado ultra-slim'],
     idealIf: 'Trabajas muchas horas de pie, llevas equipo pesado o prefieres firmeza estructural a suavidad momentánea.'
   },
   {
@@ -109,24 +94,32 @@ const systemsData = [
     shortDesc: 'Arquitectura ultradelgada para ofrecer respuesta dinámica y eficiencia del movimiento.',
     color: 'bg-red-700',
     accent: '#dc2626',
+    textAccent: 'text-red-700',
     image: 'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?auto=format&fit=crop&q=80&w=800',
-    fullDescription: 'VELOX es el sistema biomecánico orientado a performance funcional en perfil mínimo. Permite integrarse en calzado de bajo volumen sin sacrificar estabilidad.',
-    whatIs: 'La opción adecuada cuando otras soluciones fallan por grosor excesivo. Arquitectura de alto desempeño en perfil mínimo.',
-    useCases: ['Uso diario en calzado de perfil bajo', 'Jornadas activas con desplazamientos rápidos', 'Zapatos de vestir o sneakers ajustados'],
-    userProfile: 'Usuarios que priorizan respuesta, eficiencia y mantener el calce original de su calzado.',
-    technologies: ['thinboom', 'nanospread'],
-    howItWorks: [
-      { tech: 'ThinBoom™', func: 'Retorno de energía explosivo en espesor mínimo.' },
-      { tech: 'NanoSpread™', func: 'Confort térmico y frescura.' }
-    ],
-    // Enhanced Data from PDF
-    bioMimicry: 'Emula la elasticidad de un tendón reactivo y la flexibilidad absoluta para movimientos rápidos.',
+
+    // PDF Content
+    bioMimicry: 'La ingeniería del tendón reactivo. Emula la elasticidad pura y la flexibilidad absoluta para movimientos rápidos sin restricciones rígidas.',
+    fullDescription: 'VELOX es el sistema más liviano y reactivo. Construido íntegramente en ThinBoom™ (E-TPU), ofrece retorno de energía superior en un perfil ultradelgado que mantiene el calce original del zapato.',
+
     scenario: 'Calzado de espacio reducido, jornadas activas de alta movilidad y cambios de ritmo.',
     sensation: 'Reactiva, firme, fresca y totalmente flexible. "Rebote" técnico.',
-    technicalSpecs: 'Cuerpo 100% ThinBoom™ (E-TPU supercrítico) + NanoSpread™.',
-    aiReadySummary: { impact: '6/10', load: '6/10', space: '10/10 (Perfil Mínimo)', tech: '100% ThinBoom™' },
+
+    technologies: ['thinboom', 'nanospread'],
+    techSpecs: [
+      { name: '100% ThinBoom™', role: 'Retorno energético explosivo en espesor mínimo.' },
+      { name: 'NanoSpread™', role: 'Capilaridad técnica para gestión térmica.' },
+      { name: 'Flexibilidad Total', role: 'Sin chasis rígido, acompaña la torsión natural.' }
+    ],
+
+    aiReadySummary: {
+      impact: '6/10 (Retorno Energía)',
+      load: '6/10 (Agilidad)',
+      space: '10/10 (Perfil Mínimo)',
+      tech: '100% ThinBoom™'
+    },
+
+    userProfile: 'Profesionales urbanos con calzado ajustado o personas dinámicas que priorizan la respuesta sobre la suavidad.',
     bestFootwear: 'Zapatos de vestir, sneakers de perfil bajo, calzado casual ajustado.',
-    whatIsNot: ['No es para alta carga pesada', 'No es amortiguación blanda', 'No es para botas voluminosas'],
     idealIf: 'Buscas mejorar desempeño sin cambiar el calce de tus zapatos favoritos.'
   },
   {
@@ -137,25 +130,32 @@ const systemsData = [
     shortDesc: 'Diseñado para uso cotidiano prolongado. Acompaña el movimiento natural del cuerpo.',
     color: 'bg-sky-600',
     accent: '#0ea5e9',
+    textAccent: 'text-sky-600',
     image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&q=80&w=800',
-    fullDescription: 'ORBIS es el sistema biomecánico diseñado para uso cotidiano prolongado, manteniendo equilibrio postural y estabilidad funcional.',
-    whatIs: 'Un sistema orientado a confort diario con soporte equilibrado. Ayuda a mantener una postura consistente sin sobrecorregir.',
-    useCases: ['Uso diario prolongado', 'Caminatas urbanas', 'Actividades de baja a media exigencia'],
-    userProfile: 'Personas que buscan confort real que dure todo el día, no solo una suavidad inicial.',
-    technologies: ['leapcore', 'shocksphere', 'nanospread'],
-    howItWorks: [
-      { tech: 'LeapCore™', func: 'Soporte equilibrado que acompaña el arco.' },
-      { tech: 'ShockSphere™', func: 'Suaviza irregularidades del terreno.' },
-      { tech: 'NanoSpread™', func: 'Mantiene la planta seca y fresca.' }
-    ],
-    // Enhanced Data from PDF
-    bioMimicry: 'Emula la homeostasis y el balance postural constante. Autorregulación del equilibrio.',
+
+    // PDF Content
+    bioMimicry: 'Ingeniería de la homeostasis. Emula el balance postural constante y la autorregulación del equilibrio natural.',
+    fullDescription: 'ORBIS mantiene un equilibrio constante entre soporte estructural y gestión climática. Proporciona un soporte que no sobrecorrige, sino que acompaña el movimiento natural.',
+
     scenario: 'Confort diario prolongado, caminatas frecuentes en ciudad y oficina.',
     sensation: 'Natural, equilibrada y de confort progresivo. Estabilidad sin rigidez.',
-    technicalSpecs: 'Combina LeapCore™ de densidad media con ShockSphere™.',
-    aiReadySummary: { impact: '7/10 (Equilibrado)', load: '8/10 (Soporte Densidad Media)', space: '9/10 (Estándar)', tech: 'LeapCore™ + ShockSphere™' },
+
+    technologies: ['leapcore', 'shocksphere', 'nanospread'],
+    techSpecs: [
+      { name: 'LeapCore™ Media', role: 'Soporte equilibrado que acompaña el arco.' },
+      { name: 'ShockSphere™', role: 'Suaviza irregularidades del terreno urbano.' },
+      { name: 'NanoSpread™', role: 'Mantiene la planta seca y fresca.' }
+    ],
+
+    aiReadySummary: {
+      impact: '7/10 (Equilibrado)',
+      load: '8/10 (Soporte Medio)',
+      space: '9/10 (Estándar)',
+      tech: 'LeapCore™ + ShockSphere™'
+    },
+
+    userProfile: 'Usuarios urbanos cotidianos que buscan confort real para todo el día sin sensación de inestabilidad.',
     bestFootwear: 'Calzado casual, urbano, sneakers estándar.',
-    whatIsNot: ['No es para alto impacto deportivo', 'No es corrección ortopédica severa', 'No es para carga industrial extrema'],
     idealIf: 'Caminas mucho en la ciudad y quieres sentir estabilidad sin rigidez.'
   },
   {
@@ -163,1217 +163,743 @@ const systemsData = [
     name: 'LEOPARD',
     ref: 'ADAPT-STAB-SYS',
     tagline: 'Estabilidad adaptable a entornos variables',
-    shortDesc: 'Tres perfiles de altura para responder a la anatomía del usuario y la variabilidad del terreno.',
+    shortDesc: 'Inteligencia geométrica que se integra a tu anatomía y la variabilidad del terreno.',
     color: 'bg-amber-600',
     accent: '#d97706',
+    textAccent: 'text-amber-600',
     image: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&q=80&w=800',
-    fullDescription: 'LEOPARD es el sistema biomecánico diseñado para estabilidad adaptable. Pensado para donde el terreno y la pisada cambian constantemente.',
-    whatIs: 'Un sistema de control dinámico que ofrece adaptabilidad para ajustarse al arco real del usuario.',
-    useCases: ['Entornos y superficies variables', 'Caminatas en terrenos irregulares', 'Necesidad de control postural'],
-    userProfile: 'Usuarios que requieren mayor control del apoyo adaptado a su tipo de arco específico.',
-    technologies: ['leapcore', 'shocksphere', 'nanospread'],
-    howItWorks: [
-      { tech: 'LeapCore™ Adaptable', func: 'Mantiene control bajo carga variable.' },
-      { tech: 'ShockSphere™', func: 'Absorción focalizada en talón y antepié.' },
-      { tech: 'NanoSpread™', func: 'Gestión de humedad en exteriores.' }
-    ],
-    // Enhanced Data from PDF
-    bioMimicry: 'Emula la capacidad de los felinos para ajustar su pisada y mantener estabilidad en terrenos variables.',
+
+    // PDF Content
+    bioMimicry: 'Ajuste felino. Emula la capacidad de los felinos para ajustar su pisada y mantener estabilidad en terrenos variables.',
+    fullDescription: 'LEOPARD no es una corrección fija, es una plataforma inteligente. Su chasis de geometría dinámica se adapta al arco del usuario, mejorando la alineación postural.',
+
     scenario: 'Control del apoyo y estabilidad dinámica en entornos irregulares o mixtos.',
     sensation: 'Estable, robusta y adaptable al arco del usuario.',
-    technicalSpecs: 'LeapCore™ de Geometría Adaptable + Absorción ShockSphere™.',
-    aiReadySummary: { impact: '9/10 (ShockSphere™)', load: '9/10 (Resiliencia Adaptable)', space: '8/10 (Outdoor/Urbano Robusto)', tech: 'LeapCore™ Adaptable' },
+
+    technologies: ['leapcore', 'shocksphere', 'nanospread', 'arch'],
+    techSpecs: [
+      { name: 'LeapCore™ Adaptable', role: 'Geometría que se amolda a la presión del arco.' },
+      { name: 'ShockSphere™', role: 'Absorción focalizada en talón y antepié.' },
+      { name: 'Arch Support', role: 'Refuerzo para evitar fatiga en terrenos mixtos.' }
+    ],
+
+    aiReadySummary: {
+      impact: '9/10 (ShockSphere™)',
+      load: '9/10 (Resiliencia)',
+      space: '8/10 (Outdoor/Robusto)',
+      tech: 'LeapCore™ Adaptable'
+    },
+
+    userProfile: 'Usuarios activos en terrenos mixtos o quienes requieren mayor control del apoyo adaptado a su arco.',
     bestFootwear: 'Calzado outdoor ligero, botas de uso mixto, tekkies.',
-    whatIsNot: ['No es una plantilla rígida fija', 'No es ultradelgada', 'No es para zapatos de gala'],
     idealIf: 'Te mueves en superficies distintas y necesitas que tu sistema se adapte a tu pie.'
   }
 ];
 
-// --- DATA: TECNOLOGÍAS ---
+// --- DATA: TECNOLOGÍAS DETALLADAS ---
 const techData = [
   {
     id: 'leapcore',
     name: 'LeapCore™',
-    claim: 'Chasis estructural de soporte estable',
-    icon: <Activity />,
-    description: 'LeapCore™ es la columna vertebral de cada sistema Rana Walk®. Un chasis de poliuretano de ingeniería diseñado para resistir el colapso.',
-    // New fields
-    bioFunction: 'Emula la consistencia estructural ósea.',
-    engineering: 'Chasis de Poliuretano de ingeniería (PU) de alta resiliencia.',
-    keyAttribute: 'Soporte estable que resiste el colapso funcional durante jornadas intensivas.',
-    comparison: [
-      { aspect: 'Soporte estructural', generic: 'Débil / Variable', rana: 'Alto y consistente' },
-      { aspect: 'Resistencia bajo carga', generic: 'Baja (colapsa rápido)', rana: 'Alta (mantiene forma)' },
-      { aspect: 'Confort funcional', generic: 'Efímero', rana: 'Sostenido durante horas' }
-    ]
+    claim: 'La Columna Vertebral del Sistema',
+    desc: 'Matriz estructural de poliuretano de ingeniería (PU). Emula la consistencia ósea para mantener alineación y soporte bajo carga repetitiva sin colapsar.',
+    icon: <Activity className="w-8 h-8 text-blue-500" />
   },
   {
     id: 'thinboom',
     name: 'ThinBoom™',
-    claim: 'Alto performance en espesor mínimo',
-    icon: <Zap />,
-    description: 'Plataforma reactiva de E-TPU que almacena energía y la devuelve en el impulso, todo en un perfil milimétrico.',
-    // New fields
-    bioFunction: 'Emula la eficiencia elástica de los tendones.',
-    engineering: 'Elastómero Termoplástico de Células Expandidas (ETCE) de perfil ultradelgado.',
-    keyAttribute: 'Dinamismo reactivo que mantiene el calce original del calzado.',
-    comparison: [
-      { aspect: 'Perfil / Grosor', generic: 'Delgado pero pasivo', rana: 'Delgadísimo y reactivo' },
-      { aspect: 'Retorno de energía', generic: 'Nulo', rana: 'Alto (E-TPU)' },
-      { aspect: 'Alteración del calce', generic: 'Frecuente', rana: 'Mínima' }
-    ]
+    claim: 'El Tendón de Energía Explosiva',
+    desc: 'Matriz de Elastómero de Expansión Supercrítica (ETCE). Emula la eficiencia elástica de los tendones, devolviendo 70-80% de energía en perfil mínimo.',
+    icon: <Zap className="w-8 h-8 text-yellow-500" />
   },
   {
     id: 'nanospread',
     name: 'NanoSpread™',
-    claim: 'Gestión inteligente de humedad',
-    icon: <Droplets />,
-    description: 'Textil de micro-canales que dispersa el sudor sobre una superficie mayor para acelerar la evaporación.',
-    // New fields
-    bioFunction: 'Emula la capilaridad de los epitelios técnicos y la piel de reptiles.',
-    engineering: 'Membrana Micro-Capilar de Gestión de Humedad.',
-    keyAttribute: 'Homeostasis térmica y frescura técnica en uso intensivo.',
-    comparison: [
-      { aspect: 'Distribución de sudor', generic: 'Localizada (humedad)', rana: 'Dispersa (evaporación)' },
-      { aspect: 'Confort térmico', generic: 'Variable', rana: 'Más estable' },
-      { aspect: 'Durabilidad funcional', generic: 'Limitada', rana: 'Prolongada' }
-    ]
-  },
-  {
-    id: 'shocksphere',
-    name: 'ShockSphere™',
-    claim: 'Absorción focalizada de impacto',
-    icon: <Shield />,
-    description: 'Geometrías esféricas que disipan energía en puntos críticos sin generar la inestabilidad de las espumas blandas.',
-    // New fields
-    bioFunction: 'Emula las almohadillas de estabilidad felina.',
-    engineering: 'Poliuretano de Disipación de Energía y Geometría Esférica.',
-    keyAttribute: 'Adaptación dinámica al terreno y control del centro de gravedad.',
-    comparison: [
-      { aspect: 'Enfoque', generic: 'Suaviza todo (inestable)', rana: 'Absorbe impacto focalizado' },
-      { aspect: 'Estabilidad', generic: 'Baja', rana: 'Se mantiene íntegra' },
-      { aspect: 'Respuesta', generic: 'Lenta', rana: 'Inmediata' }
-    ]
+    claim: 'Capilaridad Reptiliana',
+    desc: 'Membrana de transferencia termo-higroscópica. Micro-canales que dispersan la humedad y el calor de forma pasiva, emulando pieles técnicas naturales.',
+    icon: <Droplets className="w-8 h-8 text-cyan-500" />
   },
   {
     id: 'poron',
     name: 'PORON® XRD®',
-    claim: 'Protección extrema (USA Tech)',
-    icon: <ShieldCheck />,
-    description: 'Material viscoelástico que permanece flexible al caminar pero se endurece al impacto para disipar energía.',
-    // New fields
-    bioFunction: 'Emula los cojinetes de absorción reactiva.',
-    engineering: 'Uretano de Celda Abierta para Mitigación de Impactos Extremos (Rogers Corp).',
-    keyAttribute: 'Protección reactiva localizada en zonas de aterrizaje crítico.',
-    comparison: [
-      { aspect: 'Comportamiento', generic: 'Siempre blando', rana: 'Reactivo al impacto' },
-      { aspect: 'Protección', generic: 'Básica', rana: 'Extrema (Uso Industrial)' },
-      { aspect: 'Recuperación', generic: 'Lenta', rana: 'Instantánea' }
-    ]
+    claim: 'Escudo de Reacción Instantánea',
+    desc: 'Uretano de celda abierta que permanece flexible al movimiento pero se endurece al impacto para disipar hasta el 90% de la energía. Tecnología patentada.',
+    icon: <ShieldCheck className="w-8 h-8 text-slate-400" />
+  },
+  {
+    id: 'shocksphere',
+    name: 'ShockSphere™',
+    claim: 'Estabilidad Dinámica Felina',
+    desc: 'Polímero de disipación con geometría esférica. Absorción focalizada que estabiliza la pisada en superficies irregulares sin perder control.',
+    icon: <CircleDotIcon className="w-8 h-8 text-orange-500" />
+  },
+  {
+    id: 'arch',
+    name: 'Arch Support',
+    claim: 'Exoesqueleto de Soporte',
+    desc: 'Refuerzo de polímero de vinilo de alta tenacidad. Previene el colapso del arco medial y optimiza la palanca mecánica del pie.',
+    icon: <Layers className="w-8 h-8 text-indigo-500" />
   }
 ];
 
-// --- COMPONENTES AUXILIARES ---
-
-const Navbar = ({ currentView, navigate, cartCount, onOpenCart }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const links = [
-    { id: 'home', label: 'Inicio' },
-    { id: 'systems', label: 'Sistemas Biomecánicos' },
-    { id: 'tech', label: 'Tecnologías' },
-    { id: 'distributors', label: 'Distribuidores' },
-    { id: 'support', label: 'Ayuda' }
-  ];
-
-  return (
-    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100">
-      <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-        <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('home')}>
-          <img src="https://ranawalk.com/images/rana-walk-hv2.png" alt="Rana Walk" className="h-12 w-auto" />
-
-        </div>
-
-        <div className="hidden lg:flex items-center gap-8">
-          {links.map(l => (
-            <button
-              key={l.id}
-              onClick={() => { navigate(l.id); setIsOpen(false); }}
-              className={`text-sm font-bold uppercase tracking-widest transition-colors ${currentView === l.id ? 'text-[#003B5C]' : 'text-slate-400 hover:text-[#003B5C]'}`}
-            >
-              {l.label}
-            </button>
-          ))}
-          <button onClick={() => { navigate('consultor'); setIsOpen(false) }} className="text-sm font-bold uppercase tracking-widest text-emerald-600 flex items-center gap-2 underline decoration-2 decoration-emerald-200 hover:text-emerald-700 hover:decoration-emerald-500 transition-all">
-            Consultor Inteligente <Sparkles className="w-4 h-4" />
-          </button>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <div className="relative cursor-pointer" onClick={onOpenCart}>
-            <ShoppingCart className="w-6 h-6 text-[#003B5C]" />
-            {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                {cartCount}
-              </span>
-            )}
-          </div>
-          <button className="lg:hidden" onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X /> : <Menu />}
-          </button>
-        </div>
-      </div>
-
-      {isOpen && (
-        <div className="lg:hidden bg-white border-t border-slate-100 p-6 flex flex-col gap-4 animate-fadeIn">
-          {links.map(l => (
-            <button key={l.id} onClick={() => { navigate(l.id); setIsOpen(false); }} className="text-left font-bold text-slate-600 py-2">{l.label}</button>
-          ))}
-          <button onClick={() => { navigate('consultor'); setIsOpen(false) }} className="text-left font-bold text-emerald-600 py-2 flex items-center gap-2">
-            Consultor Inteligente <Sparkles className="w-4 h-4" />
-          </button>
-        </div>
-      )}
-    </nav>
-  );
-};
-
-const SectionHeader = ({ sub, title, center = true, dark = false }) => (
-  <div className={`mb-12 ${center ? 'text-center' : 'text-left'}`}>
-    <span className={`text-sm font-black uppercase tracking-[0.2em] ${dark ? 'text-[#4FD1C5]' : 'text-[#003B5C]'} mb-3 block`}>{sub}</span>
-    <h2 className={`text-3xl md:text-5xl font-bold ${dark ? 'text-white' : 'text-slate-900'} leading-tight`}>{title}</h2>
-    <div className={`h-1.5 w-20 bg-[#4FD1C5] mt-6 ${center ? 'mx-auto' : ''}`}></div>
-  </div>
+// Helper icon component since CircleDot wasn't imported initially
+const CircleDotIcon = (props) => (
+  <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="1" /></svg>
 );
 
-// --- DATA: DATA DE TALLAS ---
-const sizeGroups = [
-  { id: 'S1', BRA: ['33', '34', '35'], EU: ['35', '36', '37'], US_Men: ['4', '4.5', '5'], US_Women: ['5.5', '6', '6.5'], MEX: ['23', '24'] },
-  { id: 'S2', BRA: ['36', '37', '38'], EU: ['38', '39', '40'], US_Men: ['5.5', '6', '6.5'], US_Women: ['7', '7.5', '8'], MEX: ['24', '25', '26'] },
-  { id: 'S3', BRA: ['39', '40'], EU: ['41', '42'], US_Men: ['7', '7.5', '8'], US_Women: ['8.5', '9', '9.5'], MEX: ['26', '27'] },
-  { id: 'S4', BRA: ['41', '42'], EU: ['43', '44'], US_Men: ['8.5', '9'], US_Women: ['10', '10.5'], MEX: ['28', '29'] },
-  { id: 'S5', BRA: ['43', '44'], EU: ['45', '46'], US_Men: ['9.5', '10', '10.5'], US_Women: ['11', '11.5', '12'], MEX: ['29', '30'] },
-  { id: 'S6', BRA: ['45', '46', '47'], EU: ['47', '48', '49'], US_Men: ['11', '12', '13'], US_Women: ['12.5', '13.5', '14.5'], MEX: ['31', '32'] }
-];
 
-// --- MODAL: AGREGAR AL CARRITO ---
-const AddToCartModal = ({ isOpen, onClose, onConfirm, system }) => {
-  const [unit, setUnit] = useState('US');
-  const [gender, setGender] = useState('Masculino');
-  const [size, setSize] = useState('');
-  const [quantity, setQuantity] = useState(1);
-
-  if (!isOpen) return null;
-
-  // Generación de tallas basada en la selección (Simplificada para el ejemplo)
-  const getAvailableSizes = (group) => {
-    if (unit === 'US') return gender === 'Masculino' ? group.US_Men : group.US_Women;
-    if (unit === 'EU') return group.EU;
-    if (unit === 'BRA') return group.BRA;
-    if (unit === 'MEX') return group.MEX;
-    return [];
-  };
-
-  const handleConfirm = () => {
-    if (!size) {
-      alert('Por favor selecciona una talla');
-      return;
-    }
-    onConfirm({
-      systemId: system.id,
-      systemName: system.name,
-      image: system.image,
-      price: 59.90, // Precio hardcodeado por ahora, idealmente vendría del sistema
-      unit,
-      gender,
-      size,
-      quantity
-    });
-    onClose();
-  };
-
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={onClose}></div>
-      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md relative z-10 overflow-hidden animate-fadeIn">
-        <div className="bg-[#003B5C] p-6 text-white flex justify-between items-center">
-          <h3 className="font-bold text-lg">Configura tu {system.name}</h3>
-          <button onClick={onClose}><X className="w-5 h-5 hover:text-[#4FD1C5]" /></button>
-        </div>
-
-        <div className="p-8 space-y-6">
-          <div>
-            <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Unidad de Medida</label>
-            <div className="grid grid-cols-4 gap-2">
-              {['US', 'BRA', 'EU', 'MEX'].map(u => (
-                <button
-                  key={u}
-                  onClick={() => { setUnit(u); setSize(''); }}
-                  className={`py-2 rounded-lg text-sm font-bold border ${unit === u ? 'bg-[#003B5C] text-white border-[#003B5C]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-[#003B5C]'}`}
-                >
-                  {u}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Género</label>
-            <div className="grid grid-cols-2 gap-2">
-              {['Masculino', 'Femenino'].map(g => (
-                <button
-                  key={g}
-                  onClick={() => { setGender(g); setSize(''); }}
-                  className={`py-2 rounded-lg text-sm font-bold border ${gender === g ? 'bg-[#003B5C] text-white border-[#003B5C]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-[#003B5C]'}`}
-                >
-                  {g}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Talla ({unit})</label>
-            <select
-              value={size}
-              onChange={(e) => setSize(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-[#003B5C] focus:outline-none focus:border-[#4FD1C5]"
-            >
-              <option value="">Selecciona tu talla</option>
-              {sizeGroups.map(group => {
-                const sizes = getAvailableSizes(group);
-                return (
-                  <option key={group.id} value={group.id}>
-                    {group.id} ({sizes.join(', ')})
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Cantidad</label>
-            <div className="flex items-center gap-4">
-              <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-[#003B5C] font-bold hover:bg-slate-200">-</button>
-              <input
-                type="number"
-                value={quantity}
-                onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                className="w-20 text-center font-bold text-xl text-[#003B5C] bg-transparent border-b-2 border-slate-200 focus:border-[#4FD1C5] outline-none"
-              />
-              <button onClick={() => setQuantity(quantity + 1)} className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-[#003B5C] font-bold hover:bg-slate-200">+</button>
-            </div>
-          </div>
-
-          <div className="pt-4 flex gap-3">
-            <button onClick={onClose} className="flex-1 py-3 rounded-xl border-2 border-slate-200 font-bold text-slate-400 hover:border-slate-300 hover:text-slate-600">Cancelar</button>
-            <button onClick={handleConfirm} className="flex-[2] py-3 rounded-xl bg-[#4FD1C5] text-[#003B5C] font-black uppercase tracking-widest hover:scale-[1.02] transition-transform">
-              ACEPTAR
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// --- SIDEBAR: CARRITO ---
-const CartSidebar = ({ isOpen, onClose, cartItems, onRemoveItem }) => {
-  if (!isOpen) return null;
-
-  const total = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-
-  return (
-    <div className="fixed inset-0 z-[200] flex justify-end">
-      <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onClick={onClose}></div>
-      <div className="relative w-full max-w-md bg-white h-full shadow-2xl p-6 flex flex-col animate-slideInRight">
-
-        <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-100">
-          <div className="flex items-center gap-3">
-            <ShoppingCart className="w-6 h-6 text-[#4FD1C5]" />
-            <h2 className="text-2xl font-black text-[#003B5C]">Tu Carrito</h2>
-          </div>
-          <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-full transition-colors"><X className="w-6 h-6 text-slate-400" /></button>
-        </div>
-
-        <div className="flex-grow overflow-y-auto space-y-6 pr-2">
-          {cartItems.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center text-slate-400 opacity-60">
-              <ShoppingCart className="w-16 h-16 mb-4" />
-              <p>Tu carrito está vacío.</p>
-            </div>
-          ) : (
-            cartItems.map((item, index) => (
-              <div key={index} className="flex gap-4 p-4 rounded-2xl border border-slate-100 bg-slate-50 relative group hover:border-[#4FD1C5]/50 transition-colors">
-                <div className="w-20 h-20 bg-white rounded-xl overflow-hidden shrink-0 border border-slate-200">
-                  {item.image && <img src={item.image} alt={item.systemName} className="w-full h-full object-cover" />}
-                </div>
-                <div className="flex-grow">
-                  <div className="flex justify-between items-start mb-1">
-                    <h4 className="font-black text-[#003B5C]">{item.systemName}</h4>
-                    <button onClick={() => onRemoveItem(index)} className="text-slate-300 hover:text-red-500 transition-colors"><Trash className="w-4 h-4" /></button>
-                  </div>
-                  <p className="text-xs font-bold text-[#4FD1C5] mb-2 uppercase tracking-wider">{item.gender} • {item.unit} Rana {item.size}</p>
-                  <div className="flex justify-between items-center bg-white p-2 rounded-lg border border-slate-100">
-                    <span className="text-xs font-bold text-slate-400">Cant: {item.quantity}</span>
-                    <span className="text-sm font-black text-[#003B5C]">${(item.price * item.quantity).toFixed(2)}</span>
-                  </div>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-
-        {cartItems.length > 0 && (
-          <div className="pt-6 border-t border-slate-100 mt-4">
-            <div className="flex justify-between items-center mb-6">
-              <span className="text-slate-500 font-bold">Total</span>
-              <span className="text-3xl font-black text-[#003B5C]">${total.toFixed(2)}</span>
-            </div>
-            <button className="w-full py-4 bg-[#003B5C] text-white rounded-xl font-black uppercase tracking-widest hover:bg-slate-800 transition-colors shadow-lg shadow-[#003B5C]/20">
-              Pagar Ahora
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-const TrustBar = () => (
-  <div className="bg-[#1e293b] py-8 border-b border-white/5">
-    <div className="container mx-auto px-6">
-      <h3 className="text-center text-xs font-black uppercase tracking-[0.2em] text-[#4FD1C5] mb-6 opacity-80">Respaldado por la Ciencia de Materiales y la Ingeniería Global</h3>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center text-white text-opacity-60 grayscale hover:grayscale-0 hover:text-opacity-100 transition-all duration-500">
-        <div className="text-center">
-          <span className="font-bold block text-white text-sm">PORON® XRD®</span>
-          <span className="text-[10px] uppercase">Protección Certificada</span>
-        </div>
-        <div className="text-center">
-          <span className="font-bold block text-white text-sm">Life Sciences Hub</span>
-          <span className="text-[10px] uppercase">Validación Costa Rica</span>
-        </div>
-        <div className="text-center">
-          <span className="font-bold block text-white text-sm">LeapCore™ Tech</span>
-          <span className="text-[10px] uppercase">Resiliencia Estructural</span>
-        </div>
-        <div className="text-center">
-          <span className="font-bold block text-white text-sm">Esencial Costa Rica</span>
-          <span className="text-[10px] uppercase">Excelencia País</span>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const Footer = ({ navigate }) => (
-  <footer className="bg-[#003B5C] text-white pt-20 pb-10">
-    <div className="container mx-auto px-6 grid md:grid-cols-5 gap-10 border-b border-white/10 pb-16 text-sm"> {/* Expanded to 5 columns */}
-      <div className="col-span-1 md:col-span-1">
-        <div className="flex items-center gap-2 mb-6">
-          <img src="https://ranawalk.com/images/2025/02/06/image-2.png" alt="Rana Walk Logo" className="h-12 w-auto" />
-        </div>
-        <p className="text-slate-400 text-xs leading-relaxed mb-6">
-          Name It, LEAP BEYOND. Ingeniería para el movimiento humano inspirada en la naturaleza.
-        </p>
-        <div className="flex gap-4">
-          <Linkedin className="w-5 h-5 opacity-60 hover:opacity-100 cursor-pointer text-[#4FD1C5]" />
-          <Instagram className="w-5 h-5 opacity-60 hover:opacity-100 cursor-pointer text-[#4FD1C5]" />
-          <Facebook className="w-5 h-5 opacity-60 hover:opacity-100 cursor-pointer text-[#4FD1C5]" />
-        </div>
-      </div>
-
-      <div>
-        <h4 className="font-bold text-[#4FD1C5] mb-6 uppercase text-[10px] tracking-widest">Ecosistema</h4>
-        <ul className="space-y-3 text-slate-300">
-          {systemsData.map(s => <li key={s.id} className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('systemDetail', s.id)}>{s.name}</li>)}
-          <li className="hover:text-white cursor-pointer transition-colors mt-4 text-[#4FD1C5] font-bold" onClick={() => navigate('consultor')}>Consultor IA</li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 className="font-bold text-[#4FD1C5] mb-6 uppercase text-[10px] tracking-widest">Ingeniería</h4>
-        <ul className="space-y-3 text-slate-300">
-          {techData.map(t => <li key={t.id} className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('techDetail', t.id)}>{t.name}</li>)}
-          <li className="hover:text-white cursor-pointer transition-colors">Ciencia de Materiales</li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 className="font-bold text-[#4FD1C5] mb-6 uppercase text-[10px] tracking-widest">Recursos</h4>
-        <ul className="space-y-3 text-slate-300">
-          <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('support')}>FAQ Maestro</li>
-          <li className="hover:text-white cursor-pointer transition-colors">Guía de Adaptación</li>
-          <li className="hover:text-white cursor-pointer transition-colors">Mantenimiento</li>
-          <li className="flex items-center gap-2 text-white font-medium mt-4"><Mail className="w-4 h-4" /> support@ranawalk.com</li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 className="font-bold text-[#4FD1C5] mb-6 uppercase text-[10px] tracking-widest">Corporativo</h4>
-        <ul className="space-y-3 text-slate-300">
-          <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('distributors')}>Partnership B2B</li>
-          <li className="hover:text-white cursor-pointer transition-colors">Seguridad Industrial</li>
-          <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('legal')}>Portal Legal</li>
-        </ul>
-      </div>
-    </div>
-
-    <div className="container mx-auto px-6 mt-10 flex flex-col md:flex-row justify-between items-center text-[10px] text-slate-500 gap-4">
-      <p>© 2026 Rana Walk®. Todos los derechos reservados.</p>
-      <div className="flex gap-6">
-        <span className="cursor-pointer hover:text-slate-300" onClick={() => navigate('legal')}>Privacidad</span>
-        <span className="cursor-pointer hover:text-slate-300" onClick={() => navigate('legal')}>Términos</span>
-        <span className="cursor-pointer hover:text-slate-300" onClick={() => navigate('legal')}>Patentes</span>
-      </div>
-      <p className="text-center md:text-right max-w-md opacity-60">Aviso Legal: Los sistemas Rana Walk® no son dispositivos médicos. Están destinados al bienestar funcional.</p>
-    </div>
-  </footer>
-);
-
-// --- VISTAS ---
-
-const HomeView = ({ navigate }) => (
-  <div className="animate-fadeIn">
-    {/* Hero */}
-    <section className="relative h-[90vh] flex items-center bg-slate-900 overflow-hidden">
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1556103330-d5b932f7970a?auto=format&fit=crop&q=80&w=2000')] bg-cover bg-center opacity-40"></div>
-      <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-transparent"></div>
-
-      <div className="container mx-auto px-6 relative z-10 text-white">
-        <div className="max-w-3xl">
-          <span className="inline-block px-4 py-1 bg-[#4FD1C5]/20 text-[#4FD1C5] rounded-full text-xs font-black tracking-widest uppercase mb-6 border border-[#4FD1C5]/30">
-            Biomimetismo Podal
-          </span>
-          <h1 className="text-5xl md:text-7xl font-bold leading-[1.1] mb-8">
-            Sistemas biomecánicos para reducir la fatiga en <span className="text-[#4FD1C5]">jornadas exigentes.</span>
-          </h1>
-          <p className="text-xl text-slate-300 mb-10 leading-relaxed max-w-xl">
-            Desarrollamos soluciones inspiradas en la naturaleza y diseñadas en el Life Sciences Hub de las Américas, Costa Rica.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-5">
-            <button onClick={() => navigate('systems')} className="bg-[#4FD1C5] text-[#003B5C] px-8 py-4 rounded-lg font-black uppercase tracking-wider hover:bg-[#3db8ae] transition-all flex items-center justify-center gap-2">
-              Explorar Sistemas <ArrowRight className="w-5 h-5" />
-            </button>
-            <button onClick={() => navigate('support')} className="border-2 border-white/30 text-white px-8 py-4 rounded-lg font-black uppercase tracking-wider hover:bg-white/10 transition-all">
-              ¿Cuál es mi sistema?
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* Propuesta de Valor */}
-    <section className="py-24 bg-white">
-      <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
-          <div>
-            <SectionHeader sub="Propuesta de Valor" title="Ingeniería aplicada a la base de tu bienestar" center={false} />
-            <div className="space-y-6 text-lg text-slate-600">
-              <p>
-                Muchas soluciones genéricas se sienten cómodas al principio, pero pierden soporte tras pocas semanas de uso. Esto ocurre porque priorizan suavidad inicial, no estabilidad estructural.
-              </p>
-              <div className="p-8 bg-slate-50 border-l-4 border-[#4FD1C5] rounded-r-xl">
-                <p className="font-bold text-[#003B5C] italic">
-                  "Rana Walk® integra un ecosistema de materiales inteligentes que trabajan como un sistema integrado, ofreciendo soporte estable y absorción de impacto en uso real."
-                </p>
-              </div>
-              <p>
-                No vendemos plantillas; diseñamos arquitecturas que responden a tres variables clave: <strong>Impacto, Carga y Espacio.</strong>
-              </p>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-6">
-            <div className="bg-slate-50 p-8 rounded-2xl border border-slate-100 flex flex-col items-center text-center">
-              <ShieldCheck className="w-12 h-12 text-[#003B5C] mb-4" />
-              <h4 className="font-bold mb-2">Defendible</h4>
-              <p className="text-sm text-slate-500">Tecnología basada en ciencia de materiales.</p>
-            </div>
-            <div className="bg-slate-100 p-8 rounded-2xl flex flex-col items-center text-center">
-              <Globe className="w-12 h-12 text-[#003B5C] mb-4" />
-              <h4 className="font-bold mb-2">Global</h4>
-              <p className="text-sm text-slate-500">Estándares de dispositivos médicos.</p>
-            </div>
-            <div className="bg-slate-100 p-8 rounded-2xl flex flex-col items-center text-center">
-              <Users className="w-12 h-12 text-[#003B5C] mb-4" />
-              <h4 className="font-bold mb-2">Humano</h4>
-              <p className="text-sm text-slate-500">Diseñado para trabajadores reales.</p>
-            </div>
-            <div className="bg-[#e6fffb] p-8 rounded-2xl border border-[#4FD1C5]/30 flex flex-col items-center text-center">
-              <Award className="w-12 h-12 text-[#003B5C] mb-4" />
-              <h4 className="font-bold mb-2">Calidad</h4>
-              <p className="text-sm text-slate-500">Fabricación de alta precisión.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* Preview de Tecnologías */}
-    <section className="py-24 bg-slate-900 text-white">
-      <div className="container mx-auto px-6">
-        <SectionHeader sub="Innovación" title="Tecnologías que cumplen una función real" dark />
-        <div className="grid md:grid-cols-5 gap-4">
-          {techData.map(t => (
-            <div
-              key={t.id}
-              onClick={() => navigate('techDetail', t.id)}
-              className="bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-all cursor-pointer group"
-            >
-              <div className="text-[#4FD1C5] mb-4 group-hover:scale-110 transition-transform">{t.icon}</div>
-              <h4 className="font-black text-xl mb-2">{t.name}</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">{t.claim}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    {/* Responsabilidad y Origen */}
-    <section className="py-24 bg-slate-50">
-      <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <SectionHeader sub="Nacimiento" title="Diseñado en el Hub de Dispositivos Médicos" />
-          <p className="text-lg text-slate-600 mb-10">
-            Costa Rica es referente mundial en Ciencias de la Vida. Rana Walk® nace en este ecosistema, heredando procesos de control de calidad y precisión propios de la industria de la salud.
-          </p>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="p-6 bg-white rounded-xl shadow-sm">
-              <div className="text-4xl font-black text-[#003B5C] mb-2">100%</div>
-              <p className="text-sm font-bold text-slate-400 uppercase">Trazabilidad técnica</p>
-            </div>
-            <div className="p-6 bg-white rounded-xl shadow-sm">
-              <div className="text-4xl font-black text-[#003B5C] mb-2">USA</div>
-              <p className="text-sm font-bold text-slate-400 uppercase">Tecnologías Aliadas</p>
-            </div>
-            <div className="p-6 bg-white rounded-xl shadow-sm">
-              <div className="text-4xl font-black text-[#003B5C] mb-2">+50</div>
-              <p className="text-sm font-bold text-slate-400 uppercase">Pruebas de Resiliencia</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-);
-
-const SystemsCatalogView = ({ navigate }) => (
-  <div className="py-20 animate-fadeIn">
-    <div className="container mx-auto px-6">
-      <SectionHeader sub="Catálogo" title="Elige tu Sistema Biomecánico" />
-      <p className="text-center text-slate-500 max-w-2xl mx-auto mb-16">
-        No todas las jornadas son iguales. Clasificamos nuestros sistemas según el nivel de carga, el impacto y el calzado que utilizas.
-      </p>
-
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {systemsData.map(s => (
-          <div key={s.id} className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all group flex flex-col border border-slate-100">
-            <div className="h-64 overflow-hidden relative">
-              <img src={s.image} alt={s.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-[10px] font-black text-[#003B5C] tracking-widest border border-slate-100">{s.ref}</div>
-            </div>
-            <div className="p-8 flex flex-col flex-grow">
-              <h3 className="text-2xl font-black text-[#003B5C] mb-1">{s.name}</h3>
-              <p className="text-[#4FD1C5] font-bold text-xs uppercase tracking-wider mb-4">{s.tagline}</p>
-              <p className="text-slate-500 text-sm mb-8 flex-grow leading-relaxed">{s.shortDesc}</p>
-              <button
-                onClick={() => navigate('systemDetail', s.id)}
-                className="w-full py-3 bg-slate-900 text-white rounded-xl font-bold uppercase text-xs tracking-widest hover:bg-[#003B5C] transition-colors"
-              >
-                Ver Especificaciones
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-);
-
-const SystemDetailView = ({ systemId, navigate, addToCart }) => {
-  const system = useMemo(() => systemsData.find(s => s.id === systemId), [systemId]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  if (!system) return null;
-
-  return (
-    <>
-      <div className="animate-fadeIn">
-        <div className="bg-slate-50 py-16 border-b border-slate-100">
-          <div className="container mx-auto px-6">
-            <button onClick={() => navigate('systems')} className="flex items-center gap-2 text-slate-400 hover:text-[#003B5C] mb-10 font-bold transition-colors">
-              <ArrowLeft className="w-4 h-4" /> VOLVER AL CATÁLOGO
-            </button>
-
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="rounded-3xl overflow-hidden shadow-2xl">
-                <img src={system.image} alt={system.name} className="w-full aspect-[4/3] object-cover" />
-              </div>
-              <div>
-                <span className="text-[#4FD1C5] font-black tracking-widest text-sm uppercase">{system.ref}</span>
-                <h1 className="text-5xl md:text-7xl font-black text-[#003B5C] mb-4">{system.name}</h1>
-                <p className="text-2xl text-slate-500 font-medium mb-8 leading-relaxed">{system.fullDescription}</p>
-
-                <div className="flex flex-wrap gap-3 mb-10">
-                  {system.technologies.map(tId => {
-                    const t = techData.find(td => td.id === tId);
-                    return (
-                      <div key={tId} className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-slate-200 text-xs font-bold text-[#003B5C]">
-                        <Check className="w-3 h-3 text-[#4FD1C5]" /> {t?.name}
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="bg-[#003B5C] p-8 rounded-2xl text-white">
-                  <div className="flex justify-between items-center mb-6">
-                    <span className="font-bold opacity-60">Precio del Sistema</span>
-                    <span className="text-3xl font-black text-[#4FD1C5]">$59.90</span>
-                  </div>
-                  <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="w-full py-4 bg-[#4FD1C5] text-[#003B5C] rounded-xl font-black uppercase tracking-widest hover:scale-[1.02] transition-transform"
-                  >
-                    Agregar al Carrito
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-        <div className="container mx-auto px-6 py-20">
-          <div className="grid lg:grid-cols-3 gap-16">
-            <div className="lg:col-span-2 space-y-16">
-              <section>
-                <h3 className="text-2xl font-bold text-[#003B5C] mb-6 flex items-center gap-3">
-                  <Info className="text-[#4FD1C5]" /> Qué es el Sistema {system.name}
-                </h3>
-                <p className="text-lg text-slate-600 leading-relaxed">{system.whatIs}</p>
-              </section>
-
-              <section>
-                <h3 className="text-2xl font-bold text-[#003B5C] mb-6">¿Cómo funciona el sistema?</h3>
-                <div className="grid sm:grid-cols-3 gap-6">
-                  {system.howItWorks.map((h, i) => (
-                    <div key={i} className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                      <h4 className="font-black text-[#003B5C] mb-2">{h.tech}</h4>
-                      <p className="text-xs text-slate-500 leading-relaxed">{h.func}</p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-
-              <section className="bg-red-50 p-8 rounded-2xl border border-red-100">
-                <h3 className="text-xl font-bold text-red-800 mb-6">Lo que NO es {system.name}</h3>
-                <div className="flex flex-wrap gap-3">
-                  {system.whatIsNot.map((item, i) => (
-                    <span key={i} className="px-4 py-2 bg-white rounded-full text-xs font-bold text-red-600 border border-red-200 uppercase">
-                      ✕ {item}
-                    </span>
-                  ))}
-                </div>
-              </section>
-            </div>
-
-            <div className="space-y-8">
-              <div className="bg-slate-900 text-white p-8 rounded-3xl">
-                <h3 className="text-xl font-bold mb-6 text-[#4FD1C5]">Ficha Técnica</h3>
-                <div className="space-y-6">
-                  <div>
-                    <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-1">Sensación</span>
-                    <p className="font-bold">{system.sensation}</p>
-                  </div>
-                  <div>
-                    <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-1">Calzado Ideal</span>
-                    <p className="font-bold">{system.bestFootwear}</p>
-                  </div>
-                  <div>
-                    <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-1">Uso Sugerido</span>
-                    <ul className="text-sm space-y-2 mt-2">
-                      {system.useCases.map((u, i) => <li key={i} className="flex gap-2"><Check className="w-4 h-4 text-[#4FD1C5] shrink-0" /> {u}</li>)}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-slate-50 p-8 rounded-3xl border border-slate-200">
-                <h4 className="font-black text-[#003B5C] mb-4">¿Es este tu sistema?</h4>
-                <p className="text-sm text-slate-500 mb-6">{system.idealIf}</p>
-                <button className="text-[#003B5C] font-black text-xs uppercase tracking-widest flex items-center gap-2 hover:translate-x-2 transition-transform">
-                  Consultar guía de elección <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <AddToCartModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={addToCart}
-        system={system}
-      />
-    </>
-  );
-};
-
-const TechCatalogView = ({ navigate }) => (
-  <div className="py-20 animate-fadeIn">
-    <div className="container mx-auto px-6">
-      <SectionHeader sub="Tecnologías" title="Biomimetismo en cada capa" />
-      <div className="grid lg:grid-cols-2 gap-12">
-        {techData.map(t => (
-          <div
-            key={t.id}
-            onClick={() => navigate('techDetail', t.id)}
-            className="group flex flex-col md:flex-row bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 cursor-pointer"
-          >
-            <div className="md:w-1/3 bg-slate-900 flex flex-col items-center justify-center p-8 text-[#4FD1C5]">
-              <div className="scale-[2] group-hover:scale-[2.5] transition-transform duration-500">{t.icon}</div>
-            </div>
-            <div className="md:w-2/3 p-8">
-              <h3 className="text-3xl font-black text-[#003B5C] mb-2">{t.name}</h3>
-              <p className="text-[#4FD1C5] font-bold text-sm mb-4 uppercase tracking-wider">{t.claim}</p>
-              <p className="text-slate-500 text-sm mb-6 leading-relaxed">{t.description}</p>
-              <span className="text-[#003B5C] font-black text-[10px] uppercase tracking-[0.2em] group-hover:gap-4 flex items-center gap-2 transition-all">
-                Ver comparativa técnica <ArrowRight className="w-4 h-4" />
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-);
-
-const TechDetailView = ({ techId, navigate }) => {
-  const tech = useMemo(() => techData.find(t => t.id === techId), [techId]);
-  if (!tech) return null;
-
-  return (
-    <div className="py-20 animate-fadeIn">
-      <div className="container mx-auto px-6 max-w-5xl">
-        <button onClick={() => navigate('tech')} className="flex items-center gap-2 text-slate-400 hover:text-[#003B5C] mb-12 font-bold transition-colors">
-          <ArrowLeft className="w-4 h-4" /> VOLVER A TECNOLOGÍAS
-        </button>
-
-        <div className="flex items-center gap-6 mb-12">
-          <div className="w-24 h-24 bg-slate-900 rounded-3xl flex items-center justify-center text-[#4FD1C5]">
-            {React.cloneElement(tech.icon, { size: 48 })}
-          </div>
-          <div>
-            <h1 className="text-4xl md:text-6xl font-black text-[#003B5C]">{tech.name}</h1>
-            <p className="text-xl text-[#4FD1C5] font-bold uppercase tracking-widest">{tech.claim}</p>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100 mb-20">
-          <div className="p-10 border-b border-slate-100">
-            <h2 className="text-2xl font-bold text-[#003B5C] mb-4">¿Por qué es superior?</h2>
-            <p className="text-lg text-slate-600 leading-relaxed">{tech.description}</p>
-          </div>
-
-          <div className="p-0 overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-100">
-                  <th className="px-10 py-6 text-xs font-black uppercase tracking-widest text-slate-400">Variable</th>
-                  <th className="px-10 py-6 text-xs font-black uppercase tracking-widest text-slate-400">Solución Genérica</th>
-                  <th className="px-10 py-6 text-xs font-black uppercase tracking-widest text-[#003B5C] bg-[#4FD1C5]/10">Tecnología Rana Walk®</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tech.comparison.map((row, i) => (
-                  <tr key={i} className="border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors">
-                    <td className="px-10 py-6 font-bold text-[#003B5C]">{row.aspect}</td>
-                    <td className="px-10 py-6 text-slate-500 italic">{row.generic}</td>
-                    <td className="px-10 py-6 font-bold text-[#003B5C] bg-[#4FD1C5]/5">{row.rana}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div className="bg-[#003B5C] p-12 rounded-3xl text-center text-white">
-          <h3 className="text-2xl font-bold mb-6">¿Quieres ver esta tecnología en acción?</h3>
-          <p className="text-slate-400 mb-8 max-w-xl mx-auto">Explora los sistemas biomecánicos que integran {tech.name} como parte de su arquitectura funcional.</p>
-          <button onClick={() => navigate('systems')} className="bg-[#4FD1C5] text-[#003B5C] px-10 py-4 rounded-xl font-black uppercase tracking-widest hover:scale-105 transition-transform">Ver Sistemas</button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const DistributorsView = () => (
-  <div className="py-24 animate-fadeIn">
-    <div className="container mx-auto px-6">
-      <SectionHeader sub="Partnership" title="Escala tu negocio con el estándar de bio-ingeniería" />
-      <div className="grid lg:grid-cols-2 gap-20 items-start">
-        <div className="space-y-10">
-          <p className="text-xl text-slate-600 leading-relaxed">
-            Rana Walk® busca socios estratégicos que deseen diferenciar su portafolio mediante <strong>sistemas biomecánicos</strong> diseñados para condiciones reales de uso. No ofrecemos productos genéricos; proporcionamos una arquitectura de valor diseñada para distribuidores que buscan soluciones consistentes y escalables.
-          </p>
-
-          <div className="space-y-8">
-            <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-              <h4 className="font-bold text-[#003B5C] mb-2 flex items-center gap-2">
-                <Check className="text-[#4FD1C5]" /> Portafolio Diferenciado
-              </h4>
-              <p className="text-sm text-slate-500">Organizamos nuestra oferta por escenario (GOLIATH, VELOX, ORBIS, LEOPARD), facilitando la segmentación del mercado.</p>
-            </div>
-
-            <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-              <h4 className="font-bold text-[#003B5C] mb-2 flex items-center gap-2">
-                <Check className="text-[#4FD1C5]" /> Capacitación Técnica de Alto Nivel
-              </h4>
-              <p className="text-sm text-slate-500">Formación basada en la ciencia de materiales del Life Sciences Hub de Costa Rica. Vende con confianza técnica.</p>
-            </div>
-
-            <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-              <h4 className="font-bold text-[#003B5C] mb-2 flex items-center gap-2">
-                <Check className="text-[#4FD1C5]" /> Herramientas de Soporte B2B
-              </h4>
-              <p className="text-sm text-slate-500">Kits de demostración táctil, material educativo sobre fatiga acumulada y canal de soporte directo.</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-10 rounded-3xl shadow-2xl border border-slate-100">
-          <h3 className="text-2xl font-black text-[#003B5C] mb-8">Solicitar Dossier Comercial</h3>
-          <form className="space-y-5" onSubmit={e => e.preventDefault()}>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-[10px] font-black uppercase text-slate-400 mb-2">Empresa</label>
-                <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:border-[#4FD1C5] outline-none" />
-              </div>
-              <div>
-                <label className="block text-[10px] font-black uppercase text-slate-400 mb-2">País</label>
-                <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:border-[#4FD1C5] outline-none" />
-              </div>
-            </div>
-            <div>
-              <label className="block text-[10px] font-black uppercase text-slate-400 mb-2">Tipo de Negocio</label>
-              <select className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:border-[#4FD1C5] outline-none">
-                <option>Retail Especializado</option>
-                <option>Distribución Industrial</option>
-                <option>Salud / Ortopedia</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-[10px] font-black uppercase text-slate-400 mb-2">Email Corporativo</label>
-              <input type="email" className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:border-[#4FD1C5] outline-none" />
-            </div>
-            <button className="w-full py-4 bg-[#003B5C] text-white rounded-xl font-black uppercase tracking-widest hover:bg-slate-800 transition-colors">Enviar Solicitud</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const SupportView = () => {
-  const sections = [
-    {
-      title: "Selección y Calce (Fitment)",
-      faqs: [
-        { q: "¿Cómo sé qué talla elegir?", a: "Nuestros sistemas están diseñados para ser recortados y adaptados con precisión. Recomendamos seleccionar la talla que incluya tu medida habitual y utilizar la plantilla original de tu calzado como guía." },
-        { q: "¿Debo remover la plantilla original?", a: "Sí. Para que tecnologías como LeapCore™ funcionen correctamente, deben estar en contacto directo con la base del calzado. Colocarlas sobre plantillas viejas altera la palanca mecánica." },
-        { q: "¿Qué sistema cabe en zapatos ajustados?", a: "El sistema VELOX es el único diseñado con ThinBoom™ de perfil ultradelgado, optimizado para calzado de vestir o sneakers con espacio interno limitado." }
-      ]
-    },
-    {
-      title: "Uso y Adaptación",
-      faqs: [
-        { q: "¿Existe un periodo de adaptación?", a: "Al ser sistemas de Integridad Estructural, es normal sentir firmeza inusual los primeros 2-4 días. Tu pie se realinea a una base sólida. Recomendamos uso progresivo." },
-        { q: "¿Por qué se sienten más 'duras' que el gel?", a: "La suavidad excesiva colapsa. Rana Walk® ofrece Resiliencia Estructural para garantizar soporte óseo que no desaparezca tras dos horas de carga." }
-      ]
-    },
-    {
-      title: "Mantenimiento e Higiene",
-      faqs: [
-        { q: "¿Cómo debo limpiar mis Rana Walk®?", a: "Usa un paño húmedo con jabón neutro y deja secar a la sombra. Nunca uses lavadora ni fuentes de calor directo." },
-        { q: "¿Cuál es la vida útil?", a: "Entre 8 y 12 meses dependiendo de la intensidad de carga, momento en el cual los polímeros inician su ciclo de fatiga natural." }
-      ]
-    },
-    {
-      title: "Garantía y Devoluciones",
-      faqs: [
-        { q: "¿Qué cubre la garantía técnica?", a: "Cubrimos defectos de manufactura o delaminación prematura no causada por uso abrasivo o recortes incorrectos." }
-      ]
-    }
-  ];
-
-  return (
-    <div className="py-24 animate-fadeIn">
-      <div className="container mx-auto px-6 max-w-4xl">
-        <SectionHeader sub="Centro de Ayuda" title="Resolviendo dudas con precisión" />
-        <div className="space-y-12">
-          {sections.map((sec, i) => (
-            <div key={i}>
-              <h3 className="text-2xl font-black text-[#003B5C] mb-6 border-b border-slate-100 pb-2">{sec.title}</h3>
-              <div className="grid gap-6">
-                {sec.faqs.map((faq, j) => (
-                  <div key={j} className="bg-slate-50 p-8 rounded-2xl border border-slate-100">
-                    <h4 className="font-bold text-[#003B5C] mb-3">{faq.q}</h4>
-                    <p className="text-sm text-slate-600 leading-relaxed">{faq.a}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const LegalView = () => (
-  <div className="py-24 animate-fadeIn bg-slate-50">
-    <div className="container mx-auto px-6 max-w-5xl">
-      <SectionHeader sub="Legal" title="Marco Legal y Propiedad Intelectual" />
-
-      <div className="bg-white p-10 rounded-3xl shadow-sm border border-slate-100 space-y-10 mb-10">
-        <section>
-          <h3 className="text-xl font-black text-[#003B5C] mb-4">1. Propiedad Intelectual y Patentes</h3>
-          <p className="text-slate-600 mb-4">El contenido, diseño, algoritmos y tecnologías presentes en este ecosistema son propiedad exclusiva de Rana Walk.</p>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-slate-500">
-            <li><strong>Marcas Registradas:</strong> Rana Walk®, LeapCore™, ThinBoom™, NanoSpread™, ShockSphere™, GOLIATH®, ORBIS®.</li>
-            <li><strong>Patentes:</strong> Diseños de sistemas biomecánicos y matrices de poliuretano protegidos por leyes de propiedad industrial.</li>
-            <li><strong>Licencias de Terceros:</strong> PORON® XRD® es una marca registrada de Rogers Corporation.</li>
-          </ul>
-        </section>
-
-        <section>
-          <h3 className="text-xl font-black text-[#003B5C] mb-4">2. Términos de Servicio (Ingeniería y Uso)</h3>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-slate-500">
-            <li><strong>Naturaleza del Producto:</strong> Dispositivos biomecánicos de soporte, no médicos.</li>
-            <li><strong>Protocolo de Adaptación:</strong> El usuario reconoce el periodo de readaptación postural de 2 a 4 días.</li>
-            <li><strong>Garantía de Resiliencia:</strong> Cubre defectos de manufactura bajo uso normal.</li>
-          </ul>
-        </section>
-
-        <section>
-          <h3 className="text-xl font-black text-[#003B5C] mb-4">3. Política de Privacidad</h3>
-          <p className="text-slate-600 mb-4">Protección de Datos en el Life Sciences Hub.</p>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-slate-500">
-            <li><strong>Uso de IA:</strong> Datos usados únicamente para mejorar precisión de recomendaciones del Consultor.</li>
-            <li><strong>Seguridad:</strong> Protocolos de grado industrial para proteger información.</li>
-          </ul>
-        </section>
-      </div>
-    </div>
-  </div>
-);
-
-const ConsultantPage = ({ query, setQuery, handleConsult, isLoading, response, error, navigate }) => (
-  <div className="pt-32 pb-24 px-4 bg-white min-h-screen animate-fadeIn">
-    <div className="max-w-4xl mx-auto">
-      <div className="text-center mb-20">
-        <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-emerald-100 text-emerald-700 text-sm font-black uppercase tracking-[0.2em] mb-10 shadow-sm border border-emerald-200">
-          <Sparkles size={18} /> Consultor Inteligente
-        </div>
-        <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tighter text-[#003B5C]">EL SISTEMA <span className="text-emerald-600">IDEAL</span> PARA TI.</h2>
-        <p className="text-slate-500 font-medium text-xl max-w-2xl mx-auto">Describe tu jornada y calzado. Nuestra IA analizará las variables de carga e impacto para recomendarte una solución técnica.</p>
-      </div>
-
-      <div className="bg-slate-900 p-10 md:p-16 rounded-[3rem] shadow-2xl relative border border-white/10 overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-600/20 blur-[100px] rounded-full"></div>
-        <form onSubmit={(e) => { e.preventDefault(); handleConsult(query) }} className="space-y-8 relative z-10">
-          <textarea
-            className="w-full h-56 bg-slate-800 border-none rounded-3xl p-8 text-white text-xl placeholder:text-slate-500 focus:ring-4 focus:ring-emerald-500/20 transition-all shadow-inner leading-relaxed resize-none"
-            placeholder="Ej: Peso 90kg, trabajo en una planta de ensamble 10 horas, uso botas de seguridad pesadas y me duele el talón..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <button
-            disabled={isLoading || !query.trim()}
-            className={`w-full py-6 rounded-2xl font-black text-xl uppercase tracking-[0.2em] flex items-center justify-center gap-4 transition-all shadow-xl ${isLoading || !query.trim() ? 'bg-slate-700 text-slate-500 cursor-not-allowed' : 'bg-emerald-600 text-white hover:bg-emerald-500 hover:scale-[1.01]'
-              }`}
-          >
-            {isLoading ? <RefreshCw className="animate-spin" /> : <Zap size={24} />}
-            {isLoading ? 'PROCESANDO VARIABLES...' : 'ANALIZAR'}
-          </button>
-        </form>
-      </div>
-
-      <div className="mt-16">
-        {response && (
-          <div className="animate-fadeIn bg-emerald-50 p-12 md:p-16 rounded-[4rem] border border-emerald-100 shadow-xl">
-            <h3 className="font-black text-[#003B5C] uppercase tracking-[0.2em] text-sm mb-10 flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-white"><Check size={18} /></div>
-              Diagnóstico del Consultor ✨
-            </h3>
-            <div className="prose prose-slate max-w-none text-slate-800 text-xl leading-relaxed font-medium whitespace-pre-wrap italic">
-              {response}
-            </div>
-            <div className="mt-12 pt-12 border-t border-emerald-200">
-              <button onClick={() => navigate('systems')} className="font-black text-emerald-700 text-lg flex items-center gap-2 hover:gap-6 transition-all uppercase tracking-widest">
-                Ver especificaciones de mi sistema <ArrowRight size={24} />
-              </button>
-            </div>
-          </div>
-        )}
-        {error && (
-          <div className="p-10 bg-red-50 text-red-600 rounded-[3rem] border border-red-100 flex items-center gap-6 shadow-sm">
-            <AlertCircle size={32} /> <span className="font-black text-lg uppercase">{error}</span>
-          </div>
-        )}
-      </div>
-    </div>
-  </div>
-);
-
-// --- MAIN APP COMPONENT ---
-
-export default function App() {
-  const [view, setView] = useState('home');
-  const [activeId, setActiveId] = useState(null);
-  const [cart, setCart] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-
-  // Gemini State
-  const [query, setQuery] = useState('');
-  const [response, setResponse] = useState(null);
+const App = () => {
+  const [activeSection, setActiveSection] = useState('home');
+  const [selectedSystem, setSelectedSystem] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [geminiQuery, setGeminiQuery] = useState('');
+  const [geminiResponse, setGeminiResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
 
-  const callGemini = async (userPrompt) => {
-    const apiKey = "AIzaSyBmO6qTow7RVhNv9QTgQM0PkdEoPTV_tf0";
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+  // Scroll to top when section changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activeSection, selectedSystem]);
 
-    const systemPrompt = `
-        Eres el Consultor Biomecánico Experto de Rana Walk®.
-        Tu misión es recomendar uno de nuestros 4 sistemas biomecánicos basados en la necesidad del usuario.
+  const handleNav = (section) => {
+    setActiveSection(section);
+    setSelectedSystem(null);
+    setIsMenuOpen(false);
+  };
 
-        Sistemas disponibles:
-        1. GOLIATH: Enfocado en alta carga e impacto repetitivo. Ideal para botas industriales y trabajo pesado.
-        2. VELOX: Perfil mínimo para calzado de vestir o ajustado. Prioriza dinamismo y retorno de energía.
-        3. ORBIS: Confort diario y equilibrio postural para caminatas urbanas.
-        4. LEOPARD: Estabilidad adaptable con perfiles de arco específicos para terrenos irregulares.
-
-        Instrucciones técnicas:
-        - Usa un tono de Biomimetismo profesional.
-        - Habla de "carga", "impacto" y "espacio interno".
-        - NO uses lenguaje médico-clínico (evita "ortopédico", "clínica", "paciente").
-        - Responde siempre en español.
-        - Sé conciso y directo.
-        - Al final, recomienda explícitamente UN sistema principal.
-        `;
-
-    const payload = {
-      contents: [{
-        parts: [{ text: `System Instruction: ${systemPrompt}\n\nUser Query: ${userPrompt}` }]
-      }]
-    };
-
-    const fetchWithRetry = async (retries = 3, delay = 1000) => {
-      try {
-        const res = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
-        const data = await res.json();
-        return data.candidates?.[0]?.content?.parts?.[0]?.text;
-      } catch (err) {
-        if (retries > 0) {
-          await new Promise(resolve => setTimeout(resolve, delay));
-          return fetchWithRetry(retries - 1, delay * 2);
-        }
-        throw err;
-      }
-    };
+  const handleGeminiConsult = async (e) => {
+    e.preventDefault();
+    if (!geminiQuery.trim()) return;
 
     setIsLoading(true);
-    setError(null);
+    setGeminiResponse('');
+
     try {
-      const result = await fetchWithRetry();
-      setResponse(result);
-    } catch (err) {
-      console.error(err);
-      setError("No se pudo conectar con el consultor inteligente. Por favor verifica tu conexión o intenta nuevamente.");
+      const response = await callGemini(geminiQuery);
+      setGeminiResponse(response);
+    } catch (error) {
+      setGeminiResponse("Error de conexión con el consultor. Por favor intenta de nuevo.");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const addToCart = (product) => {
-    setCart([...cart, product]);
-    setIsCartOpen(true); // Abrir carrito automáticamente al agregar
-  };
+  // --- COMPONENTES INTERNOS ---
 
-  const removeFromCart = (index) => {
-    const newCart = [...cart];
-    newCart.splice(index, 1);
-    setCart(newCart);
-  };
+  const Header = () => (
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-100 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div
+            className="flex items-center cursor-pointer"
+            onClick={() => handleNav('home')}
+          >
+            <Activity className="h-8 w-8 text-emerald-600 mr-2" />
+            <span className="text-xl font-bold text-slate-900 tracking-tight">RANA WALK®</span>
+          </div>
 
-  const navigate = (newView, id = null) => {
-    setView(newView);
-    setActiveId(id);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+          <div className="hidden md:flex space-x-8">
+            <button onClick={() => handleNav('home')} className={`text-sm font-medium transition-colors ${activeSection === 'home' ? 'text-emerald-600' : 'text-slate-600 hover:text-emerald-600'}`}>Inicio</button>
+            <button onClick={() => handleNav('systems')} className={`text-sm font-medium transition-colors ${activeSection === 'systems' ? 'text-emerald-600' : 'text-slate-600 hover:text-emerald-600'}`}>Sistemas</button>
+            <button onClick={() => handleNav('technology')} className={`text-sm font-medium transition-colors ${activeSection === 'technology' ? 'text-emerald-600' : 'text-slate-600 hover:text-emerald-600'}`}>Tecnología</button>
+            <button onClick={() => handleNav('distributors')} className={`text-sm font-medium transition-colors ${activeSection === 'distributors' ? 'text-emerald-600' : 'text-slate-600 hover:text-emerald-600'}`}>Distribuidores</button>
+            <button onClick={() => handleNav('ai')} className={`flex items-center text-sm font-medium bg-slate-900 text-white px-4 py-2 rounded-full hover:bg-slate-800 transition-all shadow-md`}>
+              <Sparkles className="w-4 h-4 mr-2" /> Consultor IA
+            </button>
+          </div>
 
-  return (
-    <div className="min-h-screen bg-white font-sans selection:bg-[#4FD1C5] selection:text-[#003B5C]">
-      <Navbar currentView={view} navigate={navigate} cartCount={cart.length} onOpenCart={() => setIsCartOpen(true)} />
+          <div className="md:hidden flex items-center">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-slate-600">
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
+        </div>
+      </div>
 
-      <CartSidebar
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        cartItems={cart}
-        onRemoveItem={removeFromCart}
-      />
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-white border-b border-slate-100 absolute w-full">
+          <div className="px-4 pt-2 pb-4 space-y-1">
+            <button onClick={() => handleNav('home')} className="block w-full text-left px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md">Inicio</button>
+            <button onClick={() => handleNav('systems')} className="block w-full text-left px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md">Sistemas</button>
+            <button onClick={() => handleNav('technology')} className="block w-full text-left px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md">Ciencia y Tecnología</button>
+            <button onClick={() => handleNav('distributors')} className="block w-full text-left px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md">Distribuidores</button>
+            <button onClick={() => handleNav('ai')} className="block w-full text-left px-3 py-2 text-base font-medium text-emerald-600 bg-emerald-50 rounded-md flex items-center">
+              <Sparkles className="w-4 h-4 mr-2" /> Consultor IA
+            </button>
+          </div>
+        </div>
+      )}
+    </header>
+  );
 
-      <main>
-        {view === 'home' && <HomeView navigate={navigate} />}
-        {view === 'consultor' && (
-          <ConsultantPage
-            query={query}
-            setQuery={setQuery}
-            handleConsult={callGemini}
-            isLoading={isLoading}
-            response={response}
-            error={error}
-            navigate={navigate}
-          />
-        )}
-        {view === 'systems' && <SystemsCatalogView navigate={navigate} />}
-        {view === 'systemDetail' && <SystemDetailView systemId={activeId} navigate={navigate} addToCart={addToCart} />}
-        {view === 'tech' && <TechCatalogView navigate={navigate} />}
-        {view === 'techDetail' && <TechDetailView techId={activeId} navigate={navigate} />}
-        {view === 'distributors' && <DistributorsView />}
-        {view === 'support' && <SupportView />}
-        {view === 'legal' && <LegalView />}
-      </main>
+  const Footer = () => (
+    <footer className="bg-slate-900 text-slate-300 pt-16 pb-8">
+      {/* Trust Barometer */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+        <div className="bg-slate-800 rounded-2xl p-8 border border-slate-700">
+          <h3 className="text-white text-lg font-semibold mb-6 text-center uppercase tracking-wider">Respaldado por la Ciencia Global</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div className="flex flex-col items-center">
+              <ShieldCheck className="w-8 h-8 text-slate-400 mb-2" />
+              <span className="text-sm font-bold text-white">PORON® XRD®</span>
+              <span className="text-xs text-slate-400">Protección Certificada</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <Beaker className="w-8 h-8 text-slate-400 mb-2" />
+              <span className="text-sm font-bold text-white">Life Sciences Hub</span>
+              <span className="text-xs text-slate-400">Validación Costa Rica</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <Activity className="w-8 h-8 text-slate-400 mb-2" />
+              <span className="text-sm font-bold text-white">LeapCore™ Tech</span>
+              <span className="text-xs text-slate-400">Resiliencia Estructural</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <Globe className="w-8 h-8 text-slate-400 mb-2" />
+              <span className="text-sm font-bold text-white">Esencial Costa Rica</span>
+              <span className="text-xs text-slate-400">Origen de Excelencia</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <TrustBar />
-      <Footer navigate={navigate} />
+      {/* Main Footer Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div className="space-y-4">
+          <div className="flex items-center text-white font-bold text-xl">
+            <Activity className="h-6 w-6 mr-2 text-emerald-500" /> RANA WALK®
+          </div>
+          <p className="text-sm text-slate-400">
+            Bio-ingeniería desde el Life Sciences Hub de las Américas.
+            Name it, leap forward.
+          </p>
+          <div className="flex space-x-4 pt-2">
+            <Linkedin className="w-5 h-5 hover:text-white cursor-pointer" />
+            <Instagram className="w-5 h-5 hover:text-white cursor-pointer" />
+            <Globe className="w-5 h-5 hover:text-white cursor-pointer" />
+          </div>
+        </div>
 
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.8s ease-out forwards;
-        }
-        @keyframes slideInRight {
-          from { transform: translateX(100%); }
-          to { transform: translateX(0); }
-        }
-        .animate-slideInRight {
-          animation: slideInRight 0.3s ease-out forwards;
-        }
-        body {
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-        }
-      `}</style>
+        <div>
+          <h4 className="text-white font-semibold mb-4">Plataformas</h4>
+          <ul className="space-y-2 text-sm">
+            <li onClick={() => { handleNav('systems'); setSelectedSystem(systemsData[0]); }} className="hover:text-emerald-400 cursor-pointer">GOLIATH® (Alta Carga)</li>
+            <li onClick={() => { handleNav('systems'); setSelectedSystem(systemsData[1]); }} className="hover:text-emerald-400 cursor-pointer">VELOX (Perfil Bajo)</li>
+            <li onClick={() => { handleNav('systems'); setSelectedSystem(systemsData[2]); }} className="hover:text-emerald-400 cursor-pointer">ORBIS (Equilibrio)</li>
+            <li onClick={() => { handleNav('systems'); setSelectedSystem(systemsData[3]); }} className="hover:text-emerald-400 cursor-pointer">LEOPARD (Adaptable)</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-white font-semibold mb-4">Ingeniería</h4>
+          <ul className="space-y-2 text-sm">
+            <li onClick={() => handleNav('technology')} className="hover:text-emerald-400 cursor-pointer">LeapCore™ (Estructura)</li>
+            <li onClick={() => handleNav('technology')} className="hover:text-emerald-400 cursor-pointer">ThinBoom™ (Energía)</li>
+            <li onClick={() => handleNav('technology')} className="hover:text-emerald-400 cursor-pointer">NanoSpread™ (Clima)</li>
+            <li onClick={() => handleNav('technology')} className="hover:text-emerald-400 cursor-pointer">PORON® XRD® (Impacto)</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-white font-semibold mb-4">Contacto & B2B</h4>
+          <ul className="space-y-2 text-sm">
+            <li className="flex items-center"><Mail className="w-4 h-4 mr-2" /> leap@ranawalk.com</li>
+            <li className="flex items-center"><MapPin className="w-4 h-4 mr-2" /> San Antonio, Heredia, CR</li>
+            <li onClick={() => handleNav('distributors')} className="text-emerald-400 font-medium cursor-pointer mt-4 block">→ Portal Distribuidores</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-slate-800 text-xs text-center text-slate-500">
+        <p>© 2026 Rana Walk®. Todos los derechos reservados.</p>
+        <div className="mt-2 space-x-4">
+          <span className="hover:text-slate-300 cursor-pointer">Privacidad</span>
+          <span className="hover:text-slate-300 cursor-pointer">Términos</span>
+          <span className="hover:text-slate-300 cursor-pointer">Patentes</span>
+        </div>
+      </div>
+    </footer>
+  );
+
+  // --- VISTAS ---
+
+  const HomeView = () => (
+    <div className="animate-fade-in">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden bg-slate-50 pt-16 pb-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <span className="inline-block py-1 px-3 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold tracking-wide mb-6">
+            LIFE SCIENCES HUB · COSTA RICA
+          </span>
+          <h1 className="text-5xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
+            Sistemas de Bio-mimetismo <br />
+            <span className="text-emerald-600">Diseñados para Dominar</span>
+          </h1>
+          <p className="mt-4 max-w-2xl mx-auto text-xl text-slate-600">
+            Rana Walk® desarrolla soluciones inspiradas en la eficiencia de la naturaleza.
+            Dominamos el impacto y la carga en jornadas exigentes.
+            <br /><span className="font-semibold text-slate-800">Name it, leap forward.</span>
+          </p>
+          <div className="mt-10 flex justify-center gap-4">
+            <button onClick={() => handleNav('systems')} className="px-8 py-4 bg-slate-900 text-white font-bold rounded-lg shadow-lg hover:bg-slate-800 transition-transform transform hover:-translate-y-1 flex items-center">
+              Explorar Sistemas <ArrowRight className="ml-2 w-5 h-5" />
+            </button>
+            <button onClick={() => handleNav('ai')} className="px-8 py-4 bg-white text-slate-900 border border-slate-200 font-bold rounded-lg shadow-sm hover:bg-slate-50 transition-colors flex items-center">
+              <Sparkles className="ml-2 w-5 h-5 text-emerald-600 mr-2" /> ¿Cuál es mi sistema?
+            </button>
+          </div>
+        </div>
+
+        {/* Abstract shapes background */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-0 opacity-30">
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-emerald-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
+          <div className="absolute top-0 -right-4 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
+        </div>
+      </div>
+
+      {/* Value Proposition */}
+      <div className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Bio-mimetismo aplicado a la base de tu bienestar</h2>
+            <p className="max-w-3xl mx-auto text-lg text-slate-600">
+              Nacemos donde la precisión de la bio-ingeniería converge con la mayor densidad biológica del planeta.
+              Mientras las plantillas genéricas colapsan, <span className="font-semibold text-emerald-700">Rana Walk® emula mecanismos de supervivencia.</span>
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-12 text-center">
+            <div className="p-6 rounded-2xl bg-slate-50 hover:shadow-md transition-shadow">
+              <div className="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
+                <Layers className="w-8 h-8 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">Ecosistema Interconectado</h3>
+              <p className="text-slate-600">No diseñamos capas aisladas. Creamos arquitecturas que trabajan como un sistema unificado de soporte.</p>
+            </div>
+            <div className="p-6 rounded-2xl bg-slate-50 hover:shadow-md transition-shadow">
+              <div className="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
+                <Activity className="w-8 h-8 text-emerald-600" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">Resiliencia Estructural</h3>
+              <p className="text-slate-600">Soporte estable que no cede ante la gravedad, diseñado para durar en el mundo real.</p>
+            </div>
+            <div className="p-6 rounded-2xl bg-slate-50 hover:shadow-md transition-shadow">
+              <div className="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
+                <ShieldCheck className="w-8 h-8 text-slate-600" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">Protección Reactiva</h3>
+              <p className="text-slate-600">Tecnologías que se activan ante el impacto, protegiendo tus articulaciones al instante.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Systems Preview */}
+      <div className="py-20 bg-slate-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-end mb-12">
+            <div>
+              <h2 className="text-3xl font-bold mb-2">Cuatro Ecosistemas de Movimiento</h2>
+              <p className="text-slate-400">Organizados por impacto, carga y espacio interno.</p>
+            </div>
+            <button onClick={() => handleNav('systems')} className="hidden md:flex text-emerald-400 font-bold items-center hover:text-emerald-300">
+              Ver todos <ArrowRight className="ml-2 w-5 h-5" />
+            </button>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-6">
+            {systemsData.map((sys) => (
+              <div
+                key={sys.id}
+                onClick={() => { handleNav('systems'); setSelectedSystem(sys); }}
+                className="group cursor-pointer bg-slate-800 rounded-xl overflow-hidden hover:ring-2 hover:ring-emerald-500 transition-all"
+              >
+                <div className={`h-2 w-full ${sys.color}`}></div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2">{sys.name}</h3>
+                  <p className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">{sys.tagline}</p>
+                  <p className="text-sm text-slate-300 mb-6 line-clamp-3">{sys.shortDesc}</p>
+                  <span className="text-xs font-bold text-emerald-400 flex items-center group-hover:translate-x-1 transition-transform">
+                    Explorar <ChevronRight className="w-4 h-4 ml-1" />
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
-}
+
+  const SystemsView = () => (
+    <div className="pt-12 pb-24 bg-slate-50 min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {!selectedSystem ? (
+          <>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-slate-900 mb-4">Elige tu Sistema de Biomimetismo</h2>
+              <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+                No vendemos plantillas genéricas. Ofrecemos arquitecturas biomecánicas especializadas.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {systemsData.map((sys) => (
+                <div
+                  key={sys.id}
+                  onClick={() => setSelectedSystem(sys)}
+                  className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all overflow-hidden cursor-pointer group border border-slate-100"
+                >
+                  <div className="relative h-64 overflow-hidden">
+                    <div className={`absolute inset-0 ${sys.color} opacity-90 mix-blend-multiply`}></div>
+                    <img src={sys.image} alt={sys.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                    <div className="absolute bottom-6 left-6 text-white">
+                      <p className="text-xs font-bold tracking-widest uppercase mb-1 opacity-80">{sys.ref}</p>
+                      <h3 className="text-3xl font-bold">{sys.name}</h3>
+                    </div>
+                  </div>
+                  <div className="p-8">
+                    <p className="text-lg text-slate-700 font-medium mb-4">{sys.tagline}</p>
+                    <p className="text-slate-500 mb-6">{sys.shortDesc}</p>
+                    <div className="flex items-center space-x-2 mb-6">
+                      {sys.technologies.map(techId => {
+                        const tech = techData.find(t => t.id === techId);
+                        return tech ? (
+                          <div key={techId} className="bg-slate-100 p-1.5 rounded-md text-slate-600" title={tech.name}>
+                            {React.cloneElement(tech.icon, { className: "w-4 h-4" })}
+                          </div>
+                        ) : null;
+                      })}
+                    </div>
+                    <span className={`inline-flex items-center font-bold ${sys.textAccent}`}>
+                      Ver especificaciones completas <ArrowRight className="ml-2 w-5 h-5" />
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className="animate-fade-in">
+            <button
+              onClick={() => setSelectedSystem(null)}
+              className="mb-8 flex items-center text-slate-500 hover:text-slate-800 transition-colors font-medium"
+            >
+              <ArrowLeft className="w-5 h-5 mr-2" /> Volver a Sistemas
+            </button>
+
+            {/* System Detail Hero */}
+            <div className="bg-white rounded-3xl shadow-xl overflow-hidden mb-12">
+              <div className="grid md:grid-cols-2">
+                <div className={`relative min-h-[400px] ${selectedSystem.color} p-12 flex flex-col justify-center text-white`}>
+                  <span className="inline-block py-1 px-3 rounded-full bg-white/20 text-white text-xs font-bold tracking-wide mb-6 w-max backdrop-blur-sm">
+                    {selectedSystem.ref}
+                  </span>
+                  <h1 className="text-5xl font-extrabold mb-4">{selectedSystem.name}</h1>
+                  <p className="text-2xl font-light opacity-90 mb-8">{selectedSystem.tagline}</p>
+
+                  <div className="space-y-4">
+                    <div className="flex items-start">
+                      <div className="bg-white/20 p-2 rounded-lg mr-4 backdrop-blur-sm">
+                        <Layers className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold uppercase opacity-70">Perfil Bio-mimético</p>
+                        <p className="text-sm font-medium leading-snug">{selectedSystem.bioMimicry}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-12 flex flex-col justify-center bg-white">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-6">Ingeniería del Sistema</h3>
+                  <p className="text-slate-600 mb-8 text-lg leading-relaxed">{selectedSystem.fullDescription}</p>
+
+                  <div className="grid grid-cols-2 gap-6 mb-8">
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                      <h4 className="font-bold text-slate-900 mb-2 flex items-center">
+                        <MapPin className="w-4 h-4 mr-2 text-slate-400" /> Escenario
+                      </h4>
+                      <p className="text-sm text-slate-600">{selectedSystem.scenario}</p>
+                    </div>
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                      <h4 className="font-bold text-slate-900 mb-2 flex items-center">
+                        <Activity className="w-4 h-4 mr-2 text-slate-400" /> Sensación
+                      </h4>
+                      <p className="text-sm text-slate-600">{selectedSystem.sensation}</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-slate-900 text-slate-300 p-6 rounded-xl">
+                    <div className="flex items-center justify-between mb-4 border-b border-slate-700 pb-2">
+                      <span className="font-bold text-white flex items-center"><Cpu className="w-4 h-4 mr-2" /> AI-READY SUMMARY</span>
+                    </div>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between"><span>Impacto:</span> <span className="text-white font-medium">{selectedSystem.aiReadySummary.impact}</span></div>
+                      <div className="flex justify-between"><span>Carga:</span> <span className="text-white font-medium">{selectedSystem.aiReadySummary.load}</span></div>
+                      <div className="flex justify-between"><span>Espacio:</span> <span className="text-white font-medium">{selectedSystem.aiReadySummary.space}</span></div>
+                      <div className="flex justify-between"><span>Tech Clave:</span> <span className="text-emerald-400 font-medium">{selectedSystem.aiReadySummary.tech}</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Tech Specs */}
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              {selectedSystem.techSpecs.map((spec, idx) => (
+                <div key={idx} className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-emerald-500">
+                  <h4 className="font-bold text-slate-900 text-lg mb-2">{spec.name}</h4>
+                  <p className="text-slate-600">{spec.role}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Profile & Ideal For */}
+            <div className="bg-slate-100 rounded-3xl p-8 md:p-12">
+              <div className="grid md:grid-cols-2 gap-12">
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-4">Perfil de Usuario</h3>
+                  <p className="text-slate-700 mb-6">{selectedSystem.userProfile}</p>
+                  <h3 className="text-xl font-bold text-slate-900 mb-4">Calzado Recomendado</h3>
+                  <p className="text-slate-700">{selectedSystem.bestFootwear}</p>
+                </div>
+                <div className="bg-white p-8 rounded-2xl shadow-sm">
+                  <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center">
+                    <Check className="w-6 h-6 text-emerald-500 mr-2" /> ¿Es para ti?
+                  </h3>
+                  <p className="text-lg text-slate-700 italic">"{selectedSystem.idealIf}"</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  const TechnologyView = () => (
+    <div className="animate-fade-in bg-white pt-16 pb-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-20">
+          <span className="text-emerald-600 font-bold tracking-wider uppercase text-sm">Ciencia de Materiales</span>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mt-2 mb-6">Ingeniería Pura Inspirada en la Vida</h1>
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+            Para Rana Walk®, la naturaleza es el laboratorio de I+D más avanzado. No diseñamos accesorios;
+            desarrollamos plataformas que emulan soluciones biológicas probadas por millones de años.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-12 mb-24">
+          {techData.map((tech) => (
+            <div key={tech.id} className="flex gap-6 p-6 rounded-2xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100">
+              <div className="flex-shrink-0 mt-1">
+                <div className="bg-slate-100 w-16 h-16 rounded-full flex items-center justify-center">
+                  {tech.icon}
+                </div>
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-slate-900">{tech.name}</h3>
+                <p className="text-sm font-bold text-emerald-600 uppercase tracking-wide mb-3">{tech.claim}</p>
+                <p className="text-slate-600 leading-relaxed">{tech.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Pillars of Science Section */}
+        <div className="bg-slate-900 text-white rounded-3xl p-8 md:p-16 overflow-hidden relative">
+          <div className="relative z-10">
+            <h2 className="text-3xl font-bold mb-12 text-center">Los Pilares de Nuestra Ciencia</h2>
+
+            <div className="space-y-12">
+              <div className="md:flex gap-8 items-start border-b border-slate-700 pb-12">
+                <div className="md:w-1/3 mb-4 md:mb-0">
+                  <h3 className="text-xl font-bold text-emerald-400">Resiliencia Estructural</h3>
+                  <p className="text-sm text-slate-400">vs. Suavidad Efímera</p>
+                </div>
+                <div className="md:w-2/3">
+                  <p className="text-slate-300 mb-4">Muchas marcas usan espumas que colapsan en días. Nuestra prioridad es la integridad mecánica.</p>
+                  <p className="text-sm text-slate-400 bg-slate-800 p-4 rounded-lg border-l-2 border-emerald-500">
+                    <span className="font-bold text-white">Dato Técnico:</span> Utilizamos LeapCore™, un chasis que mantiene su altura tras 12 horas de carga continua, emulando la consistencia ósea.
+                  </p>
+                </div>
+              </div>
+
+              <div className="md:flex gap-8 items-start border-b border-slate-700 pb-12">
+                <div className="md:w-1/3 mb-4 md:mb-0">
+                  <h3 className="text-xl font-bold text-emerald-400">Protección Reactiva</h3>
+                  <p className="text-sm text-slate-400">No Pasiva</p>
+                </div>
+                <div className="md:w-2/3">
+                  <p className="text-slate-300 mb-4">El impacto es dinámico. Integramos PORON® XRD® que se endurece instantáneamente.</p>
+                  <p className="text-sm text-slate-400 bg-slate-800 p-4 rounded-lg border-l-2 border-emerald-500">
+                    <span className="font-bold text-white">Enfoque Bio-mimético:</span> Emulamos los cojinetes digitales de la rana: flexibles en movimiento, escudos absolutos ante presión.
+                  </p>
+                </div>
+              </div>
+
+              <div className="md:flex gap-8 items-start">
+                <div className="md:w-1/3 mb-4 md:mb-0">
+                  <h3 className="text-xl font-bold text-emerald-400">Homeostasis Térmica</h3>
+                  <p className="text-sm text-slate-400">Gestión de Clima</p>
+                </div>
+                <div className="md:w-2/3">
+                  <p className="text-slate-300 mb-4">Gestionamos el sudor, no lo bloqueamos. NanoSpread™ actúa como un epitelio técnico.</p>
+                  <p className="text-sm text-slate-400 bg-slate-800 p-4 rounded-lg border-l-2 border-emerald-500">
+                    <span className="font-bold text-white">Ingeniería:</span> Membrana Micro-Capilar que dispersa la humedad para evaporación acelerada, manteniendo el pie fresco.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const DistributorsView = () => (
+    <div className="animate-fade-in bg-slate-50 pt-16 pb-24">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-16">
+        <h1 className="text-4xl font-bold text-slate-900 mb-6">Partnership Rana Walk®</h1>
+        <p className="text-xl text-slate-600">
+          Escala tu negocio con el estándar de bio-ingeniería en bienestar podal.
+          Buscamos socios estratégicos para distribución B2B y Retail Especializado.
+        </p>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-3 gap-8 mb-16">
+        <div className="bg-white p-8 rounded-xl shadow-sm border-t-4 border-emerald-500">
+          <Handshake className="w-10 h-10 text-emerald-600 mb-4" />
+          <h3 className="text-xl font-bold text-slate-900 mb-3">Portafolio Diferenciado</h3>
+          <p className="text-slate-600 text-sm">Organizamos la oferta por sistemas (GOLIATH, VELOX...), facilitando la segmentación del mercado y evitando la commoditización.</p>
+        </div>
+        <div className="bg-white p-8 rounded-xl shadow-sm border-t-4 border-blue-500">
+          <Award className="w-10 h-10 text-blue-600 mb-4" />
+          <h3 className="text-xl font-bold text-slate-900 mb-3">Formación Técnica</h3>
+          <p className="text-slate-600 text-sm">Capacitamos a tu equipo con la ciencia del Life Sciences Hub. Vende con argumentos de ingeniería defendibles, no solo por precio.</p>
+        </div>
+        <div className="bg-white p-8 rounded-xl shadow-sm border-t-4 border-slate-500">
+          <RefreshCw className="w-10 h-10 text-slate-600 mb-4" />
+          <h3 className="text-xl font-bold text-slate-900 mb-3">Soporte B2B</h3>
+          <p className="text-slate-600 text-sm">Kits de demostración táctil (ThinBoom™, PORON®), material educativo sobre fatiga y canal directo para licitaciones.</p>
+        </div>
+      </div>
+
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-8 md:p-12">
+        <h2 className="text-2xl font-bold text-slate-900 mb-8 text-center">Solicitar Dossier de Distribuidor</h2>
+        <form className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Empresa</label>
+              <input type="text" className="w-full rounded-md border-slate-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-3 bg-slate-50" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Contacto</label>
+              <input type="text" className="w-full rounded-md border-slate-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-3 bg-slate-50" />
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Email Corporativo</label>
+            <input type="email" className="w-full rounded-md border-slate-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-3 bg-slate-50" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Tipo de Distribución</label>
+            <select className="w-full rounded-md border-slate-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-3 bg-slate-50">
+              <option>Seguridad Industrial (EPP)</option>
+              <option>Retail Especializado / Ortopedia</option>
+              <option>Farmacias / Salud</option>
+              <option>Venta Corporativa</option>
+            </select>
+          </div>
+          <button className="w-full bg-slate-900 text-white font-bold py-4 rounded-lg hover:bg-slate-800 transition-colors">
+            Contactar Equipo Comercial
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+
+  const AIView = () => (
+    <div className="animate-fade-in bg-slate-900 min-h-screen pt-12 pb-24 text-white">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center justify-center p-3 bg-emerald-500/20 rounded-full mb-6">
+            <Sparkles className="w-8 h-8 text-emerald-400" />
+          </div>
+          <h1 className="text-4xl font-bold mb-4">Consultor Inteligente Rana Walk®</h1>
+          <p className="text-xl text-slate-300 max-w-2xl mx-auto">
+            Ingeniería personalizada impulsada por IA. Describe tu jornada, tu peso y tu calzado.
+            Nuestro algoritmo analizará las variables de carga e impacto.
+          </p>
+        </div>
+
+        <div className="bg-slate-800 rounded-2xl shadow-2xl overflow-hidden border border-slate-700">
+          <div className="p-6 md:p-8">
+            {/* Chat History / Response Area */}
+            <div className="mb-8 min-h-[200px] bg-slate-900/50 rounded-xl p-6 border border-slate-700/50">
+              {!geminiResponse && !isLoading && (
+                <div className="text-center text-slate-500 mt-8">
+                  <p className="mb-2">Prueba preguntando:</p>
+                  <p className="text-sm italic">"Trabajo 12 horas en una planta de acero y uso botas pesadas..."</p>
+                  <p className="text-sm italic mt-2">"Uso zapatos de vestir ajustados y camino mucho en la oficina..."</p>
+                </div>
+              )}
+
+              {isLoading && (
+                <div className="flex items-center justify-center h-full space-x-3 text-emerald-400">
+                  <RefreshCw className="w-6 h-6 animate-spin" />
+                  <span>Analizando variables biomecánicas...</span>
+                </div>
+              )}
+
+              {geminiResponse && (
+                <div className="prose prose-invert max-w-none">
+                  <div className="whitespace-pre-wrap leading-relaxed">{geminiResponse}</div>
+                </div>
+              )}
+            </div>
+
+            {/* Input Area */}
+            <form onSubmit={handleGeminiConsult} className="relative">
+              <input
+                type="text"
+                value={geminiQuery}
+                onChange={(e) => setGeminiQuery(e.target.value)}
+                placeholder="Describe tu trabajo, calzado y sensaciones..."
+                className="w-full bg-slate-900 text-white border border-slate-600 rounded-xl py-4 pl-6 pr-16 focus:ring-2 focus:ring-emerald-500 focus:border-transparent placeholder-slate-500"
+              />
+              <button
+                type="submit"
+                disabled={isLoading || !geminiQuery.trim()}
+                className="absolute right-2 top-2 bottom-2 bg-emerald-600 text-white p-2 rounded-lg hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <ArrowRight className="w-6 h-6" />
+              </button>
+            </form>
+            <p className="text-xs text-slate-500 mt-4 text-center">
+              Powered by Google Gemini™ • Recomendaciones orientativas basadas en datos del usuario.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-white font-sans text-slate-900 selection:bg-emerald-100 selection:text-emerald-900">
+      <Header />
+      <main>
+        {activeSection === 'home' && <HomeView />}
+        {activeSection === 'systems' && <SystemsView />}
+        {activeSection === 'technology' && <TechnologyView />}
+        {activeSection === 'distributors' && <DistributorsView />}
+        {activeSection === 'ai' && <AIView />}
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+export default App;
