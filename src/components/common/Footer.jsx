@@ -6,7 +6,7 @@ const Footer = ({ navigate }) => (
         <div className="container mx-auto px-6">
             <div className="grid lg:grid-cols-5 gap-16 mb-20">
                 <div className="col-span-1 lg:col-span-1">
-                    <img src="https://ranawalk.com/images/2025/02/06/image-2.png" alt="Rana Walk" className="h-14 w-auto mb-8 invert" />
+                    <img src="https://ranawalk.com/images/logos%20rana/Logo-Rana-Walk-negativo_vertical.png" alt="Rana Walk" className="h-20 w-auto mb-8" />
                     <p className="text-slate-500 text-sm leading-relaxed mb-6 font-medium">
                         Ingeniería de bio-mimetismo podal diseñada en el Life Sciences Hub de Costa Rica. Domina el impacto y la carga.
                     </p>
