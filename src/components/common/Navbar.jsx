@@ -26,9 +26,11 @@ const Navbar = ({ currentView, navigate, cartCount, onOpenCart }) => {
             <div className="container mx-auto px-6 h-full flex items-center justify-between">
                 <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('home')}>
                     <img
-                        src="https://ranawalk.com/images/logos%20rana/Logo-Rana-Walk-full-color_vertical.png"
+                        src={(currentView === 'home' || isScrolled)
+                            ? "https://ranawalk.com/images/logos%20rana/Logo-Rana-Walk-negativo_vertical.png"
+                            : "https://ranawalk.com/images/logos%20rana/Logo-Rana-Walk-full-color_vertical.png"}
                         alt="Rana Walk"
-                        className={`h-16 w-auto transition-all duration-300 ${(currentView === 'home' || isScrolled) ? 'brightness-0 invert' : ''}`}
+                        className="h-16 w-auto transition-all duration-300"
                     />
                 </div>
 
