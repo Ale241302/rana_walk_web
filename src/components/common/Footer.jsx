@@ -30,11 +30,12 @@ const Footer = ({ navigate }) => (
                 </div>
 
                 <div>
-                    <h4 className="font-black text-[#75CBB3] mb-8 uppercase text-[10px] tracking-[0.3em]">Navegación Técnica</h4>
+                    <h4 className="font-black text-[#75CBB3] mb-8 uppercase text-[10px] tracking-[0.3em]">Navegación</h4>
                     <ul className="space-y-4 text-sm font-bold text-slate-400">
-                        <li className="hover:text-white cursor-pointer transition-colors flex items-center gap-2" onClick={() => navigate('home')}>Inicio <ArrowRight size={12} className="opacity-0 group-hover:opacity-100" /></li>
+                        <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('home')}>Inicio</li>
+                        <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('about')}>Nosotros</li>
                         <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('systems')}>Sistemas</li>
-                        <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('tech')}>Ciencia & Tech</li>
+                        <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('contact')}>Contacto</li>
                         <li className="text-[#75CBB3] hover:brightness-125 cursor-pointer transition-all flex items-center gap-2" onClick={() => navigate('consultor')}>AI Consultant <Sparkles size={14} /></li>
                     </ul>
                     <div className="mt-8 pt-8 border-t border-white/5">

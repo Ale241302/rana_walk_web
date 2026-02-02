@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShoppingCart, X, Trash } from 'lucide-react';
 
-const CartSidebar = ({ isOpen, onClose, cartItems, onRemoveItem }) => {
+const CartSidebar = ({ isOpen, onClose, cartItems, onRemoveItem, onCheckout }) => {
     if (!isOpen) return null;
 
     const total = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
@@ -53,8 +53,8 @@ const CartSidebar = ({ isOpen, onClose, cartItems, onRemoveItem }) => {
                             <span className="text-slate-500 font-bold">Total</span>
                             <span className="text-3xl font-black text-[#013A57]">${total.toFixed(2)}</span>
                         </div>
-                        <button className="w-full py-4 bg-[#013A57] text-white rounded-xl font-black uppercase tracking-widest hover:bg-slate-800 transition-colors shadow-lg shadow-[#013A57]/20">
-                            Pagar Ahora
+                        <button onClick={onCheckout} className="w-full py-4 bg-[#013A57] text-white rounded-xl font-black uppercase tracking-widest hover:bg-slate-800 transition-colors shadow-lg shadow-[#013A57]/20">
+                            Finalizar Compra
                         </button>
                     </div>
                 )}

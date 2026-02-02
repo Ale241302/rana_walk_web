@@ -11,6 +11,8 @@ import CartSidebar from './components/common/CartSidebar';
 
 // --- VIEWS ---
 import HomeView from './views/HomeView';
+import AboutUsView from './views/AboutUsView';
+import ContactView from './views/ContactView';
 import SystemsCatalogView from './views/SystemsCatalogView';
 import SystemDetailView from './views/SystemDetailView';
 import TechCatalogView from './views/TechCatalogView';
@@ -19,12 +21,15 @@ import ConsultantPage from './views/ConsultantPage';
 import DistributorsView from './views/DistributorsView';
 import SupportView from './views/SupportView';
 import LegalView from './views/LegalView';
+import CheckoutView from './views/CheckoutView';
+import { LoginView, RegisterView, ProfileView } from './views/AuthViews';
 
 export default function App() {
   const [view, setView] = useState('home');
   const [activeId, setActiveId] = useState(null);
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [user, setUser] = useState(null); // Simulated user state
 
   // Gemini State
   const [query, setQuery] = useState('');
@@ -109,19 +114,32 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleLogin = () => {
+    setUser({ name: 'Felipe Oñate', email: 'felipe@example.com' });
+    navigate('profile');
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    navigate('home');
+  };
+
   return (
     <div className="min-h-screen bg-white font-sans selection:bg-[#75CBB3] selection:text-[#013A57]">
-      <Navbar currentView={view} navigate={navigate} cartCount={cart.length} onOpenCart={() => setIsCartOpen(true)} />
+      <Navbar currentView={view} navigate={navigate} cartCount={cart.length} onOpenCart={() => setIsCartOpen(true)} user={user} />
 
       <CartSidebar
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
         cartItems={cart}
         onRemoveItem={removeFromCart}
+        onCheckout={() => { setIsCartOpen(false); navigate('checkout'); }}
       />
 
       <main className={view !== 'home' ? 'pt-24 md:pt-32' : ''}>
         {view === 'home' && <HomeView navigate={navigate} />}
+        {view === 'about' && <AboutUsView />}
+        {view === 'contact' && <ContactView />}
         {view === 'consultor' && (
           <ConsultantPage
             query={query}
@@ -140,6 +158,10 @@ export default function App() {
         {view === 'distributors' && <DistributorsView />}
         {view === 'support' && <SupportView />}
         {view === 'legal' && <LegalView />}
+        {view === 'checkout' && <CheckoutView cartItems={cart} navigate={navigate} />}
+        {view === 'login' && <LoginView navigate={navigate} onLogin={handleLogin} />}
+        {view === 'register' && <RegisterView navigate={navigate} onRegister={handleLogin} />}
+        {view === 'profile' && <ProfileView user={user} onLogout={handleLogout} />}
       </main>
 
       <TrustBar />

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ShoppingCart, Sparkles } from 'lucide-react';
+import { Menu, X, ShoppingCart, Sparkles, User } from 'lucide-react';
 
-const Navbar = ({ currentView, navigate, cartCount, onOpenCart }) => {
+const Navbar = ({ currentView, navigate, cartCount, onOpenCart, user }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -15,10 +15,10 @@ const Navbar = ({ currentView, navigate, cartCount, onOpenCart }) => {
 
     const links = [
         { id: 'home', label: 'Inicio' },
+        { id: 'about', label: 'Nosotros' },
         { id: 'systems', label: 'Sistemas' },
-        { id: 'tech', label: 'Ciencia' },
         { id: 'distributors', label: 'B2B' },
-        { id: 'support', label: 'Soporte' }
+        { id: 'contact', label: 'Contacto' }
     ];
 
     return (
@@ -55,6 +55,9 @@ const Navbar = ({ currentView, navigate, cartCount, onOpenCart }) => {
                 </div>
 
                 <div className="flex items-center gap-6">
+                    <div className="relative group cursor-pointer" onClick={() => navigate(user ? 'profile' : 'login')}>
+                        <User className={`w-5 h-5 group-hover:text-[#75CBB3] transition-colors ${(currentView === 'home' || isScrolled) ? 'text-white' : 'text-[#013A57]'}`} />
+                    </div>
                     <div className="relative group cursor-pointer" onClick={onOpenCart}>
                         <ShoppingCart className={`w-5 h-5 group-hover:text-[#75CBB3] transition-colors ${(currentView === 'home' || isScrolled) ? 'text-white' : 'text-[#013A57]'}`} />
                         {cartCount > 0 && (
@@ -74,7 +77,10 @@ const Navbar = ({ currentView, navigate, cartCount, onOpenCart }) => {
                     {links.map(l => (
                         <button key={l.id} onClick={() => { navigate(l.id); setIsOpen(false); }} className="text-left font-black text-white text-2xl uppercase tracking-widest py-2 border-b border-white/5 pb-4">{l.label}</button>
                     ))}
-                    <button onClick={() => { navigate('consultor'); setIsOpen(false) }} className="text-left font-black text-[#75CBB3] text-2xl uppercase tracking-widest py-2 flex items-center gap-4">
+                    <button onClick={() => { navigate(user ? 'profile' : 'login'); setIsOpen(false) }} className="text-left font-black text-white text-2xl uppercase tracking-widest py-2 border-b border-white/5 pb-4 flex items-center gap-4">
+                        {user ? 'Mi Perfil' : 'Iniciar Sesión'} <User className="w-6 h-6" />
+                    </button>
+                    <button onClick={() => { navigate('consultor'); setIsOpen(false) }} className="text-left font-black text-[#75CBB3] text-2xl uppercase tracking-widest py-2 border-b border-white/5 pb-4 flex items-center gap-4">
                         Consultor IA <Sparkles className="w-6 h-6" />
                     </button>
                 </div>

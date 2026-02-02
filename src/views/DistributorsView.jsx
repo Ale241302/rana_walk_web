@@ -62,7 +62,31 @@ const DistributorsView = () => (
           </form>
         </div>
       </div>
+
+      {/* Anexos enlazados */}
+      <div className="mt-24 pt-24 border-t border-slate-100">
+        <h3 className="text-2xl font-black text-[#013A57] mb-12 uppercase tracking-tight text-center">Material Técnico descargable</h3>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { title: "Garantía de Satisfacción", file: "Garantia_Rana_Walk.pdf" },
+            { title: "Dossier Técnico B2B", file: "Dossier_Corporativo.pdf" },
+            { title: "Política de Privacidad", file: "Privacidad_Datos.pdf" },
+            { title: "Condiciones de Uso", file: "Terminos_Condiciones.pdf" }
+          ].map((doc, idx) => (
+            <div key={idx} className="bg-slate-50 p-6 rounded-2xl border border-slate-100 flex flex-col items-center text-center group hover:border-[#75CBB3] transition-all">
+              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm group-hover:bg-[#75CBB3] transition-colors">
+                <BookOpen size={20} className="text-[#013A57]" />
+              </div>
+              <h4 className="font-bold text-[#013A57] text-sm mb-4 uppercase tracking-tighter leading-tight">{doc.title}</h4>
+              <button className="text-[10px] font-black uppercase tracking-widest text-[#75CBB3] hover:underline cursor-pointer">
+                Descargar PDF
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </div>
 );
+
 export default DistributorsView;

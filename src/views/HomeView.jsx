@@ -38,7 +38,7 @@ const HomeView = ({ navigate }) => (
                         <SectionHeader sub="Bio-mimetismo aplicado a la base de tu bienestar" title="Nacemos donde la precisión de la bio-ingeniería converge" center={false} />
                         <div className="space-y-6 text-lg text-slate-600">
                             <p>
-                                Nacemos en el territorio con la mayor densidad biológica del planeta. Mientras que las plantillas genéricas ofrecen una suavidad inicial que colapsa rápidamente, perdiendo soporte y estabilidad tras pocas semanas de uso, Rana Walk® emula los mecanismos de supervivencia de la naturaleza.
+                                Nacemos en el territory con la mayor densidad biográfica del planeta. Mientras que las plantillas genéricas ofrecen una suavidad inicial que colapsa rápidamente, perdiendo soporte y estabilidad tras pocas semanas de uso, Rana Walk® emula los mecanismos de supervivencia de la naturaleza.
                             </p>
                             <div className="p-8 bg-slate-50 border-l-4 border-[#75CBB3] rounded-r-xl">
                                 <p className="font-bold text-[#013A57]">
@@ -129,6 +129,67 @@ const HomeView = ({ navigate }) => (
                 </div>
             </div>
         </section>
+
+        {/* Responsabilidad Corporativa */}
+        <section className="py-24 bg-white border-t border-slate-100">
+            <div className="container mx-auto px-6">
+                <div className="grid lg:grid-cols-2 gap-20 items-center">
+                    <div className="order-2 lg:order-1">
+                        <SectionHeader sub="COMPROMISO BIO-ÉTICO" title="Responsabilidad que emula el equilibrio" center={false} />
+                        <div className="space-y-6 text-slate-600">
+                            <p>En Rana Walk®, entendemos que la innovación no debe comprometer el entorno que la inspira. Nuestro compromiso con la sostenibilidad biológica guía cada decisión de manufactura.</p>
+                            <ul className="space-y-4">
+                                <li className="flex gap-4">
+                                    <div className="w-6 h-6 rounded-full bg-[#75CBB3]/20 flex items-center justify-center shrink-0 mt-1">
+                                        <div className="w-2 h-2 rounded-full bg-[#75CBB3]"></div>
+                                    </div>
+                                    <p className="text-sm"><strong>Materiales de Larga Duración:</strong> Reducimos el desperdicio creando sistemas que duran 3x más que las plantillas convencionales.</p>
+                                </li>
+                                <li className="flex gap-4">
+                                    <div className="w-6 h-6 rounded-full bg-[#75CBB3]/20 flex items-center justify-center shrink-0 mt-1">
+                                        <div className="w-2 h-2 rounded-full bg-[#75CBB3]"></div>
+                                    </div>
+                                    <p className="text-sm"><strong>Manufactura Local:</strong> Centralizamos la producción en Costa Rica para minimizar la huella de carbono logística.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="order-1 lg:order-2 bg-slate-900 rounded-[3rem] p-12 aspect-square flex items-center justify-center relative overflow-hidden">
+                        <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1518173946687-a4c8a98039f5?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center"></div>
+                        <div className="relative z-10 text-center">
+                            <p className="text-[#75CBB3] text-5xl font-black mb-4">100%</p>
+                            <p className="text-white font-black uppercase tracking-widest text-xs">Compromiso con la<br />Regeneración Biológica</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {/* Testimonios */}
+        <section className="py-24 bg-slate-50 overflow-hidden">
+            <div className="container mx-auto px-6">
+                <SectionHeader sub="VOCES DE LA INDUSTRIA" title="Validación en el Terreno Real" />
+                <div className="grid md:grid-cols-3 gap-8">
+                    {[
+                        { name: "Carlos M.", role: "Ingeniero Industrial", text: "Goliath cambió mi jornada. Paso 12 horas en concreto y el soporte al final del día sigue siendo el mismo que al inicio." },
+                        { name: "Elena R.", role: "Especialista en Salud", text: "La arquitectura ThinBoom en los Velox es lo más cercano que he visto a la respuesta elástica natural del pie." },
+                        { name: "Juan P.", role: "Operador Logístico", text: "He probado todo tipo de gel. Nada se compara con la estabilidad de LeapCore. Mis rodillas lo agradecen." }
+                    ].map((t, idx) => (
+                        <div key={idx} className="bg-white p-10 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-all">
+                            <div className="flex gap-1 mb-6">
+                                {[...Array(5)].map((_, i) => <div key={i} className="w-4 h-4 text-[#75CBB3] font-black">★</div>)}
+                            </div>
+                            <p className="text-slate-600 italic mb-8">"{t.text}"</p>
+                            <div>
+                                <p className="font-black text-[#013A57] uppercase text-xs tracking-widest">{t.name}</p>
+                                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">{t.role}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
     </div>
 );
+
 export default HomeView;
