@@ -1,7 +1,9 @@
-import React from 'react';
 import {
     Activity, Zap, Droplets, Shield, ShieldCheck, FileText
 } from 'lucide-react';
+import {
+    LeapCoreIcon, ThinBoomIcon, NanoSpreadIcon, ShockIcon, PoronIcon, ArchSupportIcon
+} from '../components/icons/TechIcons';
 
 export const systemsData = [
     {
@@ -145,7 +147,7 @@ export const techData = [
         id: 'leapcore',
         name: 'LeapCore™',
         claim: 'La Columna Vertebral del Sistema Biomecánico',
-        icon: <Activity />,
+        icon: <LeapCoreIcon />,
         description: 'Chasis de poliuretano de ingeniería (PU) diseñado para soportar cargas prolongadas y mantener la alineación óptima durante jornadas de +12 horas.',
         bioFunction: 'Emula la consistencia estructural ósea y la resiliencia del tejido conjuntivo.',
         engineering: 'Chasis de Poliuretano de ingeniería (PU) de alta resiliencia.',
@@ -160,7 +162,7 @@ export const techData = [
         id: 'thinboom',
         name: 'ThinBoom™',
         claim: 'Dinamismo de Alto Performance en Perfil Mínimo',
-        icon: <Zap />,
+        icon: <ThinBoomIcon />,
         description: 'Matriz de Elastómero Termoplástico de Células Expandidas (ETCE) mediante expansión supercrítica para un retorno de energía explosivo.',
         bioFunction: 'Emula la eficiencia elástica de los tendones.',
         engineering: 'Elastómero Termoplástico de Células Expandidas (ETCE) de perfil ultradelgado.',
@@ -175,7 +177,7 @@ export const techData = [
         id: 'nanospread',
         name: 'NanoSpread™',
         claim: 'Capilaridad Reptiliana y Gestión Térmica',
-        icon: <Droplets />,
+        icon: <NanoSpreadIcon />,
         description: 'Membrana Micro-Capilar de Transferencia Termo-Higroscópica que emula la capilaridad reptiliana para una dispersión acelerada de la humedad.',
         bioFunction: 'Emula los micro-canales epiteliales de reptiles.',
         engineering: 'Membrana Micro-Capilar de Gestión de Humedad.',
@@ -190,7 +192,7 @@ export const techData = [
         id: 'shocksphere',
         name: 'ShockSphere™',
         claim: 'Absorción Inteligente en Puntos de Presión Crítica',
-        icon: <Shield />,
+        icon: <ShockIcon />,
         description: 'Poliuretano de Disipación de Energía y Geometría Esférica que disipa impactos de forma focalizada sin comprometer la estabilidad.',
         bioFunction: 'Emula las almohadillas de estabilidad felina.',
         engineering: 'Poliuretano Micro-Celular de Baja Histéresis.',
@@ -205,7 +207,7 @@ export const techData = [
         id: 'poron',
         name: 'PORON® XRD®',
         claim: 'Escudo de Reacción ante Impactos Críticos',
-        icon: <ShieldCheck />,
+        icon: <PoronIcon />,
         description: 'Tecnología patentada (Rogers Corp, USA) que permanece flexible en el movimiento pero se endurece instantáneamente al impacto.',
         bioFunction: 'Emula los cojinetes de absorción reactiva.',
         engineering: 'Uretano de Celda Abierta para Mitigación de Impactos Extremos.',
@@ -220,7 +222,7 @@ export const techData = [
         id: 'archsupport',
         name: 'Arch Support',
         claim: 'El Exoesqueleto de Soporte Anti-Colapso',
-        icon: <FileText />,
+        icon: <ArchSupportIcon />,
         description: 'Exoesqueleto reforzado de vinilo de alta tenacidad que previene el colapso del arco medial ante la fatiga extrema de jornadas intensivas.',
         bioFunction: 'Emula el soporte estructural de un exoesqueleto biomecánico.',
         engineering: 'Polímero de Vinilo de Alta Tenacidad reforzado.',

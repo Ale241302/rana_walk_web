@@ -10,6 +10,13 @@
   }
 }
 
+/* Technology Icons Styling */
+.tech-icon {
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
 @layer utilities {
   .animate-fadeIn {
     animation: fadeIn 0.5s ease-out;

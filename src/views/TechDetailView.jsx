@@ -14,7 +14,7 @@ const TechDetailView = ({ techId, navigate }) => {
                 </button>
 
                 <div className="flex items-center gap-8 mb-16">
-                    <div className="w-24 h-24 bg-slate-900 rounded-[2rem] flex items-center justify-center text-[#75CBB3] shadow-2xl">
+                    <div className="w-24 h-24 bg-slate-900 rounded-[2rem] flex items-center justify-center text-[#75CBB3] shadow-2xl group">
                         {React.cloneElement(tech.icon, { size: 40 })}
                     </div>
                     <div>
