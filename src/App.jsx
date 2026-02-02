@@ -8,6 +8,7 @@ import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import TrustBar from './components/common/TrustBar';
 import CartSidebar from './components/common/CartSidebar';
+import AuthModal from './components/common/AuthModal';
 
 // --- VIEWS ---
 import HomeView from './views/HomeView';
@@ -22,7 +23,7 @@ import DistributorsView from './views/DistributorsView';
 import SupportView from './views/SupportView';
 import LegalView from './views/LegalView';
 import CheckoutView from './views/CheckoutView';
-import { LoginView, RegisterView, ProfileView } from './views/AuthViews';
+import { ProfileView } from './views/AuthViews';
 
 export default function App() {
   const [view, setView] = useState('home');
@@ -30,6 +31,8 @@ export default function App() {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [user, setUser] = useState(null); // Simulated user state
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState('login');
 
   // Gemini State
   const [query, setQuery] = useState('');
@@ -109,6 +112,11 @@ export default function App() {
   };
 
   const navigate = (newView, id = null) => {
+    if (newView === 'login' || newView === 'register') {
+      setAuthMode(newView);
+      setIsAuthModalOpen(true);
+      return;
+    }
     setView(newView);
     setActiveId(id);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -159,10 +167,15 @@ export default function App() {
         {view === 'support' && <SupportView />}
         {view === 'legal' && <LegalView />}
         {view === 'checkout' && <CheckoutView cartItems={cart} navigate={navigate} />}
-        {view === 'login' && <LoginView navigate={navigate} onLogin={handleLogin} />}
-        {view === 'register' && <RegisterView navigate={navigate} onRegister={handleLogin} />}
         {view === 'profile' && <ProfileView user={user} onLogout={handleLogout} />}
       </main>
+
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onLogin={handleLogin}
+        initialMode={authMode}
+      />
 
       <TrustBar />
       <Footer navigate={navigate} />
