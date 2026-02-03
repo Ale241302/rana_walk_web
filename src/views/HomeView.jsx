@@ -78,21 +78,39 @@ const HomeView = ({ navigate }) => (
                 </div>
             </div>
         </section>
-
         {/* Sección · Tecnologías (preview) */}
         <section className="py-24 bg-slate-900 text-white">
             <div className="container mx-auto px-6">
                 <SectionHeader sub="Tecnologías que emulan una función real" title="El Ecosistema Tecnológico" dark />
-                <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-6">
                     {techData.map(t => (
                         <div
                             key={t.id}
                             onClick={() => navigate('techDetail', t.id)}
-                            className="bg-white/5 border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition-all cursor-pointer group flex flex-col items-center text-center"
+                            className="relative bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-3xl hover:bg-white/10 hover:-translate-y-3 hover:border-[#75CBB3]/50 hover:shadow-[0_20px_60px_rgba(117,203,179,0.25)] transition-all duration-500 cursor-pointer group flex flex-col items-center text-center overflow-hidden"
                         >
-                            <div className="text-[#75CBB3] mb-4 group-hover:scale-110 transition-transform">{t.icon}</div>
-                            <h4 className="font-black text-sm mb-2">{t.name}</h4>
-                            <p className="text-[10px] text-slate-400 leading-tight uppercase tracking-widest">{t.bioFunction}</p>
+                            {/* Efecto de brillo superior */}
+                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#75CBB3]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                            {/* Glow effect detrás del icono */}
+                            <div className="absolute top-8 w-24 h-24 bg-[#75CBB3]/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                            {/* Icono con más tamaño */}
+                            <div className="relative text-[#75CBB3] mb-6 group-hover:scale-110 transition-transform duration-500">
+                                {t.icon}
+                            </div>
+                            {/* Título con mejor espaciado */}
+                            <h4 className="font-black text-base mb-3 group-hover:text-[#75CBB3] transition-colors duration-300">
+                                {t.name}
+                            </h4>
+
+                            {/* Descripción mejorada */}
+                            <p className="text-[9px] text-slate-400 leading-relaxed uppercase tracking-[0.15em] font-semibold group-hover:text-slate-300 transition-colors duration-300">
+                                {t.bioFunction}
+                            </p>
+
+                            {/* Badge opcional "Premium" o "Patented" */}
+                            <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-[#75CBB3] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </div>
                     ))}
                 </div>
@@ -103,6 +121,7 @@ const HomeView = ({ navigate }) => (
                 </div>
             </div>
         </section>
+
 
         {/* El Laboratorio del Mundo Real */}
         <section className="py-24 bg-slate-50">
