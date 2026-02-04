@@ -1,8 +1,22 @@
+<IfModule mod_mime.c>
+  AddType text/css .css
+  AddType application/javascript .js
+  AddType text/javascript .js
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
-  RewriteRule ^index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+  
+  # Si el archivo o directorio existe, servirlo directamente
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # No redirigir recursos faltantes (js, css, imágenes) a index.html
+  # Esto asegura que devuelvan 404 en lugar de contenido HTML
+  RewriteRule \.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$ - [L,NC]
+  
+  # Para todo lo demás, redirigir a index.html (SPA routing)
+  RewriteRule ^ index.html [L]
 </IfModule>

@@ -25,12 +25,21 @@ import LegalView from './views/LegalView';
 import CheckoutView from './views/CheckoutView';
 import { ProfileView } from './views/AuthViews';
 
+// --- ADMIN VIEWS ---
+import { MyClientsView, MyDistributorsView, MyProductsView, AdminOrdersView } from './views/AdminViews';
+
+// --- DISTRIBUTOR VIEWS ---
+import { DistProductsView, MySubDistributorsView, MyInfoView, DistOrdersView } from './views/DistributorViews';
+
+// --- CLIENT VIEWS ---
+import { MyOrdersView, ClientProfileView } from './views/ClientViews';
+
 export default function App() {
   const [view, setView] = useState('home');
   const [activeId, setActiveId] = useState(null);
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [user, setUser] = useState(null); // Simulated user state
+  const [user, setUser] = useState(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState('login');
 
@@ -122,9 +131,15 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleLogin = () => {
-    setUser({ name: 'Felipe Oñate', email: 'felipe@example.com' });
-    navigate('profile');
+  const handleLogin = (selectedUser) => {
+    setUser(selectedUser);
+    // Navigate to appropriate default view based on role
+    const defaultViews = {
+      admin: 'myClients',
+      distributor: 'distProducts',
+      client: 'myOrders'
+    };
+    navigate(defaultViews[selectedUser.role] || 'home');
   };
 
   const handleLogout = () => {
@@ -134,7 +149,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white font-sans selection:bg-[#75CBB3] selection:text-[#013A57]">
-      <Navbar currentView={view} navigate={navigate} cartCount={cart.length} onOpenCart={() => setIsCartOpen(true)} user={user} />
+      <Navbar currentView={view} navigate={navigate} cartCount={cart.length} onOpenCart={() => setIsCartOpen(true)} user={user} onLogout={handleLogout} />
 
       <CartSidebar
         isOpen={isCartOpen}
@@ -145,6 +160,7 @@ export default function App() {
       />
 
       <main className={view !== 'home' ? 'pt-24 md:pt-32' : ''}>
+        {/* Public Views */}
         {view === 'home' && <HomeView navigate={navigate} />}
         {view === 'about' && <AboutUsView />}
         {view === 'contact' && <ContactView />}
@@ -168,6 +184,22 @@ export default function App() {
         {view === 'legal' && <LegalView />}
         {view === 'checkout' && <CheckoutView cartItems={cart} navigate={navigate} />}
         {view === 'profile' && <ProfileView user={user} onLogout={handleLogout} />}
+
+        {/* Admin Views */}
+        {view === 'myClients' && <MyClientsView navigate={navigate} />}
+        {view === 'myDistributors' && <MyDistributorsView navigate={navigate} />}
+        {view === 'myProducts' && <MyProductsView navigate={navigate} />}
+        {view === 'adminOrders' && <AdminOrdersView navigate={navigate} />}
+
+        {/* Distributor Views */}
+        {view === 'distProducts' && <DistProductsView navigate={navigate} />}
+        {view === 'mySubDistributors' && <MySubDistributorsView navigate={navigate} />}
+        {view === 'myInfo' && <MyInfoView user={user} />}
+        {view === 'distOrders' && <DistOrdersView navigate={navigate} />}
+
+        {/* Client Views */}
+        {view === 'myOrders' && <MyOrdersView navigate={navigate} />}
+        {view === 'clientProfile' && <ClientProfileView user={user} onLogout={handleLogout} />}
       </main>
 
       <AuthModal
