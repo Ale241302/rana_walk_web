@@ -1,5 +1,5 @@
 import React from 'react';
-import { Package, Users, User, ShoppingBag, MapPin, Phone, Mail, Calendar, Building, Award, TrendingUp, Edit, Eye, Globe, Share2, Instagram, Facebook, Linkedin, Store, Clock } from 'lucide-react';
+import { Package, Users, User, ShoppingBag, MapPin, Phone, Mail, Calendar, Building, Award, TrendingUp, Edit, Eye, Globe, Share2, Instagram, Facebook, Linkedin, Store, Clock, Navigation } from 'lucide-react';
 
 // Datos quemados para Distribuidor
 const distProductsData = [
@@ -16,10 +16,10 @@ const subDistributorsData = [
 ];
 
 const distOrdersData = [
-    { id: 'ORD-D001', client: 'Tienda Deportiva XYZ', date: '2024-01-25', total: 255000, items: 3, status: 'completed' },
-    { id: 'ORD-D002', client: 'Calzado Premium', date: '2024-01-24', total: 170000, items: 2, status: 'shipped' },
-    { id: 'ORD-D003', client: 'SportZone', date: '2024-01-23', total: 340000, items: 4, status: 'processing' },
-    { id: 'ORD-D004', client: 'Almacén del Pie', date: '2024-01-22', total: 85000, items: 1, status: 'pending' },
+    { id: 'ORD-D001', client: 'Tienda Deportiva XYZ', date: '2024-01-25', total: 255000, items: 3, status: 'completed', tracking: 'RW12350CR', subDistributor: 'Ventas Norte' },
+    { id: 'ORD-D002', client: 'Calzado Premium', date: '2024-01-24', total: 170000, items: 2, status: 'shipped', tracking: 'RW12351CR', subDistributor: null },
+    { id: 'ORD-D003', client: 'SportZone', date: '2024-01-23', total: 340000, items: 4, status: 'processing', tracking: null, subDistributor: 'Comercial Pacífico' },
+    { id: 'ORD-D004', client: 'Almacén del Pie', date: '2024-01-22', total: 85000, items: 1, status: 'pending', tracking: null, subDistributor: null },
 ];
 
 const StatusBadge = ({ status }) => {
@@ -226,22 +226,33 @@ export const MyInfoView = ({ user }) => {
 };
 
 // Vista de Pedidos del Distribuidor
-export const DistOrdersView = () => (
-    <div className="py-12 animate-fadeIn">
-        <div className="container mx-auto px-6 max-w-7xl">
-            <div className="mb-10"><h1 className="text-3xl font-black text-[#013A57] uppercase tracking-tight flex items-center gap-3 mb-2"><ShoppingBag className="text-[#75CBB3]" /> Pedidos</h1><p className="text-slate-500">Gestión de pedidos recibidos</p></div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Total</p><p className="text-3xl font-black text-[#013A57]">{distOrdersData.length}</p></div>
-                <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Pendientes</p><p className="text-3xl font-black text-amber-500">{distOrdersData.filter(o => o.status === 'pending').length}</p></div>
-                <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Enviados</p><p className="text-3xl font-black text-blue-500">{distOrdersData.filter(o => o.status === 'shipped').length}</p></div>
-                <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Ventas</p><p className="text-3xl font-black text-[#75CBB3]">₡{(distOrdersData.reduce((s, o) => s + o.total, 0) / 1000).toFixed(0)}K</p></div>
-            </div>
-            <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
-                <table className="w-full">
-                    <thead className="bg-slate-900 text-white"><tr><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Pedido</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Cliente</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Fecha</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Items</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Total</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Estado</th></tr></thead>
-                    <tbody>{distOrdersData.map(o => (<tr key={o.id} className="border-b border-slate-100 hover:bg-slate-50"><td className="px-6 py-4 font-black text-[#013A57]">{o.id}</td><td className="px-6 py-4 font-bold text-slate-700">{o.client}</td><td className="px-6 py-4 text-slate-500"><Calendar className="w-4 h-4 inline mr-1" />{o.date}</td><td className="px-6 py-4 text-slate-600">{o.items}</td><td className="px-6 py-4 font-black text-[#75CBB3]">₡{o.total.toLocaleString()}</td><td className="px-6 py-4"><StatusBadge status={o.status} /></td></tr>))}</tbody>
-                </table>
+export const DistOrdersView = () => {
+    const handleTrack = (orderId, tracking) => {
+        if (tracking) {
+            alert(`Rastreando pedido ${orderId}\nNúmero de tracking: ${tracking}`);
+        } else {
+            alert(`El pedido ${orderId} aún no tiene número de rastreo asignado.`);
+        }
+    };
+
+    return (
+        <div className="py-12 animate-fadeIn">
+            <div className="container mx-auto px-6 max-w-7xl">
+                <div className="mb-10"><h1 className="text-3xl font-black text-[#013A57] uppercase tracking-tight flex items-center gap-3 mb-2"><ShoppingBag className="text-[#75CBB3]" /> Pedidos</h1><p className="text-slate-500">Gestión de pedidos recibidos</p></div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Total</p><p className="text-3xl font-black text-[#013A57]">{distOrdersData.length}</p></div>
+                    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Pendientes</p><p className="text-3xl font-black text-amber-500">{distOrdersData.filter(o => o.status === 'pending').length}</p></div>
+                    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Enviados</p><p className="text-3xl font-black text-blue-500">{distOrdersData.filter(o => o.status === 'shipped').length}</p></div>
+                    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Ventas</p><p className="text-3xl font-black text-[#75CBB3]">₡{(distOrdersData.reduce((s, o) => s + o.total, 0) / 1000).toFixed(0)}K</p></div>
+                </div>
+                <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+                    <table className="w-full">
+                        <thead className="bg-slate-900 text-white"><tr><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Pedido</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Cliente</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Canal</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Fecha</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Items</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Total</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Estado</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Acciones</th></tr></thead>
+                        <tbody>{distOrdersData.map(o => (<tr key={o.id} className="border-b border-slate-100 hover:bg-slate-50"><td className="px-6 py-4 font-black text-[#013A57]">{o.id}</td><td className="px-6 py-4 font-bold text-slate-700">{o.client}</td><td className="px-6 py-4">{o.subDistributor ? <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-purple-500/20 text-purple-400">{o.subDistributor}</span> : <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-emerald-500/20 text-emerald-400">Venta Directa</span>}</td><td className="px-6 py-4 text-slate-500"><Calendar className="w-4 h-4 inline mr-1" />{o.date}</td><td className="px-6 py-4 text-slate-600">{o.items}</td><td className="px-6 py-4 font-black text-[#75CBB3]">₡{o.total.toLocaleString()}</td><td className="px-6 py-4"><StatusBadge status={o.status} /></td><td className="px-6 py-4"><button onClick={() => handleTrack(o.id, o.tracking)} className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-xs uppercase transition-colors"><Navigation className="w-4 h-4" />Rastrear</button></td></tr>))}</tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
+

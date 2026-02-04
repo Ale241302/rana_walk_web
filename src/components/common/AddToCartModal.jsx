@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, Users } from 'lucide-react';
 import { sizeGroups } from '../../data/ranaData';
+
+// Datos de distribuidores y sub distribuidores
+const distributorsAndSubDistributors = [
+    { id: 1, name: 'Distribuciones ABC', type: 'distributor', region: 'Zona Norte' },
+    { id: 2, name: 'Comercial XYZ', type: 'distributor', region: 'Zona Sur' },
+    { id: 3, name: 'Ventas del Valle', type: 'distributor', region: 'GAM' },
+    { id: 4, name: 'Ventas Norte', type: 'sub-distributor', region: 'Guanacaste', parentId: 1 },
+    { id: 5, name: 'Comercial Pacífico', type: 'sub-distributor', region: 'Puntarenas', parentId: 2 },
+    { id: 6, name: 'Distribuidora Central', type: 'sub-distributor', region: 'San José Centro', parentId: 3 },
+];
 
 const AddToCartModal = ({ isOpen, onClose, onConfirm, system }) => {
     const [unit, setUnit] = useState('US');
     const [gender, setGender] = useState('Masculino');
     const [size, setSize] = useState('');
     const [quantity, setQuantity] = useState(1);
+    const [selectedDistributor, setSelectedDistributor] = useState('');
 
     if (!isOpen) return null;
 
@@ -23,6 +34,7 @@ const AddToCartModal = ({ isOpen, onClose, onConfirm, system }) => {
             alert('Por favor selecciona una talla');
             return;
         }
+        const selectedDist = selectedDistributor ? distributorsAndSubDistributors.find(d => d.id === parseInt(selectedDistributor)) : null;
         onConfirm({
             systemId: system.id,
             systemName: system.name,
@@ -31,7 +43,8 @@ const AddToCartModal = ({ isOpen, onClose, onConfirm, system }) => {
             unit,
             gender,
             size,
-            quantity
+            quantity,
+            distributor: selectedDist ? { id: selectedDist.id, name: selectedDist.name, type: selectedDist.type, region: selectedDist.region } : null
         });
         onClose();
     };
@@ -107,6 +120,30 @@ const AddToCartModal = ({ isOpen, onClose, onConfirm, system }) => {
                             />
                             <button onClick={() => setQuantity(quantity + 1)} className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-[#013A57] font-bold hover:bg-slate-200">+</button>
                         </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                            <Users className="w-4 h-4 text-[#75CBB3]" />
+                            Seleccionar Distribuidor <span className="text-slate-300 font-normal">(Opcional)</span>
+                        </label>
+                        <select
+                            value={selectedDistributor}
+                            onChange={(e) => setSelectedDistributor(e.target.value)}
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-[#013A57] focus:outline-none focus:border-[#75CBB3]"
+                        >
+                            <option value="">Sin preferencia de distribuidor</option>
+                            <optgroup label="Distribuidores">
+                                {distributorsAndSubDistributors.filter(d => d.type === 'distributor').map(d => (
+                                    <option key={d.id} value={d.id}>{d.name} - {d.region}</option>
+                                ))}
+                            </optgroup>
+                            <optgroup label="Sub Distribuidores">
+                                {distributorsAndSubDistributors.filter(d => d.type === 'sub-distributor').map(d => (
+                                    <option key={d.id} value={d.id}>{d.name} - {d.region}</option>
+                                ))}
+                            </optgroup>
+                        </select>
                     </div>
 
                     <div className="pt-4 flex gap-3">

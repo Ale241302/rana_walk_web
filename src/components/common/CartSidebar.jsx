@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShoppingCart, X, Trash } from 'lucide-react';
+import { ShoppingCart, X, Trash, Users } from 'lucide-react';
 
 const CartSidebar = ({ isOpen, onClose, cartItems, onRemoveItem, onCheckout }) => {
     if (!isOpen) return null;
@@ -37,6 +37,12 @@ const CartSidebar = ({ isOpen, onClose, cartItems, onRemoveItem, onCheckout }) =
                                         <button onClick={() => onRemoveItem(index)} className="text-slate-300 hover:text-red-500 transition-colors"><Trash className="w-4 h-4" /></button>
                                     </div>
                                     <p className="text-xs font-bold text-[#75CBB3] mb-2 uppercase tracking-wider">{item.gender} • {item.unit} Rana {item.size}</p>
+                                    {item.distributor && (
+                                        <p className="text-xs font-bold text-purple-500 mb-2 flex items-center gap-1">
+                                            <Users className="w-3 h-3" />
+                                            {item.distributor.name}
+                                        </p>
+                                    )}
                                     <div className="flex justify-between items-center bg-white p-2 rounded-lg border border-slate-100">
                                         <span className="text-xs font-bold text-slate-400">Cant: {item.quantity}</span>
                                         <span className="text-sm font-black text-[#013A57]">${(item.price * item.quantity).toFixed(2)}</span>
@@ -64,3 +70,4 @@ const CartSidebar = ({ isOpen, onClose, cartItems, onRemoveItem, onCheckout }) =
 };
 
 export default CartSidebar;
+
