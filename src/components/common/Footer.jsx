@@ -1,94 +1,123 @@
 import React from 'react';
-import { ArrowRight, ShieldCheck, Linkedin, Instagram, Sparkles } from 'lucide-react';
+import { Mail, MapPin, Globe, Sparkles } from 'lucide-react';
 
 const Footer = ({ navigate }) => (
     <footer className="bg-slate-950 text-white pt-24 pb-12 border-t border-white/5">
         <div className="container mx-auto px-6">
-            <div className="grid lg:grid-cols-5 gap-16 mb-20">
-                <div className="col-span-1 lg:col-span-1">
+            {/* Main Footer Grid */}
+            <div className="grid lg:grid-cols-6 gap-12 mb-16">
+                {/* Logo & Info Column */}
+                <div className="lg:col-span-2">
                     <img src="https://ranawalk.com/images/logos%20rana/Logo-Rana-Walk-negativo_vertical.png" alt="Rana Walk" className="h-20 w-auto mb-8" />
-                    <p className="text-slate-500 text-sm leading-relaxed mb-6 font-medium">
-                        Ingeniería de bio-mimetismo podal diseñada en el Life Sciences Hub de Costa Rica. Domina el impacto y la carga.
+                    <p className="text-[#75CBB3] font-bold italic text-lg mb-4">"Name it, leap forward."</p>
+                    <p className="text-slate-500 text-sm leading-relaxed mb-6">
+                        Ingeniería desde Costa Rica para USA, Latam y el mundo.
                     </p>
-                    <div className="flex items-center gap-3 mb-8 p-3 bg-white/5 rounded-xl border border-white/10 w-fit">
-                        <div className="w-10 h-10 bg-[#75CBB3] rounded-lg flex items-center justify-center">
-                            <ShieldCheck className="text-[#013A57]" size={20} />
-                        </div>
-                        <div>
-                            <p className="text-[10px] font-black uppercase tracking-widest text-[#75CBB3]">Validación Técnica</p>
-                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Life Sciences Hub Costa Rica</p>
-                        </div>
-                    </div>
-                    <div className="flex gap-5">
-                        <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#75CBB3]/20 group transition-all cursor-pointer border border-white/10">
-                            <Linkedin size={18} className="text-slate-400 group-hover:text-[#75CBB3]" />
-                        </div>
-                        <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#75CBB3]/20 group transition-all cursor-pointer border border-white/10">
-                            <Instagram size={18} className="text-slate-400 group-hover:text-[#75CBB3]" />
-                        </div>
+                    <div className="flex items-center gap-3 text-slate-400 hover:text-[#75CBB3] transition-colors">
+                        <Mail size={16} />
+                        <a href="mailto:leap@ranawalk.com" className="text-sm font-bold">leap@ranawalk.com</a>
                     </div>
                 </div>
 
+                {/* Institucional */}
                 <div>
-                    <h4 className="font-black text-[#75CBB3] mb-8 uppercase text-[10px] tracking-[0.3em]">Navegación</h4>
-                    <ul className="space-y-4 text-sm font-bold text-slate-400">
+                    <h4 className="font-black text-[#75CBB3] mb-6 uppercase text-[10px] tracking-[0.3em]">Institucional</h4>
+                    <ul className="space-y-3 text-sm font-medium text-slate-400">
                         <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('home')}>Inicio</li>
                         <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('about')}>Nosotros</li>
                         <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('systems')}>Sistemas</li>
+                        <li className="hover:text-white cursor-pointer transition-colors flex items-center gap-2" onClick={() => navigate('consultor')}>
+                            AI Consultant <Sparkles size={12} className="text-[#75CBB3]" />
+                        </li>
                         <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('contact')}>Contacto</li>
-                        <li className="text-[#75CBB3] hover:brightness-125 cursor-pointer transition-all flex items-center gap-2" onClick={() => navigate('consultor')}>AI Consultant <Sparkles size={14} /></li>
-                    </ul>
-                    <div className="mt-8 pt-8 border-t border-white/5">
-                        <div className="flex items-center gap-3 text-white/40">
-                            <div className="w-8 h-8 bg-white/10 rounded flex items-center justify-center font-black text-[10px]">LSH</div>
-                            <div className="text-[10px] leading-tight font-bold uppercase tracking-widest">
-                                Life Sciences Hub<br /><span className="text-[#75CBB3]">Validation Team</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <h4 className="font-black text-[#75CBB3] mb-8 uppercase text-[10px] tracking-[0.3em]">Sistemas Bio-Miméticos</h4>
-                    <ul className="space-y-4 text-sm font-bold text-slate-400">
-                        <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('systemDetail', 'goliath')}>GOLIATH</li>
-                        <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('systemDetail', 'velox')}>VELOX</li>
-                        <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('systemDetail', 'orbis')}>ORBIS</li>
-                        <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('systemDetail', 'leopard')}>LEOPARD</li>
                     </ul>
                 </div>
 
+                {/* Validación & Ciencia */}
                 <div>
-                    <h4 className="font-black text-[#75CBB3] mb-8 uppercase text-[10px] tracking-[0.3em]">Soporte & Legal</h4>
-                    <ul className="space-y-4 text-sm font-bold text-slate-400">
+                    <h4 className="font-black text-[#75CBB3] mb-6 uppercase text-[10px] tracking-[0.3em]">Validación & Ciencia</h4>
+                    <ul className="space-y-3 text-sm font-medium text-slate-400">
+                        <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('about')}>Costa Rica MedTech Hub</li>
+                        <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('about')}>R&D Team</li>
+                        <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('tech')}>Protocolos de Carga</li>
+                        <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('tech')}>Fichas de Tecnología</li>
+                    </ul>
+                </div>
+
+                {/* Sistemas Biomiméticos */}
+                <div>
+                    <h4 className="font-black text-[#75CBB3] mb-6 uppercase text-[10px] tracking-[0.3em]">Sistemas Biomiméticos</h4>
+                    <ul className="space-y-3 text-sm font-medium text-slate-400">
+                        <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('systemDetail', 'goliath')}>
+                            <span className="text-white font-bold">GOLIATH</span>
+                            <span className="text-slate-500 text-xs block">Poder y Estabilidad</span>
+                        </li>
+                        <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('systemDetail', 'velox')}>
+                            <span className="text-white font-bold">VELOX</span>
+                            <span className="text-slate-500 text-xs block">Agilidad y Energía</span>
+                        </li>
+                        <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('systemDetail', 'orbis')}>
+                            <span className="text-white font-bold">ORBIS</span>
+                            <span className="text-slate-500 text-xs block">Inteligencia Postural</span>
+                        </li>
+                        <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('systemDetail', 'leopard')}>
+                            <span className="text-white font-bold">LEOPARD</span>
+                            <span className="text-slate-500 text-xs block">Flexibilidad Adaptable</span>
+                        </li>
+                    </ul>
+                </div>
+
+                {/* Soporte & Legal */}
+                <div>
+                    <h4 className="font-black text-[#75CBB3] mb-6 uppercase text-[10px] tracking-[0.3em]">Soporte & Legal</h4>
+                    <ul className="space-y-3 text-sm font-medium text-slate-400">
                         <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('support')}>Centro de Ayuda</li>
                         <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('distributors')}>Distribución B2B</li>
                         <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('legal')}>Términos de Uso</li>
                         <li className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('legal')}>Privacidad de Datos</li>
                     </ul>
                 </div>
+            </div>
 
-                <div>
-                    <h4 className="font-black text-[#75CBB3] mb-8 uppercase text-[10px] tracking-[0.3em]">Presencia Industrial</h4>
-                    <div className="space-y-6">
-                        <div>
-                            <span className="text-[10px] font-black text-slate-500 uppercase block mb-1">HQ & R&D</span>
-                            <p className="text-sm font-bold">Costa Rica, Central America</p>
-                            <p className="text-[10px] text-slate-500">Life Sciences Hub</p>
+            {/* Presencia Industrial */}
+            <div className="border-t border-white/5 pt-12 mb-12">
+                <div className="grid md:grid-cols-2 gap-8">
+                    <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center border border-white/10">
+                            <MapPin size={20} className="text-[#75CBB3]" />
                         </div>
                         <div>
-                            <span className="text-[10px] font-black text-slate-500 uppercase block mb-1">Distribution</span>
-                            <p className="text-sm font-bold">USA | Latam | Global</p>
+                            <h5 className="text-[10px] font-black text-[#75CBB3] uppercase tracking-widest mb-1">HQ & R&D Center</h5>
+                            <p className="text-white font-bold">Costa Rica MedTech Hub, San José</p>
+                            <p className="text-slate-500 text-sm">Centroamérica</p>
+                        </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center border border-white/10">
+                            <Globe size={20} className="text-[#75CBB3]" />
+                        </div>
+                        <div>
+                            <h5 className="text-[10px] font-black text-[#75CBB3] uppercase tracking-widest mb-1">Ecosistema de Distribución</h5>
+                            <div className="flex flex-wrap gap-2 mt-2">
+                                {['USA', 'Europa', 'Brasil', 'Latam', 'Global'].map((region) => (
+                                    <span key={region} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-bold text-slate-400">
+                                        {region}
+                                    </span>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] font-black uppercase tracking-widest text-slate-600">
-                <p>© 2026 RANA WALK®</p>
-                <p className="text-center md:text-right max-w-xl opacity-60 leading-relaxed">
-                    AVISO LEGAL: LOS SISTEMAS RANA WALK NO SON DISPOSITIVOS MÉDICOS. ESTÁN DISEÑADOS PARA EL BIENESTAR FUNCIONAL Y LA SALUD BIOMECÁNICA.
-                </p>
+            {/* Bottom Bar */}
+            <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
+                    <span>© 2026 Rana Walk®</span>
+                    <span className="text-slate-700">|</span>
+                    <span>Desarrollado con el respaldo tecnológico de <span className="text-[#75CBB3]">Grizzly</span></span>
+                </div>
+                <p className="text-[#75CBB3] font-bold italic text-sm">"Name it, leap forward."</p>
             </div>
         </div>
     </footer>

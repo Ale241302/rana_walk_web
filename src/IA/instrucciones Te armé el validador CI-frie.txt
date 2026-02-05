@@ -1,0 +1,44 @@
+Hecho. Te armé el validador CI-friendly para que tu dev suba su CSV de predicciones y el script le diga PASS/FAIL como test unitario (con exit code), más el set de verdad consolidado y una grilla de decisión para ver qué combinaciones están cubiertas.
+
+Descargas
+
+Validador (compara tu motor vs verdad):
+validate_predictions_antigravity_v1_2.py
+
+Truth set oficial (Golden + Edge, 120 casos):
+antigravity_truth_v1_2.csv
+
+Decision grid (todas las combinaciones 4×3×3×4, marca las que tienen verdad):
+antigravity_decision_grid_v1_2.csv
+
+Demo de predicciones perfectas (para probar que el script pasa):
+demo_predictions_perfect.csv
+
+Cómo lo usa tu dev
+
+Su motor genera un CSV con columnas:
+
+ID Perfil
+
+Predicted (GOLIATH / ORBIS / LEOPARD / VELOX)
+
+Corre:
+
+python validate_predictions_antigravity_v1_2.py \
+  --truth antigravity_truth_v1_2.csv \
+  --pred my_engine_predictions.csv \
+  --outdir .
+
+Salida
+
+validation_report.txt
+
+mismatches.csv (solo si falla)
+
+Exit codes:
+
+0 = OK
+
+1 = mismatches
+
+2 = faltan IDs / archivo malformado

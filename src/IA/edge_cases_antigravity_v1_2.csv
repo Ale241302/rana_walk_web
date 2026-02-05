@@ -1,0 +1,21 @@
+﻿ID Perfil,Peso,Calce de Zapato,Actividad,Foco de Dolor,Sistema Esperado,Nota (edge case)
+EC-001,110 kg,Estándar/Casual,Alta movilidad/Deporte,Fatiga muscular,LEOPARD,Carve-out: >110 + alta movilidad
+EC-002,110 kg,Estándar/Casual,Laboral +8h (Concreto),Impacto (Rodilla/Cadera),GOLIATH,Protección/estructura para concreto prolongado
+EC-003,110 kg,Estándar/Casual,Urbano diario,Dolor espalda/Postural,ORBIS,Estabilidad postural diaria
+EC-004,110 kg,Amplio/Bota,Laboral +8h (Concreto),Fatiga muscular,GOLIATH,Protección/estructura para concreto prolongado
+EC-005,110 kg,Amplio/Bota,Urbano diario,Inestabilidad/Arco,LEOPARD,Adaptación anatómica del arco
+EC-006,<80 kg,Amplio/Bota,Laboral +8h (Concreto),Impacto (Rodilla/Cadera),GOLIATH,Protección/estructura para concreto prolongado
+EC-007,<80 kg,Amplio/Bota,Laboral +8h (Concreto),Inestabilidad/Arco,LEOPARD,Adaptación anatómica del arco
+EC-008,<80 kg,Estándar/Casual,Alta movilidad/Deporte,Inestabilidad/Arco,LEOPARD,Adaptación anatómica del arco
+EC-009,<80 kg,Estándar/Casual,Laboral +8h (Concreto),Dolor espalda/Postural,ORBIS,Default estabilidad
+EC-010,80-110 kg,Amplio/Bota,Urbano diario,Impacto (Rodilla/Cadera),ORBIS,Uso diario: equilibrio postural
+EC-011,80-110 kg,Estándar/Casual,Urbano diario,Impacto (Rodilla/Cadera),ORBIS,Uso diario: equilibrio postural
+EC-012,>110 kg,Amplio/Bota,Urbano diario,Dolor espalda/Postural,ORBIS,Estabilidad postural diaria
+EC-013,>110 kg,Amplio/Bota,Urbano diario,Inestabilidad/Arco,LEOPARD,Adaptación anatómica del arco
+EC-014,>110 kg,Estándar/Casual,Laboral +8h (Concreto),Dolor espalda/Postural,ORBIS,Default estabilidad
+EC-015,>110 kg,Estándar/Casual,Alta movilidad/Deporte,Dolor espalda/Postural,LEOPARD,Carve-out: >110 + alta movilidad
+EC-016,>110 kg,Estándar/Casual,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),LEOPARD,Carve-out: >110 + alta movilidad
+EC-017,80-110 kg,Estrecho/Slim,Urbano diario,Inestabilidad/Arco,VELOX,Hard stop: calce estrecho
+EC-018,80-110 kg,Estrecho/Slim,Laboral +8h (Concreto),Impacto (Rodilla/Cadera),VELOX,Hard stop: calce estrecho
+EC-019,<80 kg,Estrecho/Slim,Alta movilidad/Deporte,Dolor espalda/Postural,VELOX,Hard stop: calce estrecho
+EC-020,>110 kg,Estrecho/Slim,Laboral +8h (Concreto),Fatiga muscular,VELOX,Hard stop: calce estrecho

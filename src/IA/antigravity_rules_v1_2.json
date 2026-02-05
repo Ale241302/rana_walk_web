@@ -1,0 +1,226 @@
+{
+  "engine_name": "Antigravity",
+  "version": "1.2",
+  "date": "2026-02-04",
+  "description": "Decision engine for Rana Walk biomechanical platforms using hard-stops + weighted scoring (0-100).",
+  "inputs": {
+    "peso": {
+      "type": "enum",
+      "values": [
+        "<80 kg",
+        "80-110 kg",
+        ">110 kg",
+        "110 kg (edge)"
+      ],
+      "notes": "110 kg is structural threshold; treat as high-critical in edge tests."
+    },
+    "calce": {
+      "type": "enum",
+      "values": [
+        "Estrecho/Slim",
+        "Estándar/Casual",
+        "Amplio/Bota"
+      ]
+    },
+    "actividad": {
+      "type": "enum",
+      "values": [
+        "Alta movilidad/Deporte",
+        "Laboral +8h (Concreto)",
+        "Urbano diario"
+      ]
+    },
+    "foco": {
+      "type": "enum",
+      "values": [
+        "Impacto (Rodilla/Cadera)",
+        "Fatiga muscular",
+        "Dolor espalda/Postural",
+        "Inestabilidad/Arco"
+      ]
+    },
+    "termica_humedad": {
+      "type": "boolean",
+      "optional": true
+    }
+  },
+  "platforms": {
+    "GOLIATH": {
+      "requires_calce": [
+        "Estándar/Casual",
+        "Amplio/Bota"
+      ],
+      "core_tech": [
+        "LeapCore",
+        "PORON_XRD",
+        "Arch_System"
+      ]
+    },
+    "ORBIS": {
+      "requires_calce": [
+        "Estándar/Casual",
+        "Amplio/Bota"
+      ],
+      "core_tech": [
+        "LeapCore_BiDensity"
+      ]
+    },
+    "LEOPARD": {
+      "requires_calce": [
+        "Estándar/Casual",
+        "Amplio/Bota"
+      ],
+      "core_tech": [
+        "ShockSphere",
+        "ThinBoom"
+      ]
+    },
+    "VELOX": {
+      "requires_calce": [
+        "Estrecho/Slim",
+        "Estándar/Casual",
+        "Amplio/Bota"
+      ],
+      "core_tech": [
+        "ThinBoom",
+        "NanoSpread"
+      ]
+    }
+  },
+  "hard_stops": [
+    {
+      "if": {
+        "calce": "Estrecho/Slim"
+      },
+      "then": {
+        "recommend": "VELOX",
+        "reason": "Low internal volume; other platforms excluded by volumetric incompatibility."
+      }
+    }
+  ],
+  "scoring": {
+    "scale": {
+      "min": 0,
+      "max": 100
+    },
+    "base_score": {
+      "GOLIATH": 50,
+      "ORBIS": 50,
+      "LEOPARD": 50,
+      "VELOX": 50
+    },
+    "rules": [
+      {
+        "name": "Carga alta crítica",
+        "if": {
+          "peso": ">110 kg"
+        },
+        "add": {
+          "GOLIATH": 45,
+          "ORBIS": 45
+        },
+        "also_if": {
+          "actividad": "Laboral +8h (Concreto)"
+        },
+        "add_extra": {
+          "GOLIATH": 15,
+          "ORBIS": 15
+        }
+      },
+      {
+        "name": "Carve-out alto peso + alta movilidad",
+        "if": {
+          "peso": ">110 kg",
+          "actividad": "Alta movilidad/Deporte"
+        },
+        "add": {
+          "LEOPARD": 35
+        },
+        "notes": "Matches golden set behavior for >110 kg + high mobility when calce is not estrecho."
+      },
+      {
+        "name": "Impacto seco sobre concreto",
+        "if": {
+          "actividad": "Laboral +8h (Concreto)",
+          "foco": "Impacto (Rodilla/Cadera)"
+        },
+        "add": {
+          "GOLIATH": 30
+        }
+      },
+      {
+        "name": "Fatiga + alta movilidad",
+        "if": {
+          "actividad": "Alta movilidad/Deporte",
+          "foco": "Fatiga muscular"
+        },
+        "add": {
+          "VELOX": 35,
+          "LEOPARD": 20
+        }
+      },
+      {
+        "name": "Alineación postural diaria",
+        "if": {
+          "actividad": "Urbano diario",
+          "foco": "Dolor espalda/Postural"
+        },
+        "add": {
+          "ORBIS": 25
+        }
+      },
+      {
+        "name": "Adaptación anatómica del arco",
+        "if": {
+          "foco": "Inestabilidad/Arco"
+        },
+        "add": {
+          "LEOPARD": 25,
+          "ORBIS": 15
+        }
+      },
+      {
+        "name": "Termorregulación transversal",
+        "if": {
+          "termica_humedad": true
+        },
+        "add": {
+          "GOLIATH": 10,
+          "ORBIS": 10,
+          "LEOPARD": 10,
+          "VELOX": 10
+        },
+        "notes": "NanoSpread is transversal; it should not flip the recommendation by itself."
+      }
+    ],
+    "penalties": [
+      {
+        "name": "No running/competencia para Orbis",
+        "if": {
+          "actividad": "Alta movilidad/Deporte"
+        },
+        "add": {
+          "ORBIS": -25
+        }
+      }
+    ],
+    "tie_breaker": [
+      "calce_compatibility",
+      "impact_articular_concrete",
+      "mobility_energy_return",
+      "arch_adaptability",
+      "daily_postural_stability"
+    ]
+  },
+  "output": {
+    "primary": "highest_score",
+    "secondary": "runner_up_if_delta<=10",
+    "explain": {
+      "max_bullets": 3
+    }
+  },
+  "golden_set": {
+    "file": "100_perfiles_rana_walk_GOLDEN_v1_2.csv",
+    "sha256": "2e1f50f4968a1bfa629b00ace5ec8428c8e6705172567d9b80fbb98322921be3"
+  }
+}

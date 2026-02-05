@@ -9,37 +9,36 @@ export const systemsData = [
     {
         id: 'goliath',
         name: 'GOLIATH',
-        ref: 'PODER-FUERZA-SYS',
-        tagline: 'Poder y Fuerza',
-        shortDesc: 'La armadura para calzado amplio y trabajos pesados. ADN Mimético: Elefante + Pájaro Carpintero + Felino.',
+        ref: 'PODER-ESTABILIDAD-SYS',
+        tagline: 'Poder y Estabilidad Absoluta',
+        shortDesc: 'ADN Mimético: Elefante (Distribución de Carga) y Pájaro Carpintero (Protección). El sistema más robusto y capaz de la línea.',
         color: 'bg-slate-800',
         accent: '#1e293b',
         image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800',
-        fullDescription: 'La armadura para calzado amplio y trabajos pesados.',
-        whatIs: 'Ajuste de Calce: Máximo Relleno. Es nuestra plantilla más robusta. Ideal si sientes que el zapato te queda flojo o "baila". ¿Dónde usarla? Zapatos con mucho espacio (Botas de seguridad, industriales o de montaña). No cabe en calzado ajustado.',
-        adnMimetico: 'Elefante + Pájaro Carpintero + Felino',
-        ajusteCalce: 'Máximo Relleno',
+        fullDescription: 'El sistema más robusto y capaz de la línea. Diseñado para ofrecer una absorción de energía superior y aprovechar la cinética residual para impulsar el despegue. Su construcción técnica es inquebrantable en superficies agresivas.',
+        whatIs: 'Fisiología Mimética: Chasis de distribución de presiones LeapCore™ (soporta hasta 110 kg / 225 lbs) sincronizado con un escudo de PORON® XRD® para la absorción de impactos extremos. Potenciado por un Arch System rígido diseñado para mantener la integridad de su forma bajo carga pesada.',
+        adnMimetico: 'Elefante (Distribución de Carga) y Pájaro Carpintero (Protección)',
+        ajusteCalce: 'Grosor Máximo (Relleno de espacio alto)',
         anatomia: 'Altura de arco Media',
         useCases: [
-            'Zapatos con mucho espacio interno',
-            'Botas de seguridad e industriales',
-            'Botas de montaña',
-            'Calzado que sientes flojo o que "baila"'
+            'Jornadas de +8 horas en industria',
+            'Construcción',
+            'Senderismo con calzado amplio',
+            'Profesionales que enfrentan superficies duras'
         ],
-        userProfile: 'El Profesional Industrial que necesita máximo soporte y protección. Ideal para usuarios de +110kg o trabajos pesados de +12 horas.',
-        technologies: ['leapcore', 'poron', 'thinboom', 'nanospread', 'archsupport'],
+        userProfile: 'Usuarios que buscan un efecto superior en la mejora de postura. Perfecto para jornadas de +8 horas en industria, construcción o senderismo con calzado amplio.',
+        technologies: ['leapcore', 'poron', 'archsupport', 'nanospread'],
         howItWorks: [
-            { tech: 'LeapCore™ (Bi-densidad)', func: 'Estructura de Elefante para soportar presiones masivas sin colapsar.' },
-            { tech: 'PORON® XRD®', func: 'Escudo de Pájaro Carpintero que anula impactos y protege articulaciones.' },
-            { tech: 'ThinBoom™ (Antepié)', func: 'Propulsión de Felino para un despegue potente y eficiente.' },
-            { tech: 'Arch Support', func: 'Exoesqueleto de soporte que previene el colapso del arco.' },
-            { tech: 'NanoSpread™', func: 'Homeostasis térmica que mantiene tus pies frescos.' }
+            { tech: 'LeapCore™ (Bi-densidad)', func: 'Chasis de distribución de presiones que soporta hasta 110 kg sin colapsar.' },
+            { tech: 'PORON® XRD®', func: 'Escudo de absorción de impactos extremos inspirado en el pájaro carpintero.' },
+            { tech: 'Arch System Rígido', func: 'Mantiene la integridad de forma bajo carga pesada.' },
+            { tech: 'NanoSpread™', func: 'Regula la temperatura (hasta 5°C menos) y mantiene el pie seco.' }
         ],
-        bioMimicry: 'ADN Mimético: Elefante + Pájaro Carpintero + Felino. Una fusión de ingeniería pesada para soportar presiones masivas, anular impactos y propulsar con fuerza.',
-        scenario: 'Diseñado para alta carga, impacto repetitivo y jornadas intensivas de pie en superficies duras.',
-        sensation: 'Soporte firme, sólido y de máxima protección contra el impacto.',
-        technicalSpecs: 'LeapCore™ (Bi-densidad) + PORON® XRD® + ThinBoom™ (Antepié) + Arch Support + NanoSpread™.',
-        aiReadySummary: { impact: '5/5', load: '5/5', tech: 'LeapCore™ + PORON® XRD® + ThinBoom™ + NanoSpread™ + Arch Support' },
+        bioMimicry: 'ADN Mimético: Elefante (Distribución de Carga) y Pájaro Carpintero (Protección). Una fusión de ingeniería pesada para soportar presiones masivas, anular impactos y proteger articulaciones.',
+        scenario: 'Mecanismo de Desempeño: Su efecto es el más potente de la gama para la corrección postural y el alivio del estrés mecánico en rodillas y caderas.',
+        sensation: 'Soporte firme, sólido y de máxima protección contra el impacto. El más potente para corrección postural.',
+        technicalSpecs: 'LeapCore™ (Bi-densidad) + PORON® XRD® + Arch System + NanoSpread™. Gestión Térmica: NanoSpread™ integrado que regula la temperatura (hasta 5 °C menos) y mantiene el pie seco incluso en jornadas extensas.',
+        aiReadySummary: { impact: '5/5', load: '5/5', tech: 'LeapCore™ + PORON® XRD® + Arch System + NanoSpread™' },
         beneficiosSistema: {
             mejoraPostura: 5,
             absorcionImpacto: 5,
@@ -48,48 +47,48 @@ export const systemsData = [
             piesFrescosSecos: 4,
             manejoPeso: 5,
             protectorRodillaCadera: 5,
-            rellenoEspacio: 5
+            rellenoEspacio: 1
         },
-        bestFootwear: 'Botas de seguridad, calzado industrial, botas de montaña y calzado con mucho espacio interno.',
+        bestFootwear: 'Botas de seguridad, calzado industrial, botas de montaña y calzado con mucho espacio interno. NO apta para calzado ajustado: Debido a su alto nivel de relleno, no cabe en calzado de oficina slim o mocasines.',
         whatIsNot: [
-            'No es para calzado ajustado: Es nuestra plantilla más robusta, diseñada para zapatos con mucho espacio interno.',
-            'No es solo para gigantes: Es para cualquier persona que someta sus pies a impactos extremos o jornadas intensivas.',
-            'No es una superficie plana: Tiene arquitectura de soporte de arco diseñada para evitar que tus rodillas colapsen.'
+            'No es una plantilla pesada: Su ingeniería de PU de bi-densidad es ligera para no añadir fatiga adicional al calzado.',
+            'No es solo para personas de gran tamaño: Es para cualquier usuario expuesto a impactos secos contra el concreto o jornadas donde el cansancio suele vencer a otras plantillas.',
+            'No es una superficie plana: Posee una arquitectura de soporte de arco media diseñada para evitar que las rodillas colapsen.',
+            'No es apta para calzado ajustado: Debido a su alto nivel de relleno, no cabe en calzado de oficina slim o mocasines.'
         ],
-        idealIf: 'Si sientes que tu zapato te queda flojo o "baila", o necesitas máximo soporte para trabajos pesados e industriales.'
+        idealIf: 'Buscas un efecto superior en la mejora de postura para jornadas de +8 horas en industria, construcción o senderismo con calzado amplio.'
     },
     {
         id: 'velox',
         name: 'VELOX',
         ref: 'AGILIDAD-ENERGIA-SYS',
-        tagline: 'Agilidad y Energía',
-        shortDesc: 'Propulsión ultra-delgada para calzado elegante o ajustado. ADN Mimético: Tendón de Felino (Propulsión Pura).',
+        tagline: 'Agilidad y Energía Reactiva',
+        shortDesc: 'ADN Mimético: Tendón de Felino (Efecto Catapulta). Sistema ultra-delgado diseñado para la máxima eficiencia energética.',
         color: 'bg-red-700',
         accent: '#dc2626',
         image: 'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?auto=format&fit=crop&q=80&w=800',
-        fullDescription: 'Propulsión ultra-delgada para calzado elegante o ajustado.',
-        whatIs: 'Ajuste de Calce: Ultra Delgada. Casi no ocupa espacio. Respeta el calce original de tu zapato. ¿Dónde usarla? Es la única para calzado con poco espacio (Zapatos de vestir, oficina, mocasines o tenis muy tallados).',
-        adnMimetico: 'Tendón de Felino (Propulsión Pura)',
-        ajusteCalce: 'Ultra Delgada',
+        fullDescription: 'Sistema ultra-delgado diseñado para la máxima eficiencia energética. Transforma el impacto en fuerza de despegue sin alterar el calce original del zapato.',
+        whatIs: 'Fisiología Mimética: Emula la elasticidad de los tendones felinos mediante una matriz de E-TPU supercritical de alto rebote. Este sistema NO integra el chasis LeapCore™ para garantizar flexibilidad absoluta y un perfil mínimo que respeta el espacio del pie.',
+        adnMimetico: 'Tendón de Felino (Efecto Catapulta)',
+        ajusteCalce: 'Grosor Mínimo (Ultra delgada)',
         anatomia: 'Altura de arco Media',
         useCases: [
-            'Zapatos de vestir y oficina',
-            'Mocasines y calzado formal',
-            'Tenis muy tallados o ajustados',
-            'Calzado con poco espacio interno'
+            'Fútbol',
+            'Ciclismo',
+            'Calzado de vestir',
+            'Mocasines y tenis deportivos slim'
         ],
-        userProfile: 'El Profesional Urbano que viste calzado formal o ajustado y prioriza la respuesta, la eficiencia y la agilidad total.',
-        technologies: ['thinboom', 'shocksphere', 'nanospread'],
+        userProfile: 'El profesional que usa calzado elegante o ajustado y busca propulsión, eficiencia energética y agilidad total.',
+        technologies: ['thinboom', 'nanospread'],
         howItWorks: [
-            { tech: 'ThinBoom™ (Full-Length)', func: 'Catapulta continua que transforma cada pisada en velocidad.' },
-            { tech: 'ShockSphere™', func: 'Absorción focalizada felina para un despegue ágil.' },
-            { tech: 'NanoSpread™', func: 'Homeostasis reptiliana que mantiene tus pies frescos.' }
+            { tech: 'ThinBoom™ (Full-Length)', func: 'Actúa como un resorte biológico que devuelve hasta el 80% de la energía de cada paso.' },
+            { tech: 'NanoSpread™', func: 'Control térmico activo y evaporación acelerada del sudor.' }
         ],
-        bioMimicry: 'ADN Mimético: Tendón de Felino (Propulsión Pura). Actúa como una catapulta continua, transformando cada pisada en velocidad.',
-        scenario: 'Ideal para calzado de espacio reducido y jornadas activas que requieren desplazamientos rápidos.',
-        sensation: 'Reactiva, impulsiva, fresca y totalmente flexible.',
-        technicalSpecs: 'ThinBoom™ (Full-Length) + ShockSphere™ + NanoSpread™.',
-        aiReadySummary: { impact: '3/5', load: '3/5', tech: 'ThinBoom™ + ShockSphere™ + NanoSpread™' },
+        bioMimicry: 'ADN Mimético: Tendón de Felino (Efecto Catapulta). Actúa como una catapulta continua, transformando cada pisada en velocidad y devolviendo hasta el 80% de la energía.',
+        scenario: 'Mecanismo de Desempeño: Este sistema NO integra el chasis LeapCore™ para garantizar flexibilidad absoluta y un perfil mínimo que respeta el espacio del pie.',
+        sensation: 'Reactiva, impulsiva, fresca y totalmente flexible. Eficiencia energética máxima.',
+        technicalSpecs: 'ThinBoom™ (Full-Length) + NanoSpread™. Perfil ultra-delgado con retorno de energía del 80%. Gestión Térmica: NanoSpread™ activo para el control térmico y evaporación acelerada del sudor.',
+        aiReadySummary: { impact: '4/5', load: '3/5', tech: 'ThinBoom™ + NanoSpread™' },
         beneficiosSistema: {
             mejoraPostura: 3,
             absorcionImpacto: 4,
@@ -98,47 +97,47 @@ export const systemsData = [
             piesFrescosSecos: 5,
             manejoPeso: 3,
             protectorRodillaCadera: 3,
-            rellenoEspacio: 1
+            rellenoEspacio: 5
         },
-        bestFootwear: 'Zapatos de vestir, mocasines, calzado de oficina y tenis muy tallados.',
+        bestFootwear: 'Fútbol, ciclismo, calzado de vestir, mocasines y tenis deportivos slim. NO es para botas de gran volumen: Al ser de bajo perfil, su eficiencia se maximiza en calzado con poco espacio interno.',
         whatIsNot: [
-            'No es para zapatos con mucho espacio: Es ultra delgada, diseñada para calzado ajustado donde el espacio es limitado.',
-            'No es una plantilla ortopédica rígida: Su enfoque no es corregir deformidades, sino devolverte energía.',
-            'No es una plantilla pasiva: No solo "amortigua"; te empuja hacia adelante con su efecto catapulta.'
+            'No es una plantilla ortopédica rígida: Su propósito no es la inmovilización, sino devolver hasta el 80% de la energía de cada paso.',
+            'No es para botas de gran volumen: Al ser de bajo perfil, su eficiencia se maximiza en calzado con poco espacio interno.',
+            'No es una plantilla pasiva: Utiliza la tecnología ThinBoom™ para actuar como un resorte biológico que te impulsa activamente.'
         ],
-        idealIf: 'Si usas calzado elegante o ajustado y buscas propulsión y agilidad sin alterar el calce original de tu zapato.'
+        idealIf: 'Usas calzado elegante, ajustado o deportivo slim y buscas máxima agilidad y retorno de energía sin alterar el calce.'
     },
     {
         id: 'orbis',
         name: 'ORBIS',
-        ref: 'INTELIGENCIA-CONFORT-SYS',
-        tagline: 'Inteligencia y Confort',
-        shortDesc: 'Equilibrio y postura para tu calzado de todos los días. ADN Mimético: Estabilidad y Armonía Natural.',
+        ref: 'INTELIGENCIA-SALUD-SYS',
+        tagline: 'Inteligencia y Salud Postural',
+        shortDesc: 'ADN Mimético: Homeostasis y Equilibrio Estructural. La solución técnica para estabilizar la cadena cinética y eliminar la fatiga mecánica diaria.',
         color: 'bg-sky-600',
         accent: '#0ea5e9',
         image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&q=80&w=800',
-        fullDescription: 'Equilibrio y postura para tu calzado de todos los días.',
-        whatIs: 'Ajuste de Calce: Relleno Estándar. Reemplaza perfectamente la plantilla que trae tu zapato de fábrica. ¿Dónde usarla? Zapatos con espacio normal (Tenis casuales, calzado médico o profesional y zapatos de caminata).',
-        adnMimetico: 'Estabilidad y Armonía Natural',
-        ajusteCalce: 'Relleno Estándar',
+        fullDescription: 'La solución técnica para estabilizar la cadena cinética y eliminar la fatiga mecánica diaria.',
+        whatIs: 'Fisiología Mimética: Núcleo de LeapCore™ validado para mantener el arco firme por +8 horas en usuarios de hasta 110 kg. Proporciona un soporte de arco constante que evita el desbalance pélvico y el cansancio acumulado.',
+        adnMimetico: 'Homeostasis y Equilibrio Estructural',
+        ajusteCalce: 'Grosor Medio (Relleno estándar)',
         anatomia: 'Altura de arco Media',
         useCases: [
             'Tenis casuales',
-            'Calzado médico o profesional',
-            'Zapatos de caminata',
-            'Zapatos con espacio normal'
+            'Calzado médico',
+            'Calzado de oficina',
+            'El profesional que busca que su espalda no le duela al llegar a casa'
         ],
-        userProfile: 'El Profesional Urbano que camina su jornada completa y necesita equilibrio y salud postural sin sentir rigidez.',
+        userProfile: 'Tenis casuales, calzado médico o de oficina. Diseñado para el profesional que busca que su espalda no le duela al llegar a casa.',
         technologies: ['leapcore', 'nanospread'],
         howItWorks: [
-            { tech: 'LeapCore™', func: 'Control del paso diario manteniendo la armonía biomecánica.' },
-            { tech: 'NanoSpread™', func: 'Homeostasis reptiliana que mantiene tus pies frescos y secos.' }
+            { tech: 'LeapCore™', func: 'Núcleo validado para mantener el arco firme por +8 horas en usuarios de hasta 110 kg.' },
+            { tech: 'NanoSpread™', func: 'Tecnología que dispersa la humedad de forma uniforme para acelerar su evaporación.' }
         ],
-        bioMimicry: 'ADN Mimético: Estabilidad y Armonía Natural. Se enfoca en el control del paso diario, manteniendo la armonía de tu cuerpo de la mañana a la noche.',
-        scenario: 'Equilibrio y salud postural para profesionales que caminan jornadas completas.',
-        sensation: 'Apoyo equilibrado, corrección postural suave y frescura constante.',
-        technicalSpecs: 'LeapCore™ + NanoSpread™.',
-        aiReadySummary: { impact: '3/5', load: '4/5', tech: 'LeapCore™ + NanoSpread™' },
+        bioMimicry: 'ADN Mimético: Homeostasis y Equilibrio Estructural. Se enfoca en estabilizar la cadena cinética y eliminar la fatiga mecánica diaria.',
+        scenario: 'Mecanismo de Desempeño: Proporciona un soporte de arco constante que evita el desbalance pélvico y el cansancio acumulado.',
+        sensation: 'Apoyo equilibrado, corrección postural suave y frescura constante. Estabilidad para el caminante urbano.',
+        technicalSpecs: 'LeapCore™ + NanoSpread™. Soporte de arco constante para +8 horas. Gestión Térmica: Tecnología NanoSpread™ que dispersa la humedad de forma uniforme para acelerar su evaporación.',
+        aiReadySummary: { impact: '3/5', load: '5/5', tech: 'LeapCore™ + NanoSpread™' },
         beneficiosSistema: {
             mejoraPostura: 5,
             absorcionImpacto: 3,
@@ -149,46 +148,46 @@ export const systemsData = [
             protectorRodillaCadera: 3,
             rellenoEspacio: 4
         },
-        bestFootwear: 'Tenis casuales, calzado médico o profesional y zapatos de caminata.',
+        bestFootwear: 'Tenis casuales, calzado médico o de oficina. Diseñado para el profesional que busca que su espalda no le duela al llegar a casa.',
         whatIsNot: [
-            'No es un sistema de alto rebote: Si buscas salir a correr y sentir propulsión, Orbis no es para eso. Su enfoque es la estabilidad postural.',
-            'No es para impactos extremos: No tiene el escudo PORON® XRD® de la Goliath; es para el caminante urbano.',
-            'No es temporal: Su resiliencia garantiza que el soporte no se "aplaste" con el uso diario intenso.'
+            'No es un sistema de alto rebote: No integra ThinBoom™; su enfoque es la calma postural, no la propulsión deportiva.',
+            'No es para impactos extremos: No incluye el escudo PORON® XRD®; está optimizada para la estabilidad del caminante urbano.',
+            'No es una solución temporal: Su estructura de PU de bi-densidad garantiza que el soporte no se "aplaste" con el uso continuo.'
         ],
-        idealIf: 'Si buscas reemplazar la plantilla de fábrica de tu zapato con espacio normal y mejorar tu postura y confort diario.'
+        idealIf: 'Buscas estabilizar tu postura y eliminar la fatiga mecánica diaria con calzado casual, médico o de oficina.'
     },
     {
         id: 'leopard',
         name: 'LEOPARD',
-        ref: 'FLEXIBILIDAD-LIBERTAD-SYS',
-        tagline: 'Flexibilidad y Libertad',
-        shortDesc: 'Personalización total para tu tipo de arco. ADN Mimético: Almohadillas de Leopardo (Suspensión Adaptable).',
+        ref: 'FLEXIBILIDAD-ADAPTABLE-SYS',
+        tagline: 'Flexibilidad Adaptable',
+        shortDesc: 'ADN Mimético: Almohadillas de Leopardo (Suspensión Adaptable). Sistema de rendimiento dinámico que ofrece libertad de movimiento total y suspensión inteligente.',
         color: 'bg-amber-600',
         accent: '#d97706',
         image: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&q=80&w=800',
-        fullDescription: 'Personalización total para tu tipo de arco.',
-        whatIs: 'Ajuste de Calce: Relleno Adaptable. Tiene cuerpo pero es muy flexible para moverte libremente. ¿Dónde usarla? Zapatos con espacio moderado (Tenis de correr, crossfit o deportivos con plantilla removible). Anatomía Personalizada: Única con 3 alturas de arco (Bajo, Medio y Alto). Eliges la que mejor se adapte a tu pie plano o cavo.',
+        fullDescription: 'Sistema de rendimiento dinámico que ofrece libertad de movimiento total y suspensión inteligente.',
+        whatIs: 'Fisiología Mimética: Chasis 100% en LeapCore™ con tecnología ShockSphere™ localizada para absorción dinámica de impactos. Única con tres alturas de arco (Bajo, Medio y Alto) para moldearse perfectamente a la anatomía del usuario.',
         adnMimetico: 'Almohadillas de Leopardo (Suspensión Adaptable)',
-        ajusteCalce: 'Relleno Adaptable',
+        ajusteCalce: 'Grosor Medio (Relleno adaptable)',
         anatomia: 'Personalizada (3 alturas: Bajo, Medio y Alto)',
         useCases: [
-            'Tenis de correr',
-            'Crossfit y deportes dinámicos',
-            'Calzado deportivo con plantilla removible',
-            'Zapatos con espacio moderado'
+            'Running',
+            'Crossfit',
+            'Actividades de alta movilidad',
+            'Deportes que requieren corregir alineamiento sin restringir torsión'
         ],
-        userProfile: 'El Usuario Activo que necesita adaptabilidad natural y libertad de movimiento. Busca un sistema que se moldee a su anatomía única.',
+        userProfile: 'Running, Crossfit y actividades de alta movilidad que requieren corregir el alineamiento sin restringir la torsión.',
         technologies: ['leapcore', 'shocksphere', 'nanospread'],
         howItWorks: [
-            { tech: 'LeapCore™ (Arco Variable)', func: 'Geometría dinámica que se ajusta a la altura real de tu arco.' },
-            { tech: 'ShockSphere™', func: 'Suspensión inteligente inspirada en las almohadillas del leopardo.' },
-            { tech: 'NanoSpread™', func: 'Homeostasis reptiliana que mantiene tus pies frescos.' }
+            { tech: 'LeapCore™ (100%)', func: 'Chasis completo con geometría adaptable a tu tipo de arco.' },
+            { tech: 'ShockSphere™', func: 'Suspensión inteligente localizada para absorción dinámica de impactos.' },
+            { tech: 'NanoSpread™', func: 'Mantiene el microclima interno del calzado seco y fresco.' }
         ],
-        bioMimicry: 'ADN Mimético: Almohadillas de Leopardo (Suspensión Adaptable). Se adaptan a cualquier terreno de forma independiente, ofreciendo máxima libertad de movimiento.',
-        scenario: 'Adaptabilidad y flexibilidad para actividades que requieren libertad de movimiento.',
-        sensation: 'Flexible, adaptable, libre y como una extensión natural de tu pie.',
-        technicalSpecs: 'LeapCore™ (Arco Variable) + ShockSphere™ + NanoSpread™.',
-        aiReadySummary: { impact: '4/5', load: '4/5', tech: 'LeapCore™ Adaptable + ShockSphere™ + NanoSpread™' },
+        bioMimicry: 'ADN Mimético: Almohadillas de Leopardo (Suspensión Adaptable). Se adaptan a cualquier terreno ofreciendo máxima libertad de movimiento y suspensión inteligente.',
+        scenario: 'Mecanismo de Desempeño: Única con tres alturas de arco (Bajo, Medio y Alto) para moldearse perfectamente a la anatomía del usuario.',
+        sensation: 'Flexible, adaptable, libre y como una extensión natural de tu pie. Suspensión inteligente.',
+        technicalSpecs: 'LeapCore™ (100%) + ShockSphere™ + NanoSpread™. Tres alturas de arco (Bajo, Medio, Alto). Gestión Térmica: NanoSpread™ integrado que mantiene el microclima interno del calzado seco y fresco.',
+        aiReadySummary: { impact: '5/5', load: '3/5', tech: 'LeapCore™ + ShockSphere™ + NanoSpread™' },
         beneficiosSistema: {
             mejoraPostura: 4,
             absorcionImpacto: 5,
@@ -199,13 +198,13 @@ export const systemsData = [
             protectorRodillaCadera: 4,
             rellenoEspacio: 4
         },
-        bestFootwear: 'Tenis de correr, crossfit, calzado deportivo con plantilla removible.',
+        bestFootwear: 'Running, Crossfit y actividades de alta movilidad que requieren corregir el alineamiento sin restringir la torsión.',
         whatIsNot: [
-            'No es de talla única: Al tener arco variable (Bajo, Medio, Alto), requiere saber qué tipo de pie tienes.',
-            'No es una plantilla inestable: Aunque es la más flexible, su tecnología ShockSphere™ asegura tracción y equilibrio.',
-            'No es restrictiva: Es para quien busca que la plantilla se sienta como una extensión de su propia piel.'
+            'No somos gel genérico: El gel colapsa y pierde forma; nuestro PU de bi-densidad tiene memoria geométrica y recupera su estructura instantáneamente.',
+            'No somos un "yeso": No bloqueamos la musculatura del pie; somos un soporte activo que permite el trabajo biomecánico saludable.',
+            'No somos un accesorio cosmético: Somos sistemas de ingeniería de grado médico desarrollados en el Costa Rica MedTech Hub.'
         ],
-        idealIf: 'Si practicas deportes y buscas personalizar la altura del arco (Bajo, Medio o Alto) según tu pie plano o cavo.'
+        idealIf: 'Practicas deportes o actividades de alta movilidad y necesitas personalizar la altura del arco según tu anatomía.'
     }
 ];
 
@@ -215,16 +214,16 @@ export const techData = [
         name: 'LEAPCORE™',
         claim: 'Fisiología de Megafauna',
         icon: <LeapCoreIcon />,
-        description: 'Nos inspiramos en la arquitectura plantar del Elefante, la estructura más eficiente de la naturaleza para distribuir presiones masivas sin colapsar.',
-        bioFunction: 'Alineación Total de la Cadena Cinética. Al soportar hasta 110 kg (225 lbs) sin deformarse, LeapCore™ evita que el arco caiga. Esto detiene la rotación interna de la tibia (valgo de rodilla) y mantiene la pelvis nivelada, eliminando el dolor lumbar por desbalance postural.',
-        engineering: 'Un chasis de poliuretano (PU) de bi-densidad. Una capa superior de baja densidad que ofrece una bienvenida de suavidad inmediata, sobre una base de alta densidad con memoria geométrica.',
-        keyAttribute: 'Soporte estructural activo que garantiza la forma del arco por más de 8 horas, permitiendo que el pie trabaje sin llegar a la fatiga.',
-        benefit: 'Alineación Total de la Cadena Cinética. Al soportar hasta 110 kg sin deformarse, evita que el arco caiga, detiene la rotación interna de la tibia y mantiene la pelvis nivelada, eliminando el dolor lumbar por desbalance postural.',
+        description: 'Inspirada en la arquitectura plantar del Elefante, diseñada para distribuir presiones masivas sin que el tejido colapse.',
+        bioFunction: 'Mantiene la integridad del arco por jornadas de +8 horas, evitando el valgo de rodilla y el desbalance pélvico. A diferencia del gel, el LeapCore™ no se "vence" con el uso continuo.',
+        engineering: 'Chasis de Poliuretano (PU) de bi-densidad. Combina una capa superior de baja densidad para confort inmediato y una base de alta densidad con memoria geométrica.',
+        keyAttribute: 'Capacidad de Carga: Validada para soportar usuarios de hasta 110 kg (220 lbs) sin perder su forma original.',
+        benefit: 'Mantiene la integridad del arco por jornadas de +8 horas, evitando el valgo de rodilla y el desbalance pélvico. A diferencia del gel, el LeapCore™ no se "vence" con el uso continuo.',
         science: 'Chasis de PU de bi-densidad con memoria geométrica para distribución de presiones masivas.',
         comparison: [
-            { aspect: 'Puntos de Presión', generic: 'Dolor y fatiga plantar', rana: 'Elimina puntos de presión dolorosos' },
-            { aspect: 'Soporte', generic: 'Colapsa con el peso', rana: 'Soporta hasta 110kg sin deformarse' },
-            { aspect: 'Duración', generic: 'Dolor tras pocas horas', rana: 'Arco activo y sano +8 horas' }
+            { aspect: 'Capacidad de Carga', generic: 'Colapsa bajo peso', rana: 'Soporta hasta 110 kg (220 lbs)' },
+            { aspect: 'Soporte de Arco', generic: 'Pierde forma tras horas', rana: 'Mantiene integridad +8 horas' },
+            { aspect: 'Material', generic: 'Gel que se "vence"', rana: 'PU bi-densidad con memoria geométrica' }
         ]
     },
     {
@@ -232,84 +231,84 @@ export const techData = [
         name: 'THINBOOM™',
         claim: 'El Tendón Reactivo',
         icon: <ThinBoomIcon />,
-        description: 'Emulamos la eficiencia elástica de los Felinos. Sus patas no solo amortiguan; funcionan como una catapulta que almacena energía en el apoyo y la libera explosivamente en la propulsión.',
-        bioFunction: 'Eficiencia Energética y Reducción de Fatiga. Al devolver entre el 70% y 80% de la energía que recibes, tus músculos posteriores (isquiotibiales y glúteos) realizan menos esfuerzo en cada despegue. Es agilidad pura que te permite llegar al final del día con piernas descansadas.',
-        engineering: 'Una matriz de Elastómero de Celdas Expandidas de alto rebote integrada en un perfil mínimo de alto desempeño.',
-        keyAttribute: 'Transformación del impacto cinético en impulso propulsivo mediante retorno elástico acelerado.',
-        benefit: 'Eficiencia Energética y Reducción de Fatiga. Devuelve entre el 70% y 80% de la energía, tus músculos trabajan menos y llegas al final del día con piernas descansadas.',
-        science: 'Matriz de Elastómero de Celdas Expandidas de alto rebote para retorno elástico acelerado.',
+        description: 'Emula la eficiencia elástica de los Felinos, funcionando como una catapulta biológica que almacena energía en el apoyo y la libera en la propulsión.',
+        bioFunction: 'Reduce significativamente el esfuerzo de los isquiotibiales y glúteos, retrasando la fatiga muscular y permitiendo un andar más ágil y potente.',
+        engineering: 'Matriz de E-TPU Supercritical (Elastómero de Celdas Expandidas) de alto rebote y perfil mínimo.',
+        keyAttribute: 'Eficiencia Energética: Devuelve entre el 70% y 80% de la energía cinética en cada paso.',
+        benefit: 'Reduce significativamente el esfuerzo de los isquiotibiales y glúteos, retrasando la fatiga muscular y permitiendo un andar más ágil y potente.',
+        science: 'Matriz de E-TPU Supercritical de alto rebote para retorno elástico acelerado.',
         comparison: [
-            { aspect: 'Energía', generic: 'Amortiguación pasiva (absorbe)', rana: 'Catapulta reactiva (devuelve 70-80%)' },
-            { aspect: 'Esfuerzo', generic: 'Músculos trabajan más', rana: 'Músculos trabajan menos' },
-            { aspect: 'Sensación', generic: 'Cansancio progresivo', rana: 'Agilidad pura todo el día' }
+            { aspect: 'Retorno de Energía', generic: 'Amortiguación pasiva', rana: 'Devuelve 70-80% de energía' },
+            { aspect: 'Fatiga Muscular', generic: 'Músculos trabajan más', rana: 'Reduce esfuerzo muscular' },
+            { aspect: 'Perfil', generic: 'Grueso y voluminoso', rana: 'Perfil mínimo de alto desempeño' }
         ]
     },
     {
         id: 'poron',
         name: 'PORON® XRD®',
-        claim: 'Absorbedor y Disipador de Impactos',
+        claim: 'Escudo de Reacción Molecular',
         icon: <PoronIcon />,
-        description: 'Copiamos el sistema de seguridad del Pájaro Carpintero. El hueso hioides de esta ave actúa como un cinturón de seguridad que rodea su cráneo, dispersando vibraciones extremas para proteger su centro vital.',
-        bioFunction: 'Protección Estructural y Articular. Absorbe el 90% de la energía de cada impacto contra superficies duras (concreto/asfalto). Al disipar la onda de choque en la base, evitas que las vibraciones dañinas asciendan por los huesos hacia las articulaciones de rodilla y cadera, previniendo el desgaste prematuro.',
-        engineering: 'Polímero viscoelástico de protección extrema con propiedad intelectual de Rogers Corp, USA.',
-        keyAttribute: 'Material inteligente que permanece flexible en movimiento, pero se endurece molecularmente al instante del impacto para neutralizar la fuerza.',
-        benefit: 'Protección Estructural y Articular. Absorbe el 90% de la energía de cada impacto, evitando que las vibraciones dañinas asciendan hacia rodillas y cadera, previniendo el desgaste prematuro.',
-        science: 'Polímero viscoelástico de Rogers Corp (USA) que se endurece molecularmente al impacto.',
+        description: 'Tecnología propietaria y patentada del fabricante Rogers Corp (USA). Inspirado en el sistema de protección del Pájaro Carpintero, cuyo cráneo disipa impactos masivos protegiendo su estructura vital.',
+        bioFunction: 'Actúa como un escudo para las articulaciones, evitando que las vibraciones dañinas viajen desde el talón hacia la rodilla y la cadera.',
+        engineering: 'Polímero viscoelástico de celda abierta. Sus moléculas se "congelan" instantáneamente ante un impacto para disipar la energía y recuperan su flexibilidad al caminar.',
+        keyAttribute: 'Capacidad de Absorción: Neutraliza hasta el 90% de la energía de impacto en superficies agresivas (concreto, acero, piedra).',
+        benefit: 'Actúa como un escudo para las articulaciones, evitando que las vibraciones dañinas viajen desde el talón hacia la rodilla y la cadera.',
+        science: 'Polímero viscoelástico de Rogers Corp (USA) que se "congela" molecularmente al impacto.',
         comparison: [
-            { aspect: 'Protección', generic: 'Pasiva / Limitada', rana: 'Absorbe 90% del impacto' },
-            { aspect: 'Articulaciones', generic: 'Vibraciones dañan rodillas', rana: 'Escudo para rodillas y cadera' },
-            { aspect: 'Certificación', generic: 'No certificada', rana: 'Rogers Corp (USA) patentado' }
+            { aspect: 'Absorción', generic: 'Protección pasiva limitada', rana: 'Neutraliza 90% del impacto' },
+            { aspect: 'Articulaciones', generic: 'Vibraciones dañan rodillas', rana: 'Escudo protector articular' },
+            { aspect: 'Certificación', generic: 'Sin patente', rana: 'Rogers Corp (USA) patentado' }
         ]
     },
     {
         id: 'nanospread',
         name: 'NANOSPREAD™',
-        claim: 'Capilaridad Disipativa Reptiliana',
+        claim: 'Capilaridad Reptiliana',
         icon: <NanoSpreadIcon />,
-        description: 'Inspirado en los micro-canales de los Reptiles, que movilizan la humedad a través de su piel mediante capilaridad pasiva, desafiando incluso la gravedad.',
-        bioFunction: 'Homeostasis Térmica y Estabilidad Volumétrica. Un pie caliente se hincha, y un pie hinchado altera su forma de pisar. NanoSpread™ regula la temperatura (hasta 5°C menos) y mantiene el pie seco. Esto asegura que el pie conserve su volumen ideal y que el soporte ortótico actúe exactamente donde fue diseñado.',
-        engineering: 'Textil técnico avanzado con nanotecnología de capilaridad activa para gestión de flujo de aire y humedad.',
-        keyAttribute: 'Succión y movilización del sudor hacia los bordes para una evaporación controlada (FreshStep Dynamics).',
-        benefit: 'Homeostasis Térmica y Estabilidad Volumétrica. Regula la temperatura (hasta 5°C menos) y mantiene el pie seco, asegurando que el soporte ortótico actúe exactamente donde fue diseñado.',
-        science: 'Nanotecnología de capilaridad activa para gestión de flujo de aire y evaporación controlada.',
+        description: 'Emula los micro-canales de la piel de los Reptiles que dirigen la humedad por capilaridad para la termorregulación activa.',
+        bioFunction: 'Mantiene los pies frescos y secos, eliminando la fricción que causa ampollas y reduciendo la hinchazón por calor acumulado.',
+        engineering: 'Textil técnico de dispersión con nanotecnología de hilos hidrofóbicos.',
+        keyAttribute: 'Gestión Térmica: Capaz de reducir la temperatura interna del calzado hasta 5°C (41°F), manteniendo la homeostasis incluso en climas extremos.',
+        benefit: 'Mantiene los pies frescos y secos, eliminando la fricción que causa ampollas y reduciendo la hinchazón por calor acumulado.',
+        science: 'Nanotecnología de hilos hidrofóbicos para gestión térmica y evaporación controlada.',
         comparison: [
-            { aspect: 'Clima', generic: 'Pies calientes o fríos', rana: 'Regulación térmica de 5°C' },
-            { aspect: 'Sudor', generic: 'Absorbe y retiene humedad', rana: 'Expulsa sudor rápidamente' },
-            { aspect: 'Confort', generic: 'Ampollas y olores', rana: 'Pies secos y frescos siempre' }
+            { aspect: 'Temperatura', generic: 'Pies calientes e incómodos', rana: 'Reduce hasta 5°C la temperatura' },
+            { aspect: 'Humedad', generic: 'Absorbe y retiene sudor', rana: 'Expulsa humedad por capilaridad' },
+            { aspect: 'Confort', generic: 'Ampollas y fricción', rana: 'Pies secos y frescos siempre' }
         ]
     },
     {
         id: 'shocksphere',
         name: 'ShockSphere™',
-        claim: 'Absorción Felina Focalizada',
+        claim: 'Amortiguación Focalizada',
         icon: <ShockIcon />,
-        description: 'Absorción inteligente en puntos de presión crítica. Emula las almohadillas de estabilidad felina para disipar impactos de forma focalizada sin comprometer la estabilidad.',
-        bioFunction: 'Emula las almohadillas de estabilidad felina.',
-        engineering: 'Poliuretano Micro-Celular de Baja Histéresis con geometría esférica.',
-        keyAttribute: 'Adaptación dinámica al terreno y control del centro de gravedad.',
-        benefit: 'Absorción inteligente en los puntos críticos de presión. Disipa impactos de forma focalizada sin comprometer tu estabilidad ni equilibrio.',
-        science: 'Poliuretano Micro-Celular de Baja Histéresis con geometría esférica para disipación focalizada.',
+        description: 'Inspirada en las almohadillas protectoras de las Ranas, que absorben impactos proporcionales a saltos masivos.',
+        bioFunction: 'Neutraliza micro-vibraciones específicas, mejorando la tracción y el equilibrio en cada apoyo.',
+        engineering: 'Puntos de absorción localizada fabricados en PU de baja densidad técnica integrados en zonas críticas de presión.',
+        keyAttribute: 'Función: Proporciona una suspensión inteligente en el talón y metatarsos, adaptándose dinámicamente al terreno.',
+        benefit: 'Neutraliza micro-vibraciones específicas, mejorando la tracción y el equilibrio en cada apoyo.',
+        science: 'PU de baja densidad técnica con geometría esférica para suspensión inteligente.',
         comparison: [
-            { aspect: 'Impacto', generic: 'Amortiguación inestable', rana: 'Disipación focalizada felina' },
+            { aspect: 'Absorción', generic: 'Amortiguación uniforme', rana: 'Suspensión focalizada en zonas críticas' },
             { aspect: 'Terreno', generic: 'Transmite irregularidades', rana: 'Adaptación dinámica al suelo' },
-            { aspect: 'Fatiga', generic: 'Carga articular alta', rana: 'Neutralización de vibraciones' }
+            { aspect: 'Equilibrio', generic: 'Inestabilidad en apoyo', rana: 'Tracción y equilibrio optimizados' }
         ]
     },
     {
         id: 'archsupport',
-        name: 'Arch Support',
-        claim: 'El Exoesqueleto de Soporte Anti-Colapso',
+        name: 'Arch System',
+        claim: 'El Exoesqueleto de Soporte',
         icon: <ArchSupportIcon />,
-        description: 'Exoesqueleto reforzado de vinilo de alta tenacidad que previene el colapso del arco medial ante la fatiga extrema de jornadas intensivas.',
-        bioFunction: 'Emula el soporte estructural de un exoesqueleto biomecánico.',
-        engineering: 'Polímero de Vinilo de Alta Tenacidad reforzado para soporte inquebrantable.',
-        keyAttribute: 'Base de soporte inquebrantable que optimiza la distribución de carga del arco.',
-        benefit: 'Soporte de arco que nunca falla. Previene el colapso del arco medial durante jornadas intensivas, optimizando la distribución de carga.',
-        science: 'Polímero de Vinilo de Alta Tenacidad reforzado con geometría de exoesqueleto.',
+        description: 'Emula la integridad y resistencia de un Exoesqueleto, actuando como un armazón externo que protege la estructura ósea cuando la musculatura se agota.',
+        bioFunction: 'Optimiza la palanca de movimiento y asegura una transferencia de energía óptima, garantizando que el soporte sea inquebrantable independientemente del peso del usuario.',
+        engineering: 'Refuerzo rígido de alta tenacidad diseñado para integrarse estructuralmente al chasis LeapCore™.',
+        keyAttribute: 'Función: Previene el colapso del arco medial ante la fatiga extrema provocada por jornadas intensivas o cargas elevadas.',
+        benefit: 'Optimiza la palanca de movimiento y asegura una transferencia de energía óptima, garantizando que el soporte sea inquebrantable independientemente del peso del usuario.',
+        science: 'Refuerzo de alta tenacidad con integración estructural al chasis LeapCore™.',
         comparison: [
-            { aspect: 'Arco', generic: 'Soporte blando (cede)', rana: 'Refuerzo externo inquebrantable' },
+            { aspect: 'Soporte de Arco', generic: 'Cede ante la fatiga', rana: 'Inquebrantable bajo carga' },
             { aspect: 'Durabilidad', generic: 'Se deforma con el uso', rana: 'Integridad mecánica prolongada' },
-            { aspect: 'Palanca', generic: 'Pérdida de potencia', rana: 'Transferencia de energía óptima' }
+            { aspect: 'Transferencia', generic: 'Pérdida de potencia', rana: 'Transferencia de energía óptima' }
         ]
     }
 ];

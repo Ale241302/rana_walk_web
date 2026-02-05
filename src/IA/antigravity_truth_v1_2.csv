@@ -1,0 +1,121 @@
+﻿ID Perfil,Peso,Calce de Zapato,Actividad,Foco de Dolor,Expected
+RW-001,<80 kg,Amplio/Bota,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),LEOPARD
+RW-002,80-110 kg,Amplio/Bota,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),LEOPARD
+RW-003,>110 kg,Amplio/Bota,Laboral +8h (Concreto),Fatiga muscular,GOLIATH
+RW-004,80-110 kg,Amplio/Bota,Alta movilidad/Deporte,Dolor espalda/Postural,LEOPARD
+RW-005,80-110 kg,Amplio/Bota,Laboral +8h (Concreto),Fatiga muscular,GOLIATH
+RW-006,80-110 kg,Estándar/Casual,Laboral +8h (Concreto),Dolor espalda/Postural,ORBIS
+RW-007,>110 kg,Estándar/Casual,Laboral +8h (Concreto),Inestabilidad/Arco,ORBIS
+RW-008,<80 kg,Estándar/Casual,Alta movilidad/Deporte,Inestabilidad/Arco,LEOPARD
+RW-009,80-110 kg,Amplio/Bota,Urbano diario,Impacto (Rodilla/Cadera),GOLIATH
+RW-010,>110 kg,Amplio/Bota,Laboral +8h (Concreto),Impacto (Rodilla/Cadera),GOLIATH
+RW-011,<80 kg,Amplio/Bota,Alta movilidad/Deporte,Inestabilidad/Arco,LEOPARD
+RW-012,<80 kg,Estrecho/Slim,Laboral +8h (Concreto),Fatiga muscular,VELOX
+RW-013,>110 kg,Estándar/Casual,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),LEOPARD
+RW-014,<80 kg,Estrecho/Slim,Urbano diario,Impacto (Rodilla/Cadera),VELOX
+RW-015,80-110 kg,Estándar/Casual,Laboral +8h (Concreto),Impacto (Rodilla/Cadera),ORBIS
+RW-016,80-110 kg,Amplio/Bota,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),LEOPARD
+RW-017,80-110 kg,Amplio/Bota,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),LEOPARD
+RW-018,<80 kg,Amplio/Bota,Urbano diario,Fatiga muscular,GOLIATH
+RW-019,<80 kg,Estrecho/Slim,Laboral +8h (Concreto),Fatiga muscular,VELOX
+RW-020,<80 kg,Estándar/Casual,Urbano diario,Inestabilidad/Arco,ORBIS
+RW-021,<80 kg,Estrecho/Slim,Laboral +8h (Concreto),Impacto (Rodilla/Cadera),VELOX
+RW-022,80-110 kg,Estrecho/Slim,Urbano diario,Fatiga muscular,VELOX
+RW-023,<80 kg,Estándar/Casual,Urbano diario,Inestabilidad/Arco,ORBIS
+RW-024,>110 kg,Estándar/Casual,Laboral +8h (Concreto),Fatiga muscular,ORBIS
+RW-025,>110 kg,Estrecho/Slim,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),VELOX
+RW-026,<80 kg,Estrecho/Slim,Urbano diario,Fatiga muscular,VELOX
+RW-027,80-110 kg,Amplio/Bota,Urbano diario,Dolor espalda/Postural,ORBIS
+RW-028,80-110 kg,Estrecho/Slim,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),VELOX
+RW-029,>110 kg,Amplio/Bota,Urbano diario,Impacto (Rodilla/Cadera),GOLIATH
+RW-030,80-110 kg,Amplio/Bota,Urbano diario,Fatiga muscular,GOLIATH
+RW-031,80-110 kg,Amplio/Bota,Alta movilidad/Deporte,Dolor espalda/Postural,LEOPARD
+RW-032,80-110 kg,Estrecho/Slim,Laboral +8h (Concreto),Dolor espalda/Postural,VELOX
+RW-033,80-110 kg,Estándar/Casual,Alta movilidad/Deporte,Inestabilidad/Arco,LEOPARD
+RW-034,80-110 kg,Estándar/Casual,Urbano diario,Inestabilidad/Arco,ORBIS
+RW-035,>110 kg,Amplio/Bota,Urbano diario,Dolor espalda/Postural,GOLIATH
+RW-036,<80 kg,Amplio/Bota,Laboral +8h (Concreto),Fatiga muscular,GOLIATH
+RW-037,<80 kg,Amplio/Bota,Alta movilidad/Deporte,Fatiga muscular,LEOPARD
+RW-038,<80 kg,Estándar/Casual,Urbano diario,Fatiga muscular,ORBIS
+RW-039,>110 kg,Amplio/Bota,Laboral +8h (Concreto),Fatiga muscular,GOLIATH
+RW-040,<80 kg,Amplio/Bota,Urbano diario,Inestabilidad/Arco,GOLIATH
+RW-041,80-110 kg,Estrecho/Slim,Urbano diario,Inestabilidad/Arco,VELOX
+RW-042,>110 kg,Estrecho/Slim,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),VELOX
+RW-043,80-110 kg,Estándar/Casual,Urbano diario,Inestabilidad/Arco,ORBIS
+RW-044,80-110 kg,Estrecho/Slim,Laboral +8h (Concreto),Dolor espalda/Postural,VELOX
+RW-045,>110 kg,Estrecho/Slim,Urbano diario,Impacto (Rodilla/Cadera),VELOX
+RW-046,>110 kg,Estándar/Casual,Urbano diario,Inestabilidad/Arco,ORBIS
+RW-047,80-110 kg,Amplio/Bota,Urbano diario,Impacto (Rodilla/Cadera),GOLIATH
+RW-048,<80 kg,Estándar/Casual,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),LEOPARD
+RW-049,80-110 kg,Estrecho/Slim,Alta movilidad/Deporte,Inestabilidad/Arco,VELOX
+RW-050,>110 kg,Estándar/Casual,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),LEOPARD
+RW-051,80-110 kg,Estándar/Casual,Alta movilidad/Deporte,Dolor espalda/Postural,LEOPARD
+RW-052,<80 kg,Estándar/Casual,Urbano diario,Dolor espalda/Postural,ORBIS
+RW-053,>110 kg,Amplio/Bota,Urbano diario,Fatiga muscular,GOLIATH
+RW-054,<80 kg,Estrecho/Slim,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),VELOX
+RW-055,>110 kg,Estándar/Casual,Urbano diario,Inestabilidad/Arco,ORBIS
+RW-056,80-110 kg,Amplio/Bota,Alta movilidad/Deporte,Inestabilidad/Arco,LEOPARD
+RW-057,>110 kg,Estrecho/Slim,Alta movilidad/Deporte,Inestabilidad/Arco,VELOX
+RW-058,<80 kg,Estándar/Casual,Laboral +8h (Concreto),Fatiga muscular,ORBIS
+RW-059,>110 kg,Estrecho/Slim,Alta movilidad/Deporte,Fatiga muscular,VELOX
+RW-060,80-110 kg,Amplio/Bota,Alta movilidad/Deporte,Fatiga muscular,LEOPARD
+RW-061,>110 kg,Amplio/Bota,Alta movilidad/Deporte,Dolor espalda/Postural,GOLIATH
+RW-062,80-110 kg,Estrecho/Slim,Urbano diario,Impacto (Rodilla/Cadera),VELOX
+RW-063,<80 kg,Amplio/Bota,Alta movilidad/Deporte,Inestabilidad/Arco,LEOPARD
+RW-064,<80 kg,Estándar/Casual,Urbano diario,Inestabilidad/Arco,ORBIS
+RW-065,<80 kg,Estrecho/Slim,Laboral +8h (Concreto),Fatiga muscular,VELOX
+RW-066,>110 kg,Estrecho/Slim,Urbano diario,Impacto (Rodilla/Cadera),VELOX
+RW-067,<80 kg,Estándar/Casual,Laboral +8h (Concreto),Fatiga muscular,ORBIS
+RW-068,>110 kg,Amplio/Bota,Laboral +8h (Concreto),Dolor espalda/Postural,GOLIATH
+RW-069,80-110 kg,Estrecho/Slim,Laboral +8h (Concreto),Fatiga muscular,VELOX
+RW-070,80-110 kg,Estándar/Casual,Laboral +8h (Concreto),Fatiga muscular,ORBIS
+RW-071,>110 kg,Amplio/Bota,Alta movilidad/Deporte,Fatiga muscular,GOLIATH
+RW-072,<80 kg,Estrecho/Slim,Urbano diario,Inestabilidad/Arco,VELOX
+RW-073,<80 kg,Estándar/Casual,Laboral +8h (Concreto),Fatiga muscular,ORBIS
+RW-074,<80 kg,Estrecho/Slim,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),VELOX
+RW-075,80-110 kg,Estrecho/Slim,Urbano diario,Inestabilidad/Arco,VELOX
+RW-076,80-110 kg,Estándar/Casual,Alta movilidad/Deporte,Inestabilidad/Arco,LEOPARD
+RW-077,80-110 kg,Estándar/Casual,Alta movilidad/Deporte,Dolor espalda/Postural,LEOPARD
+RW-078,>110 kg,Amplio/Bota,Laboral +8h (Concreto),Dolor espalda/Postural,GOLIATH
+RW-079,80-110 kg,Estrecho/Slim,Alta movilidad/Deporte,Dolor espalda/Postural,VELOX
+RW-080,<80 kg,Estrecho/Slim,Laboral +8h (Concreto),Fatiga muscular,VELOX
+RW-081,>110 kg,Amplio/Bota,Laboral +8h (Concreto),Impacto (Rodilla/Cadera),GOLIATH
+RW-082,>110 kg,Amplio/Bota,Laboral +8h (Concreto),Fatiga muscular,GOLIATH
+RW-083,80-110 kg,Estrecho/Slim,Laboral +8h (Concreto),Impacto (Rodilla/Cadera),VELOX
+RW-084,80-110 kg,Estándar/Casual,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),LEOPARD
+RW-085,80-110 kg,Estándar/Casual,Urbano diario,Fatiga muscular,ORBIS
+RW-086,<80 kg,Estándar/Casual,Urbano diario,Fatiga muscular,ORBIS
+RW-087,80-110 kg,Amplio/Bota,Urbano diario,Fatiga muscular,GOLIATH
+RW-088,80-110 kg,Estrecho/Slim,Alta movilidad/Deporte,Inestabilidad/Arco,VELOX
+RW-089,>110 kg,Estrecho/Slim,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),VELOX
+RW-090,<80 kg,Estándar/Casual,Laboral +8h (Concreto),Fatiga muscular,ORBIS
+RW-091,>110 kg,Estrecho/Slim,Laboral +8h (Concreto),Fatiga muscular,VELOX
+RW-092,<80 kg,Amplio/Bota,Alta movilidad/Deporte,Inestabilidad/Arco,LEOPARD
+RW-093,>110 kg,Estándar/Casual,Alta movilidad/Deporte,Fatiga muscular,LEOPARD
+RW-094,>110 kg,Estrecho/Slim,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),VELOX
+RW-095,80-110 kg,Amplio/Bota,Laboral +8h (Concreto),Impacto (Rodilla/Cadera),GOLIATH
+RW-096,<80 kg,Estándar/Casual,Urbano diario,Fatiga muscular,ORBIS
+RW-097,<80 kg,Estándar/Casual,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),LEOPARD
+RW-098,>110 kg,Estándar/Casual,Alta movilidad/Deporte,Dolor espalda/Postural,LEOPARD
+RW-099,>110 kg,Amplio/Bota,Urbano diario,Dolor espalda/Postural,GOLIATH
+RW-100,80-110 kg,Amplio/Bota,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),LEOPARD
+EC-001,110 kg,Estándar/Casual,Alta movilidad/Deporte,Fatiga muscular,LEOPARD
+EC-002,110 kg,Estándar/Casual,Laboral +8h (Concreto),Impacto (Rodilla/Cadera),GOLIATH
+EC-003,110 kg,Estándar/Casual,Urbano diario,Dolor espalda/Postural,ORBIS
+EC-004,110 kg,Amplio/Bota,Laboral +8h (Concreto),Fatiga muscular,GOLIATH
+EC-005,110 kg,Amplio/Bota,Urbano diario,Inestabilidad/Arco,LEOPARD
+EC-006,<80 kg,Amplio/Bota,Laboral +8h (Concreto),Impacto (Rodilla/Cadera),GOLIATH
+EC-007,<80 kg,Amplio/Bota,Laboral +8h (Concreto),Inestabilidad/Arco,LEOPARD
+EC-008,<80 kg,Estándar/Casual,Alta movilidad/Deporte,Inestabilidad/Arco,LEOPARD
+EC-009,<80 kg,Estándar/Casual,Laboral +8h (Concreto),Dolor espalda/Postural,ORBIS
+EC-010,80-110 kg,Amplio/Bota,Urbano diario,Impacto (Rodilla/Cadera),ORBIS
+EC-011,80-110 kg,Estándar/Casual,Urbano diario,Impacto (Rodilla/Cadera),ORBIS
+EC-012,>110 kg,Amplio/Bota,Urbano diario,Dolor espalda/Postural,ORBIS
+EC-013,>110 kg,Amplio/Bota,Urbano diario,Inestabilidad/Arco,LEOPARD
+EC-014,>110 kg,Estándar/Casual,Laboral +8h (Concreto),Dolor espalda/Postural,ORBIS
+EC-015,>110 kg,Estándar/Casual,Alta movilidad/Deporte,Dolor espalda/Postural,LEOPARD
+EC-016,>110 kg,Estándar/Casual,Alta movilidad/Deporte,Impacto (Rodilla/Cadera),LEOPARD
+EC-017,80-110 kg,Estrecho/Slim,Urbano diario,Inestabilidad/Arco,VELOX
+EC-018,80-110 kg,Estrecho/Slim,Laboral +8h (Concreto),Impacto (Rodilla/Cadera),VELOX
+EC-019,<80 kg,Estrecho/Slim,Alta movilidad/Deporte,Dolor espalda/Postural,VELOX
+EC-020,>110 kg,Estrecho/Slim,Laboral +8h (Concreto),Fatiga muscular,VELOX

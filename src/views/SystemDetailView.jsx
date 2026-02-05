@@ -97,25 +97,18 @@ const SystemDetailView = ({ systemId, navigate, addToCart }) => {
                                     Lo que NO es {system.name}
                                 </h3>
                                 <div className="space-y-4">
-                                    {system.whatIsNot.map((item, i) => {
-                                        const [title, ...rest] = item.split(':');
-                                        const description = rest.join(':').trim();
-                                        return (
-                                            <div key={i} className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
-                                                <div className="flex items-start gap-3">
-                                                    <div className="w-6 h-6 bg-red-50 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                                        <div className="w-2 h-2 bg-red-400 rounded-full"></div>
-                                                    </div>
-                                                    <div>
-                                                        <span className="font-bold text-[#013A57] block mb-1">{title}</span>
-                                                        {description && (
-                                                            <p className="text-slate-500 text-sm leading-relaxed">{description}</p>
-                                                        )}
-                                                    </div>
+                                    {system.whatIsNot.map((item, i) => (
+                                        <div key={i} className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                                            <div className="flex items-start gap-3">
+                                                <div className="w-6 h-6 bg-red-50 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                    <div className="w-2 h-2 bg-red-400 rounded-full"></div>
                                                 </div>
+                                                <p className="text-slate-600 text-sm leading-relaxed">
+                                                    <span className="font-bold text-[#013A57]">{item.split(':')[0]}:</span> {item.split(':').slice(1).join(':').trim()}
+                                                </p>
                                             </div>
-                                        );
-                                    })}
+                                        </div>
+                                    ))}
                                 </div>
                             </section>
                         </div>
