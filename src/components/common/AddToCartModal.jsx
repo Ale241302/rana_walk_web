@@ -1,8 +1,23 @@
 import React, { useState } from 'react';
 import { X, Users } from 'lucide-react';
+
+// Iconos de género personalizados
+const MaleIcon = ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+        <circle cx="12" cy="4" r="3" />
+        <path d="M12 8c-2 0-4 1-4 3v6h2v7h4v-7h2v-6c0-2-2-3-4-3z" />
+    </svg>
+);
+
+const FemaleIcon = ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+        <circle cx="12" cy="4" r="3" />
+        <path d="M12 8c-2 0-3.5 1-4 2l-1 5h3v9h4v-9h3l-1-5c-.5-1-2-2-4-2z" />
+    </svg>
+);
 import { sizeGroups } from '../../data/ranaData';
 
-// Datos de distribuidores y sub distribuidores
+// Datos de puntos de ventas
 const distributorsAndSubDistributors = [
     { id: 1, name: 'Distribuciones ABC', type: 'distributor', region: 'Zona Norte' },
     { id: 2, name: 'Comercial XYZ', type: 'distributor', region: 'Zona Sur' },
@@ -26,6 +41,8 @@ const AddToCartModal = ({ isOpen, onClose, onConfirm, system }) => {
         if (unit === 'EU') return group.EU;
         if (unit === 'BRA') return group.BRA;
         if (unit === 'MEX') return group.MEX;
+        if (unit === 'CM') return [`Ancho: ${(group.Width_mm / 10).toFixed(1)} cm, Largo: ${(parseFloat(group.Length_mm[0]) / 10).toFixed(1)}-${(parseFloat(group.Length_mm[group.Length_mm.length - 1]) / 10).toFixed(1)} cm`];
+        if (unit === 'IN') return [`Ancho: ${(group.Width_mm / 25.4).toFixed(2)}", Largo: ${group.Length_in[0]}-${group.Length_in[group.Length_in.length - 1]}"`];
         return [];
     };
 
@@ -61,8 +78,8 @@ const AddToCartModal = ({ isOpen, onClose, onConfirm, system }) => {
                 <div className="p-8 space-y-6">
                     <div>
                         <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Unidad de Medida</label>
-                        <div className="grid grid-cols-4 gap-2">
-                            {['US', 'BRA', 'EU', 'MEX'].map(u => (
+                        <div className="grid grid-cols-6 gap-2">
+                            {['US', 'BRA', 'EU', 'MEX', 'CM', 'IN'].map(u => (
                                 <button
                                     key={u}
                                     onClick={() => { setUnit(u); setSize(''); }}
@@ -76,16 +93,21 @@ const AddToCartModal = ({ isOpen, onClose, onConfirm, system }) => {
 
                     <div>
                         <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Género</label>
-                        <div className="grid grid-cols-2 gap-2">
-                            {['Masculino', 'Femenino'].map(g => (
-                                <button
-                                    key={g}
-                                    onClick={() => { setGender(g); setSize(''); }}
-                                    className={`py-2 rounded-lg text-sm font-bold border ${gender === g ? 'bg-[#013A57] text-white border-[#013A57]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-[#013A57]'}`}
-                                >
-                                    {g}
-                                </button>
-                            ))}
+                        <div className="grid grid-cols-2 gap-3">
+                            <button
+                                onClick={() => { setGender('Masculino'); setSize(''); }}
+                                className={`py-3 rounded-lg font-bold border flex items-center justify-center gap-2 ${gender === 'Masculino' ? 'bg-[#013A57] text-white border-[#013A57]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-[#013A57]'}`}
+                                title="Masculino"
+                            >
+                                <MaleIcon className="w-6 h-6" />
+                            </button>
+                            <button
+                                onClick={() => { setGender('Femenino'); setSize(''); }}
+                                className={`py-3 rounded-lg font-bold border flex items-center justify-center gap-2 ${gender === 'Femenino' ? 'bg-[#013A57] text-white border-[#013A57]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-[#013A57]'}`}
+                                title="Femenino"
+                            >
+                                <FemaleIcon className="w-6 h-6" />
+                            </button>
                         </div>
                     </div>
 
@@ -125,20 +147,20 @@ const AddToCartModal = ({ isOpen, onClose, onConfirm, system }) => {
                     <div>
                         <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
                             <Users className="w-4 h-4 text-[#75CBB3]" />
-                            Seleccionar Distribuidor <span className="text-slate-300 font-normal">(Opcional)</span>
+                            Seleccionar Punto de Venta <span className="text-slate-300 font-normal">(Opcional)</span>
                         </label>
                         <select
                             value={selectedDistributor}
                             onChange={(e) => setSelectedDistributor(e.target.value)}
                             className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-[#013A57] focus:outline-none focus:border-[#75CBB3]"
                         >
-                            <option value="">Sin preferencia de distribuidor</option>
-                            <optgroup label="Distribuidores">
+                            <option value="">Sin preferencia de punto de venta</option>
+                            <optgroup label="Puntos de Venta">
                                 {distributorsAndSubDistributors.filter(d => d.type === 'distributor').map(d => (
                                     <option key={d.id} value={d.id}>{d.name} - {d.region}</option>
                                 ))}
                             </optgroup>
-                            <optgroup label="Sub Distribuidores">
+                            <optgroup label="Puntos de Venta Asociados">
                                 {distributorsAndSubDistributors.filter(d => d.type === 'sub-distributor').map(d => (
                                     <option key={d.id} value={d.id}>{d.name} - {d.region}</option>
                                 ))}

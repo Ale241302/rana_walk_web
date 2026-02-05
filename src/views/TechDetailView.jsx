@@ -18,9 +18,17 @@ const TechDetailView = ({ techId, navigate }) => {
                         {React.cloneElement(tech.icon, { size: 40 })}
                     </div>
                     <div>
-                        <span className="text-[10px] font-black text-[#75CBB3] uppercase tracking-[0.4em] block mb-2">{tech.bioFunction}</span>
+
                         <h1 className="text-4xl md:text-7xl font-black text-[#013A57] leading-none">{tech.name}</h1>
                         <p className="text-lg text-slate-400 font-bold uppercase tracking-widest mt-2">{tech.claim}</p>
+                    </div>
+                </div>
+
+                {/* Beneficio Biomecánico Card */}
+                <div className="bg-white rounded-[3rem] shadow-2xl overflow-hidden border border-slate-100 mb-8">
+                    <div className="p-12 bg-gradient-to-br from-[#75CBB3]/10 to-[#013A57]/5">
+                        <h2 className="text-xs font-black text-[#75CBB3] uppercase tracking-[0.3em] mb-6">Beneficio Biomecánico</h2>
+                        <p className="text-xl text-[#013A57] leading-relaxed font-medium">{tech.bioFunction}</p>
                     </div>
                 </div>
 

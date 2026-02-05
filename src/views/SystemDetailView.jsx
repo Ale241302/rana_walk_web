@@ -96,13 +96,26 @@ const SystemDetailView = ({ systemId, navigate, addToCart }) => {
                                     <span className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-red-500 shadow-sm">✕</span>
                                     Lo que NO es {system.name}
                                 </h3>
-                                <div className="grid md:grid-cols-2 gap-4">
-                                    {system.whatIsNot.map((item, i) => (
-                                        <div key={i} className="flex items-center gap-3 text-slate-500 font-medium">
-                                            <div className="w-1.5 h-1.5 bg-red-400 rounded-full"></div>
-                                            {item}
-                                        </div>
-                                    ))}
+                                <div className="space-y-4">
+                                    {system.whatIsNot.map((item, i) => {
+                                        const [title, ...rest] = item.split(':');
+                                        const description = rest.join(':').trim();
+                                        return (
+                                            <div key={i} className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                                                <div className="flex items-start gap-3">
+                                                    <div className="w-6 h-6 bg-red-50 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                        <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                                                    </div>
+                                                    <div>
+                                                        <span className="font-bold text-[#013A57] block mb-1">{title}</span>
+                                                        {description && (
+                                                            <p className="text-slate-500 text-sm leading-relaxed">{description}</p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </section>
                         </div>
@@ -132,23 +145,39 @@ const SystemDetailView = ({ systemId, navigate, addToCart }) => {
                             </div>
 
                             <div className="bg-emerald-50 p-10 rounded-[2.5rem] border border-emerald-100 relative group">
-                                <div className="space-y-4">
-                                    <div className="flex justify-between items-center text-xs">
-                                        <span className="font-bold text-slate-500">Carga</span>
-                                        <span className="font-black text-[#013A57]">{system.aiReadySummary.load}</span>
+
+                                {/* Beneficios del Sistema */}
+                                {system.beneficiosSistema && (
+                                    <div className="border-t border-emerald-200 pt-6 mt-6">
+                                        <h4 className="text-xs font-black text-[#013A57] uppercase tracking-widest mb-4">Beneficios del Sistema</h4>
+                                        <div className="space-y-3">
+                                            {[
+                                                { key: 'mejoraPostura', label: 'Mejora de Postura / Alineamiento' },
+                                                { key: 'absorcionImpacto', label: 'Absorción de Impacto en el Paso' },
+                                                { key: 'anatomicaFlexible', label: 'Anatómica y Flexible' },
+                                                { key: 'devolucionEnergia', label: 'Devolución de Energía' },
+                                                { key: 'piesFrescosSecos', label: 'Pies Frescos y Secos' },
+                                                { key: 'manejoPeso', label: 'Manejo de Peso / Resiliencia' },
+                                                { key: 'protectorRodillaCadera', label: 'Protector de Rodilla y Cadera' },
+                                                { key: 'rellenoEspacio', label: 'Ajuste al Calzado (Grosor)' }
+                                            ].map(({ key, label }) => (
+                                                <div key={key} className="flex items-center justify-between gap-4">
+                                                    <span className="text-xs font-medium text-slate-600 flex-1">{label}</span>
+                                                    <div className="flex gap-1">
+                                                        {[1, 2, 3, 4, 5].map((dot) => (
+                                                            <div
+                                                                key={dot}
+                                                                className={`w-2.5 h-2.5 rounded-full transition-all ${dot <= system.beneficiosSistema[key] ? 'bg-[#75CBB3]' : 'bg-slate-200'}`}
+                                                            />
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
-                                    <div className="w-full bg-white h-1.5 rounded-full overflow-hidden">
-                                        <div className="bg-emerald-500 h-full" style={{ width: system.aiReadySummary.load.includes('10/10') ? '100%' : '80%' }}></div>
-                                    </div>
-                                    <div className="flex justify-between items-center text-xs">
-                                        <span className="font-bold text-slate-500">Impacto</span>
-                                        <span className="font-black text-[#013A57]">{system.aiReadySummary.impact}</span>
-                                    </div>
-                                    <div className="w-full bg-white h-1.5 rounded-full overflow-hidden">
-                                        <div className="bg-emerald-500 h-full" style={{ width: system.aiReadySummary.impact.includes('10/10') ? '100%' : '70%' }}></div>
-                                    </div>
-                                </div>
-                                <p className="mt-8 text-sm text-emerald-800 font-medium leading-relaxed italic border-t border-emerald-200 pt-6">"{system.idealIf}"</p>
+                                )}
+
+                                <p className="mt-6 text-sm text-emerald-800 font-medium leading-relaxed italic border-t border-emerald-200 pt-6">"{system.idealIf}"</p>
                             </div>
                         </div>
                     </div>

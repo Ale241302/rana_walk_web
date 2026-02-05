@@ -24,7 +24,6 @@ const TechCatalogView = ({ navigate }) => (
                             <div className="scale-[2.5] group-hover:rotate-12 transition-transform duration-700 relative z-10">{t.icon}</div>
                         </div>
                         <div className="md:w-2/3 p-10">
-                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] block mb-2">{t.bioFunction}</span>
                             <h3 className="text-3xl font-black text-[#013A57] mb-2">{t.name}</h3>
                             <p className="text-[#75CBB3] font-bold text-xs mb-4 uppercase tracking-widest">{t.claim}</p>
                             <p className="text-slate-500 text-sm mb-6 leading-relaxed italic">{t.description}</p>

@@ -108,10 +108,10 @@ const CheckoutView = ({ cartItems, navigate }) => {
                         {selectedDistributor && (
                             <div className="mb-6 p-4 bg-purple-500/20 rounded-xl border border-purple-500/30">
                                 <p className="text-[10px] text-purple-300 uppercase font-bold tracking-widest mb-1 flex items-center gap-2">
-                                    <Users className="w-3 h-3" /> Distribuidor Seleccionado
+                                    <Users className="w-3 h-3" /> Punto de Venta Seleccionado
                                 </p>
                                 <p className="font-bold text-white">{selectedDistributor.name}</p>
-                                <p className="text-xs text-purple-300">{selectedDistributor.region} • {selectedDistributor.type === 'distributor' ? 'Distribuidor' : 'Sub Distribuidor'}</p>
+                                <p className="text-xs text-purple-300">{selectedDistributor.region} • {selectedDistributor.type === 'distributor' ? 'Punto de Venta' : 'Punto de Venta Asociado'}</p>
                             </div>
                         )}
 

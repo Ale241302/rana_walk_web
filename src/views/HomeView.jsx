@@ -16,7 +16,7 @@ const HomeView = ({ navigate }) => (
                         Sistemas de bio-mimetismo podal: diseñados para dominar el <span className="text-[#75CBB3]">impacto y la carga</span> en jornadas exigentes.
                     </h1>
                     <p className="text-xl text-slate-300 mb-6 leading-relaxed max-w-2xl">
-                        Rana Walk® desarrolla soluciones de bio-mimetismo podal inspiradas en la eficiencia de la naturaleza y diseñadas en el Life Sciences Hub de las Américas en Costa Rica. Name it, leap forward.
+                        Rana Walk® desarrolla soluciones de bio-mimetismo podal inspiradas en la eficiencia de la naturaleza y diseñadas en el Costa Rica MedTech Hub. Name it, leap forward.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-5">
                         <button onClick={() => navigate('systems')} className="bg-[#75CBB3] text-[#013A57] px-8 py-4 rounded-lg font-black uppercase tracking-wider hover:bg-[#066383] transition-all flex items-center justify-center gap-2">
@@ -103,12 +103,6 @@ const HomeView = ({ navigate }) => (
                             <h4 className="font-black text-base mb-3 group-hover:text-[#75CBB3] transition-colors duration-300">
                                 {t.name}
                             </h4>
-
-                            {/* Descripción mejorada */}
-                            <p className="text-[9px] text-slate-400 leading-relaxed uppercase tracking-[0.15em] font-semibold group-hover:text-slate-300 transition-colors duration-300">
-                                {t.bioFunction}
-                            </p>
-
                             {/* Badge opcional "Premium" o "Patented" */}
                             <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-[#75CBB3] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </div>
