@@ -46,8 +46,7 @@ const Navbar = ({ currentView, navigate, cartCount, onOpenCart, user, onLogout }
 
     const links = [
         { id: 'home', label: 'Inicio' },
-        { id: 'about', label: 'Nosotros' },
-        { id: 'systems', label: 'Sistemas' },
+        { id: 'systems', label: 'Sistemas Biomecánicos' },
         { id: 'tech', label: 'Tecnologías' },
         { id: 'distributors', label: 'Distribuidores' },
         { id: 'contact', label: 'Contacto' }
