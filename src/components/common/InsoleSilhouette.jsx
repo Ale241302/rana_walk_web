@@ -69,7 +69,7 @@ const InsoleSilhouette = ({ series, trimInfo, trimLevel, trimMessage, selectedLe
         return (
             <div className="flex flex-col items-center justify-center h-full gap-3">
                 <img
-                    src="https://ranawalk.com/images/grifo-claque.png"
+                    src="https://ranawalk.com/images/1000467066.png"
                     alt="Plantilla Rana Walk"
                     className="w-32 opacity-30"
                 />
@@ -170,7 +170,7 @@ const InsoleSilhouette = ({ series, trimInfo, trimLevel, trimMessage, selectedLe
                 {/* INSOLE IMAGE + cut lines */}
                 <div className="relative mx-1 flex-shrink-0" style={{ width: '170px', height: '430px' }}>
                     <img
-                        src="https://ranawalk.com/images/grifo-claque.png"
+                        src="https://ranawalk.com/images/1000467066.png"
                         alt={`Plantilla ${series.id}`}
                         className="w-full h-full object-fill drop-shadow-lg"
                     />
