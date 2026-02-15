@@ -135,6 +135,20 @@ const InsoleSilhouette = ({ series, trimInfo, trimLevel, trimMessage, selectedLe
 
     return (
         <div className="flex flex-col items-center h-full gap-4">
+            <style>
+                {`
+                @keyframes waveText {
+                    0% { color: #64748b; transform: scale(1); }
+                    50% { color: #75CBB3; transform: scale(1.2); }
+                    100% { color: #64748b; transform: scale(1); }
+                }
+                @keyframes waveLine {
+                    0% { background-color: #cbd5e1; }
+                    50% { background-color: #75CBB3; box-shadow: 0 0 4px #75CBB3; }
+                    100% { background-color: #cbd5e1; }
+                }
+                `}
+            </style>
             {/* Serie badge */}
             <div className="flex items-center gap-3 flex-shrink-0">
                 <span className="px-4 py-1.5 rounded-full bg-[#013A57] text-white font-black text-lg tracking-wider shadow-md">
@@ -156,10 +170,30 @@ const InsoleSilhouette = ({ series, trimInfo, trimLevel, trimMessage, selectedLe
                         for (let mm = 0; mm <= maxL; mm += step) {
                             // 0mm = heel (bottom), maxL = toe (top)
                             const topPct = ((maxL - mm) / maxL) * 100;
+                            // Animation delay logic: 0mm (bottom) starts first, maxL (top) starts last
+                            // We use series.id in key to force re-render and restart animation
+                            const delay = `${(mm / maxL) * 0.8}s`;
+
                             ticks.push(
-                                <div key={mm} className="absolute right-0 flex items-center" style={{ top: `${topPct}%`, transform: 'translateY(-50%)' }}>
-                                    <span className="text-[11px] text-slate-500 font-mono font-semibold mr-0.5">{mm}</span>
-                                    <div className="w-1.5 h-px bg-slate-300" />
+                                <div key={`${series.id}-mm-${mm}`} className="absolute right-0 flex items-center" style={{ top: `${topPct}%`, transform: 'translateY(-50%)' }}>
+                                    <span
+                                        className="text-[11px] font-mono font-semibold mr-0.5"
+                                        style={{
+                                            animation: `waveText 0.8s ease-out both`,
+                                            animationDelay: delay,
+                                            color: '#64748b' // initial slate-500
+                                        }}
+                                    >
+                                        {mm}
+                                    </span>
+                                    <div
+                                        className="w-1.5 h-px"
+                                        style={{
+                                            animation: `waveLine 0.8s ease-out both`,
+                                            animationDelay: delay,
+                                            backgroundColor: '#cbd5e1' // initial slate-300
+                                        }}
+                                    />
                                 </div>
                             );
                         }
@@ -250,11 +284,31 @@ const InsoleSilhouette = ({ series, trimInfo, trimLevel, trimMessage, selectedLe
                         for (let inch = 0; inch <= maxIn; inch += 0.5) {
                             const mm = inch * 25.4;
                             const topPct = ((maxL - mm) / maxL) * 100;
+                            // Same logic: delay based on mm height (0 is bottom)
+                            // mm goes from 0 to maxL. 
+                            const delay = `${(mm / maxL) * 0.8}s`;
+
                             if (topPct >= 0 && topPct <= 100) {
                                 ticks.push(
-                                    <div key={inch} className="absolute left-0 flex items-center" style={{ top: `${topPct}%`, transform: 'translateY(-50%)' }}>
-                                        <div className="w-1.5 h-px bg-slate-300" />
-                                        <span className="text-[11px] text-slate-500 font-mono font-semibold ml-0.5">{inch.toFixed(1)}"</span>
+                                    <div key={`${series.id}-in-${inch}`} className="absolute left-0 flex items-center" style={{ top: `${topPct}%`, transform: 'translateY(-50%)' }}>
+                                        <div
+                                            className="w-1.5 h-px"
+                                            style={{
+                                                animation: `waveLine 0.8s ease-out both`,
+                                                animationDelay: delay,
+                                                backgroundColor: '#cbd5e1'
+                                            }}
+                                        />
+                                        <span
+                                            className="text-[11px] font-mono font-semibold ml-0.5"
+                                            style={{
+                                                animation: `waveText 0.8s ease-out both`,
+                                                animationDelay: delay,
+                                                color: '#64748b'
+                                            }}
+                                        >
+                                            {inch.toFixed(1)}"
+                                        </span>
                                     </div>
                                 );
                             }
