@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { sizeGroups } from '../../data/ranaData';
+import { getSizeCutLines } from '../../data/seriesGeometry';
 
 /**
  * InsoleSilhouette — Image-based insole view with mm/inch rulers,
@@ -23,47 +23,26 @@ const InsoleSilhouette = ({ series, trimInfo, trimLevel, trimMessage, selectedLe
 
     const [hoveredLine, setHoveredLine] = useState(null);
 
-    // Get all size-to-length mappings for this series
+    // Get all size-to-length mappings for this series using new data source
     const sizeCutLines = useMemo(() => {
-        if (!series || !sizeGroupId) return [];
-        const group = sizeGroups.find(g => g.id === sizeGroupId);
-        if (!group) return [];
+        if (!series) return [];
 
-        let sizeLabels = [];
-        if (unit === 'US') {
-            sizeLabels = gender === 'Masculino' ? (group.US_Men || []) : (group.US_Women || []);
-        } else if (unit === 'EU') {
-            sizeLabels = group.EU || [];
-        } else if (unit === 'BRA') {
-            sizeLabels = group.BRA || [];
-        } else if (unit === 'MEX') {
-            sizeLabels = group.MEX || [];
-        } else {
-            sizeLabels = group.US_Men || [];
-        }
-
-        const lengths = (group.Length_mm || []).map(l => parseFloat(l));
+        // Use the new helper to get lines (label, lengthMm, offset)
+        const rawLines = getSizeCutLines(series.id, unit, gender);
         const maxL = series.length_max_mm;
 
-        const lines = [];
-        for (let i = 0; i < lengths.length; i++) {
-            const lengthMm = lengths[i];
-            if (isNaN(lengthMm)) continue;
-            const offset = maxL - lengthMm;
-            const label = sizeLabels[i]
-                ? `${unit === 'US' ? (gender === 'Masculino' ? 'US' : 'USW') : unit}${sizeLabels[i]}`
-                : `${lengthMm}mm`;
-            const lengthIn = (lengthMm / 25.4).toFixed(2);
-
+        return rawLines.map(line => {
             // Map offset → vertical position % on the insole
             // The insole image: toe at ~3% from top, heel at ~97%
             // offset=0 means max length (at tip), larger offset = line further from tip (downward)
-            const posPercent = 4 + (offset / maxL) * 45;
+            const posPercent = (line.offset / maxL) * 100;
 
-            lines.push({ label, lengthMm, lengthIn, offset, posPercent });
-        }
-        return lines;
-    }, [series, sizeGroupId, unit, gender]);
+            return {
+                ...line,
+                posPercent
+            };
+        });
+    }, [series, unit, gender]);
 
     if (!series) {
         return (
@@ -162,7 +141,7 @@ const InsoleSilhouette = ({ series, trimInfo, trimLevel, trimMessage, selectedLe
             {/* Main visual: left ruler + insole + right ruler */}
             <div className="flex items-stretch justify-center flex-1 min-h-0 w-full">
                 {/* LEFT RULER — mm */}
-                <div className="flex flex-col justify-between h-[430px] w-9 flex-shrink-0 relative">
+                <div className="flex flex-col justify-between h-[580px] w-9 flex-shrink-0 relative">
                     <div className="absolute right-0 top-0 bottom-0 w-px bg-slate-200" />
                     {(() => {
                         const step = maxL > 300 ? 20 : maxL > 260 ? 15 : 10;
@@ -202,11 +181,11 @@ const InsoleSilhouette = ({ series, trimInfo, trimLevel, trimMessage, selectedLe
                 </div>
 
                 {/* INSOLE IMAGE + cut lines */}
-                <div className="relative mx-1 flex-shrink-0" style={{ width: '170px', height: '430px' }}>
+                <div className="relative mx-1 flex-shrink-0" style={{ width: '220px', height: '580px' }}>
                     <img
                         src="https://ranawalk.com/images/1000467066.png"
                         alt={`Plantilla ${series.id}`}
-                        className="w-full h-full object-fill drop-shadow-lg"
+                        className="w-full h-full object-fill drop-shadow-lg transform scale-[1.02]"
                     />
 
                     {/* Parabolic cut arcs */}
@@ -214,9 +193,9 @@ const InsoleSilhouette = ({ series, trimInfo, trimLevel, trimMessage, selectedLe
                         const isSelected = line.lengthMm === selectedLength;
                         const isHovered = hoveredLine === idx;
                         const lineColor = isSelected ? trimColor : (isHovered ? '#013A57' : '#94a3b8');
-                        // Intelligent width: match insole silhouette at this position
-                        const arcWidth = Math.max(15, getInsoleWidthAt(line.posPercent) + 8);
                         const isExact = isSelected && line.offset === 0;
+                        // Intelligent width: match insole silhouette at this position, but wider for exact
+                        const arcWidth = isExact ? 60 : Math.max(15, getInsoleWidthAt(line.posPercent) + 8);
 
                         // Build path: straight line for exact match, parabolic arc for trim
                         const pathD = isExact
@@ -232,7 +211,7 @@ const InsoleSilhouette = ({ series, trimInfo, trimLevel, trimMessage, selectedLe
                                 key={idx}
                                 className="absolute left-0 right-0 cursor-pointer"
                                 style={{
-                                    top: isExact ? '-1.5%' : `${line.posPercent}%`,
+                                    top: isExact ? '-2%' : `${line.posPercent}%`,
                                     zIndex: isHovered || isSelected ? 20 : 10,
                                     transition: 'transform 0.15s ease',
                                     transform: isHovered ? 'scale(1.04)' : 'scale(1)',
@@ -276,7 +255,7 @@ const InsoleSilhouette = ({ series, trimInfo, trimLevel, trimMessage, selectedLe
                 </div>
 
                 {/* RIGHT RULER — inches + talla labels */}
-                <div className="flex flex-col justify-between h-[430px] w-12 flex-shrink-0 relative">
+                <div className="flex flex-col justify-between h-[580px] w-12 flex-shrink-0 relative">
                     <div className="absolute left-0 top-0 bottom-0 w-px bg-slate-200" />
                     {(() => {
                         const maxIn = maxL / 25.4;
@@ -337,6 +316,7 @@ const InsoleSilhouette = ({ series, trimInfo, trimLevel, trimMessage, selectedLe
                                 onMouseEnter={() => setHoveredLine(idx)}
                                 onMouseLeave={() => setHoveredLine(null)}
                             >
+                                {unit === 'US' ? (gender === 'Masculino' ? 'US ' : 'USW ') : (unit + ' ')}
                                 {line.label}
                             </div>
                         );

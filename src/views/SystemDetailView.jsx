@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { ArrowLeft, Activity, Zap, Info } from 'lucide-react';
 import { systemsData, techData } from '../data/ranaData';
 import AddToCartModal from '../components/common/AddToCartModal';
+import SizeConversionChart from '../components/common/SizeConversionChart';
 
 const SystemDetailView = ({ systemId, navigate, addToCart }) => {
     const system = useMemo(() => systemsData.find(s => s.id === systemId), [systemId]);
@@ -174,6 +175,11 @@ const SystemDetailView = ({ systemId, navigate, addToCart }) => {
                             </div>
                         </div>
                     </div>
+                </div>
+
+                {/* Size Conversion Chart Section */}
+                <div className="bg-white py-24 border-t border-slate-100">
+                    <SizeConversionChart />
                 </div>
             </div>
             <AddToCartModal

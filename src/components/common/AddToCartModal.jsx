@@ -1,15 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { X, Users } from 'lucide-react';
-import { sizeGroups } from '../../data/ranaData';
-import {
-    seriesData,
-    getSeriesForLength,
-    getTrimInfo,
-    getTrimLevel,
-    getLengthFromSizeGroup,
-    getAlternativeSeries,
-    getTrimMessage
-} from '../../data/seriesGeometry';
+import { sizeConversionData, seriesData, getSizeCutLines, getTrimLevel, getTrimMessage, getAlternativeSeries } from '../../data/seriesGeometry';
 import InsoleSilhouette from './InsoleSilhouette';
 
 // Iconos de género personalizados
@@ -40,77 +31,71 @@ const distributorsAndSubDistributors = [
 const AddToCartModal = ({ isOpen, onClose, onConfirm, system }) => {
     const [unit, setUnit] = useState('US');
     const [gender, setGender] = useState('Masculino');
-    const [size, setSize] = useState('');  // stores "groupId:lengthIndex" e.g. "S3:0"
+    const [size, setSize] = useState('');  // stores "seriesId:label" e.g. "S3:8.5"
     const [quantity, setQuantity] = useState(1);
     const [selectedDistributor, setSelectedDistributor] = useState('');
 
     // ── Build flat list of individual tallas for the current unit/gender ──
     const individualSizes = useMemo(() => {
         const items = [];
-        for (const group of sizeGroups) {
-            let sizeLabels = [];
-            if (unit === 'US') {
-                sizeLabels = gender === 'Masculino' ? (group.US_Men || []) : (group.US_Women || []);
-            } else if (unit === 'EU') {
-                sizeLabels = group.EU || [];
-            } else if (unit === 'BRA') {
-                sizeLabels = group.BRA || [];
-            } else if (unit === 'MEX') {
-                sizeLabels = group.MEX || [];
-            } else if (unit === 'CM') {
-                // For CM/IN, show each length as its own option
-                sizeLabels = group.Length_mm.map(l => `${(parseFloat(l) / 10).toFixed(1)} cm`);
-            } else if (unit === 'IN') {
-                sizeLabels = (group.Length_in || []).map(l => `${l}"`);
-            }
+        const seriesKeys = Object.keys(sizeConversionData);
 
-            const lengths = group.Length_mm || [];
+        for (const sId of seriesKeys) {
+            // Get valid sizes (cut lines) for this series/unit/gender using shared logic
+            const lines = getSizeCutLines(sId, unit, gender);
 
-            for (let i = 0; i < sizeLabels.length; i++) {
-                // Map label index to length index proportionally
-                const lengthIdx = Math.min(
-                    Math.round((i / Math.max(sizeLabels.length - 1, 1)) * (lengths.length - 1)),
-                    lengths.length - 1
-                );
-                const lengthMm = parseFloat(lengths[lengthIdx]);
-                if (isNaN(lengthMm)) continue;
+            lines.forEach(line => {
+                let label = line.label;
+                if (unit === 'CM') label = `${(line.lengthMm / 10).toFixed(1)} cm`;
+                else if (unit === 'IN') label = `${line.lengthIn}"`;
 
-                // Determine which series this size belongs to
-                const sizeSeries = getSeriesForLength(lengthMm);
-                const seriesLabel = sizeSeries ? sizeSeries.id : '';
-
+                // Composite value: "S1:Label"
+                // Using label as unique ID per series
                 items.push({
-                    value: `${group.id}:${lengthIdx}`,
-                    label: seriesLabel ? `${seriesLabel}  ${sizeLabels[i]}` : sizeLabels[i],
-                    groupId: group.id,
-                    lengthMm,
-                    lengthIdx,
+                    value: `${sId}:${line.label}`, // Keep original label in value for lookup
+                    label: `${sId} - ${label}`,
+                    seriesId: sId,
+                    lineData: line,
+                    lengthMm: line.lengthMm
                 });
-            }
+            });
         }
-        return items;
+
+        // Sort by length? (Small to Large)
+        return items.sort((a, b) => a.lengthMm - b.lengthMm);
     }, [unit, gender]);
 
     // ── Cálculo reactivo de serie y trim ──
     const seriesCalc = useMemo(() => {
         if (!size) return null;
 
-        // Parse composite value: "S3:0" → groupId="S3", lengthIdx=0
-        const [groupId, idxStr] = size.split(':');
-        const lengthIdx = parseInt(idxStr, 10);
-        const group = sizeGroups.find(g => g.id === groupId);
-        if (!group) return null;
+        // Parse composite value: "S1:Label"
+        const [seriesId, label] = size.split(':');
 
-        const lengths = group.Length_mm || [];
-        const selectedLength = parseFloat(lengths[lengthIdx]);
-        if (isNaN(selectedLength)) return null;
+        // Find the selected item to get details
+        const selectedItem = individualSizes.find(i => i.value === size);
+        if (!selectedItem) return null;
 
-        // Determinar la serie por longitud
-        const series = getSeriesForLength(selectedLength);
+        const { lineData, lengthMm } = selectedItem;
 
-        // Calcular trim: trim_offset = length_max - selected_length
-        const trimInfo = getTrimInfo(series, selectedLength);
-        const trimLevel = getTrimLevel(series, trimInfo.trim_offset_mm);
+        // Get generic series data (geometry)
+        const series = seriesData.find(s => s.id === seriesId);
+        if (!series) return null;
+
+        const selectedLength = lengthMm;
+
+        // Calculate trim info directly from lineData
+        // lineData has offset.
+        const trimOffset = lineData.offset;
+        const requiresTrim = !lineData.isCore; // or trimOffset > 0
+
+        const trimInfo = {
+            trim_offset_mm: trimOffset,
+            requires_trim: requiresTrim,
+            trim_ratio: requiresTrim ? trimOffset / series.length_max_mm : 0
+        };
+
+        const trimLevel = getTrimLevel(series, trimOffset);
         const alternative = trimLevel === 'blocked' ? getAlternativeSeries(series.id) : null;
         const trimMessage = getTrimMessage(trimLevel, alternative);
 
@@ -121,11 +106,11 @@ const AddToCartModal = ({ isOpen, onClose, onConfirm, system }) => {
             trimLevel,
             trimMessage
         };
-    }, [size]);
+    }, [size, individualSizes]);
 
     if (!isOpen) return null;
 
-    // Extract groupId from composite size value for InsoleSilhouette
+    // Extract seriesId from composite size value
     const selectedGroupId = size ? size.split(':')[0] : null;
 
     const handleConfirm = () => {
@@ -158,7 +143,7 @@ const AddToCartModal = ({ isOpen, onClose, onConfirm, system }) => {
             <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={onClose}></div>
             <div className="bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[95vh] relative z-10 overflow-hidden animate-fadeIn flex flex-col">
                 {/* Header */}
-                <div className="bg-[#013A57] p-6 text-white flex justify-between items-center">
+                <div className="bg-[#013A57] px-5 py-3 text-white flex justify-between items-center shrink-0">
                     <div>
                         <h3 className="font-bold text-lg">Configura tu {system.name}</h3>
                         <p className="text-xs text-[#75CBB3]/80 mt-0.5">Selecciona tu talla y visualiza tu plantilla</p>
@@ -167,105 +152,107 @@ const AddToCartModal = ({ isOpen, onClose, onConfirm, system }) => {
                 </div>
 
                 {/* Two-column body */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 overflow-y-auto flex-1">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 flex-1 overflow-hidden">
                     {/* ── LEFT COLUMN: Selectors ── */}
-                    <div className="p-6 space-y-4 border-r border-slate-100">
-                        {/* Unit selector */}
-                        <div>
-                            <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Unidad de Medida</label>
-                            <div className="grid grid-cols-6 gap-2">
-                                {['US', 'BRA', 'EU', 'MEX', 'CM', 'IN'].map(u => (
+                    <div className="flex flex-col h-full border-r border-slate-100 bg-white">
+                        <div className="flex-1 overflow-y-auto p-5 space-y-3">
+                            {/* Unit selector */}
+                            <div>
+                                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Unidad de Medida</label>
+                                <div className="grid grid-cols-6 gap-2">
+                                    {['US', 'BRA', 'EU', 'MEX', 'CM', 'IN'].map(u => (
+                                        <button
+                                            key={u}
+                                            onClick={() => { setUnit(u); setSize(''); }}
+                                            className={`py-2 rounded-lg text-sm font-bold border transition-all ${unit === u ? 'bg-[#013A57] text-white border-[#013A57]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-[#013A57]'}`}
+                                        >
+                                            {u}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Gender */}
+                            <div>
+                                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Género</label>
+                                <div className="grid grid-cols-2 gap-3">
                                     <button
-                                        key={u}
-                                        onClick={() => { setUnit(u); setSize(''); }}
-                                        className={`py-2 rounded-lg text-sm font-bold border transition-all ${unit === u ? 'bg-[#013A57] text-white border-[#013A57]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-[#013A57]'}`}
+                                        onClick={() => { setGender('Masculino'); setSize(''); }}
+                                        className={`py-3 rounded-lg font-bold border flex items-center justify-center gap-2 transition-all ${gender === 'Masculino' ? 'bg-[#013A57] text-white border-[#013A57]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-[#013A57]'}`}
+                                        title="Masculino"
                                     >
-                                        {u}
+                                        <MaleIcon className="w-6 h-6" />
                                     </button>
-                                ))}
+                                    <button
+                                        onClick={() => { setGender('Femenino'); setSize(''); }}
+                                        className={`py-3 rounded-lg font-bold border flex items-center justify-center gap-2 transition-all ${gender === 'Femenino' ? 'bg-[#013A57] text-white border-[#013A57]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-[#013A57]'}`}
+                                        title="Femenino"
+                                    >
+                                        <FemaleIcon className="w-6 h-6" />
+                                    </button>
+                                </div>
                             </div>
-                        </div>
 
-                        {/* Gender */}
-                        <div>
-                            <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Género</label>
-                            <div className="grid grid-cols-2 gap-3">
-                                <button
-                                    onClick={() => { setGender('Masculino'); setSize(''); }}
-                                    className={`py-3 rounded-lg font-bold border flex items-center justify-center gap-2 transition-all ${gender === 'Masculino' ? 'bg-[#013A57] text-white border-[#013A57]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-[#013A57]'}`}
-                                    title="Masculino"
+                            {/* Size selector — individual tallas */}
+                            <div>
+                                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Talla ({unit})</label>
+                                <select
+                                    value={size}
+                                    onChange={(e) => setSize(e.target.value)}
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 font-bold text-[#013A57] focus:outline-none focus:border-[#75CBB3] transition-colors"
                                 >
-                                    <MaleIcon className="w-6 h-6" />
-                                </button>
-                                <button
-                                    onClick={() => { setGender('Femenino'); setSize(''); }}
-                                    className={`py-3 rounded-lg font-bold border flex items-center justify-center gap-2 transition-all ${gender === 'Femenino' ? 'bg-[#013A57] text-white border-[#013A57]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-[#013A57]'}`}
-                                    title="Femenino"
+                                    <option value="">Selecciona tu talla</option>
+                                    {individualSizes.map(item => (
+                                        <option key={item.value} value={item.value}>
+                                            {item.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Quantity */}
+                            <div>
+                                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Cantidad</label>
+                                <div className="flex items-center gap-4">
+                                    <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-[#013A57] font-bold hover:bg-slate-200 transition-colors">-</button>
+                                    <input
+                                        type="number"
+                                        value={quantity}
+                                        onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                                        className="w-20 text-center font-bold text-xl text-[#013A57] bg-transparent border-b-2 border-slate-200 focus:border-[#75CBB3] outline-none"
+                                    />
+                                    <button onClick={() => setQuantity(quantity + 1)} className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-[#013A57] font-bold hover:bg-slate-200 transition-colors">+</button>
+                                </div>
+                            </div>
+
+                            {/* Distributors */}
+                            <div>
+                                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                                    <Users className="w-4 h-4 text-[#75CBB3]" />
+                                    Seleccionar Punto de Venta <span className="text-slate-300 font-normal">(Opcional)</span>
+                                </label>
+                                <select
+                                    value={selectedDistributor}
+                                    onChange={(e) => setSelectedDistributor(e.target.value)}
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 font-bold text-[#013A57] focus:outline-none focus:border-[#75CBB3] transition-colors"
                                 >
-                                    <FemaleIcon className="w-6 h-6" />
-                                </button>
+                                    <option value="">Sin preferencia de punto de venta</option>
+                                    <optgroup label="Puntos de Venta">
+                                        {distributorsAndSubDistributors.filter(d => d.type === 'distributor').map(d => (
+                                            <option key={d.id} value={d.id}>{d.name} - {d.region}</option>
+                                        ))}
+                                    </optgroup>
+                                    <optgroup label="Puntos de Venta Asociados">
+                                        {distributorsAndSubDistributors.filter(d => d.type === 'sub-distributor').map(d => (
+                                            <option key={d.id} value={d.id}>{d.name} - {d.region}</option>
+                                        ))}
+                                    </optgroup>
+                                </select>
                             </div>
-                        </div>
+                        </div> {/* This closes the overflow-y-auto div */}
 
-                        {/* Size selector — individual tallas */}
-                        <div>
-                            <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Talla ({unit})</label>
-                            <select
-                                value={size}
-                                onChange={(e) => setSize(e.target.value)}
-                                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-[#013A57] focus:outline-none focus:border-[#75CBB3] transition-colors"
-                            >
-                                <option value="">Selecciona tu talla</option>
-                                {individualSizes.map(item => (
-                                    <option key={item.value} value={item.value}>
-                                        {item.label}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        {/* Quantity */}
-                        <div>
-                            <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Cantidad</label>
-                            <div className="flex items-center gap-4">
-                                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-[#013A57] font-bold hover:bg-slate-200 transition-colors">-</button>
-                                <input
-                                    type="number"
-                                    value={quantity}
-                                    onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                                    className="w-20 text-center font-bold text-xl text-[#013A57] bg-transparent border-b-2 border-slate-200 focus:border-[#75CBB3] outline-none"
-                                />
-                                <button onClick={() => setQuantity(quantity + 1)} className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-[#013A57] font-bold hover:bg-slate-200 transition-colors">+</button>
-                            </div>
-                        </div>
-
-                        {/* Distributors */}
-                        <div>
-                            <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
-                                <Users className="w-4 h-4 text-[#75CBB3]" />
-                                Seleccionar Punto de Venta <span className="text-slate-300 font-normal">(Opcional)</span>
-                            </label>
-                            <select
-                                value={selectedDistributor}
-                                onChange={(e) => setSelectedDistributor(e.target.value)}
-                                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-[#013A57] focus:outline-none focus:border-[#75CBB3] transition-colors"
-                            >
-                                <option value="">Sin preferencia de punto de venta</option>
-                                <optgroup label="Puntos de Venta">
-                                    {distributorsAndSubDistributors.filter(d => d.type === 'distributor').map(d => (
-                                        <option key={d.id} value={d.id}>{d.name} - {d.region}</option>
-                                    ))}
-                                </optgroup>
-                                <optgroup label="Puntos de Venta Asociados">
-                                    {distributorsAndSubDistributors.filter(d => d.type === 'sub-distributor').map(d => (
-                                        <option key={d.id} value={d.id}>{d.name} - {d.region}</option>
-                                    ))}
-                                </optgroup>
-                            </select>
-                        </div>
-
-                        {/* Action buttons */}
-                        <div className="pt-4 flex gap-3">
+                        {/* Action buttons (fixed footer) */}
+                        <div className="p-5 pt-4 flex gap-3 shrink-0 border-t border-slate-100 bg-white">
                             <button onClick={onClose} className="flex-1 py-3 rounded-xl border-2 border-slate-200 font-bold text-slate-400 hover:border-slate-300 hover:text-slate-600 transition-all">Cancelar</button>
                             <button onClick={handleConfirm} className="flex-[2] py-3 rounded-xl bg-[#75CBB3] text-[#013A57] font-black uppercase tracking-widest hover:scale-[1.02] transition-transform">
                                 ACEPTAR
@@ -274,7 +261,7 @@ const AddToCartModal = ({ isOpen, onClose, onConfirm, system }) => {
                     </div>
 
                     {/* ── RIGHT COLUMN: Insole Visualization ── */}
-                    <div className="bg-gradient-to-b from-slate-50 to-white p-5 flex flex-col min-h-[600px]">
+                    <div className="bg-gradient-to-b from-slate-50 to-white p-3 flex flex-col justify-center overflow-hidden">
                         <div className="text-center mb-3">
                             <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest">Vista de Plantilla</h4>
                             {seriesCalc && (
