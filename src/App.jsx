@@ -23,6 +23,7 @@ import DistributorsView from './views/DistributorsView';
 import SupportView from './views/SupportView';
 import LegalView from './views/LegalView';
 import CheckoutView from './views/CheckoutView';
+import SizeGuideView from './views/SizeGuideView';
 import { ProfileView } from './views/AuthViews';
 
 // --- ADMIN VIEWS ---
@@ -35,7 +36,17 @@ import { DistProductsView, MySubDistributorsView, MyInfoView, DistOrdersView } f
 import { MyOrdersView, ClientProfileView } from './views/ClientViews';
 
 export default function App() {
-  const [view, setView] = useState('home');
+  // Initialize view from URL query param if present
+  const getInitialView = () => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const viewParam = params.get('view');
+      if (viewParam) return viewParam;
+    }
+    return 'home';
+  };
+
+  const [view, setView] = useState(getInitialView);
   const [activeId, setActiveId] = useState(null);
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -183,6 +194,7 @@ export default function App() {
         {view === 'support' && <SupportView />}
         {view === 'legal' && <LegalView />}
         {view === 'checkout' && <CheckoutView cartItems={cart} navigate={navigate} />}
+        {view === 'sizeGuide' && <SizeGuideView />}
         {view === 'profile' && <ProfileView user={user} onLogout={handleLogout} />}
 
         {/* Admin Views */}

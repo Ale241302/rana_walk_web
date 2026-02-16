@@ -190,10 +190,29 @@ const InsoleSilhouette = ({ series, trimInfo, trimLevel, trimMessage, selectedLe
 
                     {/* Parabolic cut arcs */}
                     {sizeCutLines.map((line, idx) => {
+                        // Match PDF/Chart colors
+                        const PDF_ORANGE = '#F97316';
+                        const PDF_GREEN = '#16A34A';
+                        const PDF_NAVY = '#013A57';
+
                         const isSelected = line.lengthMm === selectedLength;
                         const isHovered = hoveredLine === idx;
-                        const lineColor = isSelected ? trimColor : (isHovered ? '#013A57' : '#94a3b8');
-                        const isExact = isSelected && line.offset === 0;
+                        const isExact = line.isCore; // or line.offset === 0
+
+                        // Logic:
+                        // - Selected: Bright Orange/Green based on type
+                        // - Hovered: Navy (standard interactive)
+                        // - Default: Muted version of the semantic color to guide user
+                        let strokeColor;
+                        if (isSelected) {
+                            strokeColor = isExact ? PDF_GREEN : PDF_ORANGE;
+                        } else if (isHovered) {
+                            strokeColor = PDF_NAVY;
+                        } else {
+                            // Subtle hint:
+                            strokeColor = '#94a3b8';
+                        }
+
                         // Intelligent width: match insole silhouette at this position, but wider for exact
                         const arcWidth = isExact ? 60 : Math.max(15, getInsoleWidthAt(line.posPercent) + 8);
 
@@ -228,10 +247,10 @@ const InsoleSilhouette = ({ series, trimInfo, trimLevel, trimMessage, selectedLe
                                     <path
                                         d={pathD}
                                         fill="none"
-                                        stroke={lineColor}
+                                        stroke={strokeColor}
                                         strokeWidth={isSelected ? '2.5' : (isHovered ? '2' : '1')}
-                                        strokeDasharray="none"
-                                        opacity={isSelected || isHovered ? 1 : 0.45}
+                                        strokeDasharray={!isExact ? "3,2" : "none"} // Dashed for trim lines (scissors)
+                                        opacity={isSelected || isHovered ? 1 : 0.6}
                                     />
                                 </svg>
 

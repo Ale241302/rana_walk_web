@@ -64,12 +64,12 @@ export const seriesData = [
     },
     {
         id: 'S4',
-        length_max_mm: 285,
+        length_max_mm: 286, // 28.6 cm -> 286 mm (PDF)
         width_B_mm: 99,
         width_A_mm: 78.2,
         width_C_mm: 71.1,
         control_ratios: { xc: 0.15, xa: 0.50, xb: 0.70 },
-        trim_max_mm: 13, // 285 - 272
+        trim_max_mm: 14, // 286 - 272
         safe_trim_mm: 5,
         warning_trim_mm: 10,
     },
@@ -86,12 +86,12 @@ export const seriesData = [
     },
     {
         id: 'S6',
-        length_max_mm: 325,
+        length_max_mm: 312, // 31.2 cm -> 312 mm (PDF)
         width_B_mm: 106,
         width_A_mm: 85.7,
         width_C_mm: 77.9,
         control_ratios: { xc: 0.15, xa: 0.50, xb: 0.70 },
-        trim_max_mm: 27, // 325 - 298
+        trim_max_mm: 14, // 312 - 298
         safe_trim_mm: 10,
         warning_trim_mm: 20,
     },

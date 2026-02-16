@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { X, Users } from 'lucide-react';
+import { X, Users, Ruler } from 'lucide-react';
 import { sizeConversionData, seriesData, getSizeCutLines, getTrimLevel, getTrimMessage, getAlternativeSeries } from '../../data/seriesGeometry';
 import InsoleSilhouette from './InsoleSilhouette';
 
@@ -195,7 +195,17 @@ const AddToCartModal = ({ isOpen, onClose, onConfirm, system }) => {
 
                             {/* Size selector — individual tallas */}
                             <div>
-                                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Talla ({unit})</label>
+                                <div className="flex justify-between items-center mb-2">
+                                    <label className="block text-xs font-black text-slate-400 uppercase tracking-widest">Talla ({unit})</label>
+                                    <a
+                                        href="/?view=sizeGuide"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-[10px] font-bold text-[#75CBB3] hover:text-[#013A57] uppercase tracking-wider transition-colors flex items-center gap-1"
+                                    >
+                                        <Ruler size={12} /> Guía de tallas
+                                    </a>
+                                </div>
                                 <select
                                     value={size}
                                     onChange={(e) => setSize(e.target.value)}
