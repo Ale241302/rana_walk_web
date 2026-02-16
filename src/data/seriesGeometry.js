@@ -1,4 +1,4 @@
-import { sizeGroups } from './ranaData';
+import { sizeGroups } from './ranaData.jsx';
 
 
 

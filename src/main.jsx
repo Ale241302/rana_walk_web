@@ -8,4 +8,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <App />
   </React.StrictMode>,
 )
-console.log('Version: Cache Buster 4');
+console.log('Version: Cache Buster 5');
