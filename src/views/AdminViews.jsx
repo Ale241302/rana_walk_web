@@ -1,5 +1,6 @@
 import React from 'react';
 import { Users, Truck, Package, ShoppingBag, Search, Filter, Mail, Phone, MapPin, Calendar, Eye, Edit, Trash2, MoreVertical, Navigation } from 'lucide-react';
+import AdminSizeDashboard from '../components/AdminSizeDashboard';
 
 // Datos quemados
 const clientsData = [
@@ -140,6 +141,14 @@ export const AdminOrdersView = () => {
                         <thead className="bg-slate-900 text-white"><tr><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Pedido</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Cliente</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Canal</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Fecha</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Total</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Estado</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Pago</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Acciones</th></tr></thead>
                         <tbody>{ordersData.map(o => (<tr key={o.id} className="border-b border-slate-100 hover:bg-slate-50"><td className="px-6 py-4 font-black text-[#013A57]">{o.id}</td><td className="px-6 py-4 font-bold text-slate-700">{o.client}</td><td className="px-6 py-4">{!o.distributor && !o.subDistributor ? <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-slate-500/20 text-slate-400">Propio</span> : o.subDistributor ? <div><span className="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-blue-500/20 text-blue-400">{o.distributor}</span><p className="text-[9px] text-purple-400 mt-1">vía {o.subDistributor}</p></div> : <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-blue-500/20 text-blue-400">{o.distributor}</span>}</td><td className="px-6 py-4 text-slate-500"><Calendar className="w-4 h-4 inline mr-1" />{o.date}</td><td className="px-6 py-4 font-black text-[#75CBB3]">₡{o.total.toLocaleString()}</td><td className="px-6 py-4"><StatusBadge status={o.status} /></td><td className="px-6 py-4"><StatusBadge status={o.paymentStatus} /></td><td className="px-6 py-4"><button onClick={() => handleTrack(o.id, o.tracking)} className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-xs uppercase transition-colors"><Navigation className="w-4 h-4" />Rastrear</button></td></tr>))}</tbody>
                     </table>
+                </div>
+                <div className="mb-12">
+                </div>
+                <div className="mb-12">
+                </div>
+                {/* Size Dashboard Integration */}
+                <div className="mb-12">
+                    <AdminSizeDashboard />
                 </div>
             </div>
         </div>
