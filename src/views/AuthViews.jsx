@@ -5,11 +5,12 @@ import { User, LogOut, ChevronRight, MapPin, Package } from 'lucide-react';
 
 export const ProfileView = ({ user, onLogout }) => (
     <div className="py-24 animate-fadeIn">
+        {/* Compliance: Rana Walk Design System v2.8 — Adecuado 2026-02-18 */}
         <div className="container mx-auto px-6 max-w-5xl">
             <div className="flex flex-col md:flex-row gap-12">
                 {/* Sidebar Perfil */}
                 <div className="w-full md:w-80 shrink-0">
-                    <div className="bg-slate-900 rounded-[2rem] p-8 text-white text-center shadow-xl">
+                    <div className="bg-[#0F172A] rounded-[2rem] p-8 text-white text-center shadow-xl">
                         <div className="w-24 h-24 bg-[#75CBB3] rounded-full mx-auto mb-6 flex items-center justify-center">
                             <User className="w-12 h-12 text-[#013A57]" />
                         </div>
@@ -25,7 +26,7 @@ export const ProfileView = ({ user, onLogout }) => (
                                 <span className="flex items-center gap-3"><MapPin className="w-4 h-4" /> Direcciones</span>
                                 <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                             </button>
-                            <button onClick={onLogout} className="w-full flex items-center gap-3 p-4 text-red-400 font-bold text-xs uppercase tracking-widest mt-10 hover:text-red-300 transition-all">
+                            <button onClick={onLogout} className="w-full flex items-center gap-3 p-4 text-[#EF4E54] font-bold text-xs uppercase tracking-widest mt-10 hover:text-[#EF4E54]/80 transition-all">
                                 <LogOut className="w-4 h-4" /> Cerrar Sesión
                             </button>
                         </div>

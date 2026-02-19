@@ -36,6 +36,7 @@ const SupportView = () => {
 
     return (
         <div className="py-24 animate-fadeIn">
+            {/* Compliance: Rana Walk Design System v2.8 — Adecuado 2026-02-18 */}
             <div className="container mx-auto px-6 max-w-4xl">
                 <SectionHeader sub="Centro de Ayuda y Soporte Técnico" title="Resolviendo tus dudas con precisión biomecánica" center={false} />
                 <p className="text-xl text-slate-600 mb-12">En Rana Walk®, entendemos que la transición a un sistema de alto desempeño puede generar preguntas. Aquí encontrarás las respuestas técnicas necesarias para optimizar tu experiencia.</p>

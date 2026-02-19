@@ -23,7 +23,7 @@ const distOrdersData = [
 ];
 
 const StatusBadge = ({ status }) => {
-    const styles = { active: 'bg-emerald-500/20 text-emerald-400', pending: 'bg-amber-500/20 text-amber-400', completed: 'bg-emerald-500/20 text-emerald-400', shipped: 'bg-blue-500/20 text-blue-400', processing: 'bg-purple-500/20 text-purple-400' };
+    const styles = { active: 'bg-[#75CBB3]/20 text-[#066383]', pending: 'bg-[#C5A96A]/20 text-[#C5A96A]', completed: 'bg-[#75CBB3]/20 text-[#066383]', shipped: 'bg-[#066383]/20 text-[#066383]', processing: 'bg-[#066383]/20 text-[#066383]' };
     const labels = { active: 'Activo', pending: 'Pendiente', completed: 'Completado', shipped: 'Enviado', processing: 'Procesando' };
     return <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase ${styles[status]}`}>{labels[status]}</span>;
 };
@@ -31,6 +31,7 @@ const StatusBadge = ({ status }) => {
 // Vista de Productos del Distribuidor
 export const DistProductsView = () => (
     <div className="py-12 animate-fadeIn">
+        {/* Compliance: Rana Walk Design System v2.8 — Adecuado 2026-02-18 */}
         <div className="container mx-auto px-6 max-w-7xl">
             <div className="mb-10">
                 <h1 className="text-3xl font-black text-[#013A57] uppercase tracking-tight flex items-center gap-3 mb-2"><Package className="text-[#75CBB3]" /> Mis Productos</h1>
@@ -39,7 +40,7 @@ export const DistProductsView = () => (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                 <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Productos</p><p className="text-3xl font-black text-[#013A57]">{distProductsData.length}</p></div>
                 <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Stock Total</p><p className="text-3xl font-black text-[#013A57]">{distProductsData.reduce((s, p) => s + p.stock, 0)}</p></div>
-                <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Vendidos</p><p className="text-3xl font-black text-emerald-500">{distProductsData.reduce((s, p) => s + p.sold, 0)}</p></div>
+                <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Vendidos</p><p className="text-3xl font-black text-[#75CBB3]">{distProductsData.reduce((s, p) => s + p.sold, 0)}</p></div>
                 <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Comisiones</p><p className="text-3xl font-black text-[#75CBB3]">₡{(distProductsData.reduce((s, p) => s + p.commission, 0) / 1000).toFixed(0)}K</p></div>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
@@ -70,7 +71,7 @@ export const MySubDistributorsView = () => (
         <div className="container mx-auto px-6 max-w-7xl">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
                 <div><h1 className="text-3xl font-black text-[#013A57] uppercase tracking-tight flex items-center gap-3 mb-2"><Users className="text-[#75CBB3]" /> Mis Sub Distribuidores</h1><p className="text-slate-500">Red de sub distribuidores asociados</p></div>
-                <button className="mt-4 md:mt-0 bg-[#75CBB3] text-[#013A57] px-6 py-3 rounded-xl font-black uppercase tracking-widest text-xs">+ Nuevo Sub Distribuidor</button>
+                <button className="mt-4 md:mt-0 bg-[#75CBB3] text-[#013A57] px-6 py-3 rounded-full font-black uppercase tracking-widest text-xs">+ Nuevo Sub Distribuidor</button>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
                 {subDistributorsData.map(d => (
@@ -115,7 +116,7 @@ export const MyInfoView = ({ user }) => {
     };
 
     const businessTypeLabels = { physical: 'Tiendas Físicas', online: 'Solo En Línea', hybrid: 'Físico + En Línea' };
-    const businessTypeColors = { physical: 'bg-blue-500/20 text-blue-400', online: 'bg-purple-500/20 text-purple-400', hybrid: 'bg-emerald-500/20 text-emerald-400' };
+    const businessTypeColors = { physical: 'bg-[#066383]/20 text-[#066383]', online: 'bg-[#7B2DBF]/20 text-[#7B2DBF]', hybrid: 'bg-[#75CBB3]/20 text-[#066383]' };
 
     return (
         <div className="py-12 animate-fadeIn">
@@ -151,30 +152,30 @@ export const MyInfoView = ({ user }) => {
                         <div className="pt-6 border-t border-slate-100 mb-8">
                             <h3 className="text-lg font-black text-[#013A57] uppercase mb-4 flex items-center gap-2"><Share2 className="text-[#75CBB3]" />Redes Sociales</h3>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <a href="#" className="flex items-center gap-4 p-5 bg-gradient-to-br from-pink-50 to-purple-50 border border-pink-100 rounded-2xl hover:shadow-lg hover:scale-[1.02] transition-all group">
+                                <a href="#" className="flex items-center gap-4 p-5 bg-gradient-to-br from-[#E6FFFB] to-[#E6FFFB] border border-[#75CBB3]/20 rounded-2xl hover:shadow-lg hover:scale-[1.02] transition-all group">
                                     <div className="w-12 h-12 bg-gradient-to-br from-pink-500 via-red-500 to-yellow-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-pink-500/30">
                                         <Instagram className="w-6 h-6" />
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <p className="text-[10px] text-pink-400 uppercase font-bold tracking-wider">Instagram</p>
+                                        <p className="text-[10px] text-[#066383] uppercase font-bold tracking-wider">Instagram</p>
                                         <p className="font-bold text-[#013A57] text-sm truncate">{distributorInfo.socialMedia.instagram}</p>
                                     </div>
                                 </a>
-                                <a href="#" className="flex items-center gap-4 p-5 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl hover:shadow-lg hover:scale-[1.02] transition-all group">
+                                <a href="#" className="flex items-center gap-4 p-5 bg-gradient-to-br from-[#E6FFFB] to-[#E6FFFB] border border-[#75CBB3]/20 rounded-2xl hover:shadow-lg hover:scale-[1.02] transition-all group">
                                     <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
                                         <Facebook className="w-6 h-6" />
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <p className="text-[10px] text-blue-400 uppercase font-bold tracking-wider">Facebook</p>
+                                        <p className="text-[10px] text-[#066383] uppercase font-bold tracking-wider">Facebook</p>
                                         <p className="font-bold text-[#013A57] text-sm truncate">{distributorInfo.socialMedia.facebook}</p>
                                     </div>
                                 </a>
-                                <a href="#" className="flex items-center gap-4 p-5 bg-gradient-to-br from-sky-50 to-cyan-50 border border-sky-100 rounded-2xl hover:shadow-lg hover:scale-[1.02] transition-all group">
-                                    <div className="w-12 h-12 bg-gradient-to-br from-sky-600 to-sky-800 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-sky-500/30">
+                                <a href="#" className="flex items-center gap-4 p-5 bg-gradient-to-br from-[#E6FFFB] to-[#E6FFFB] border border-[#75CBB3]/20 rounded-2xl hover:shadow-lg hover:scale-[1.02] transition-all group">
+                                    <div className="w-12 h-12 bg-gradient-to-br from-[#066383] to-[#013A57] rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#066383]/30">
                                         <Linkedin className="w-6 h-6" />
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <p className="text-[10px] text-sky-400 uppercase font-bold tracking-wider">LinkedIn</p>
+                                        <p className="text-[10px] text-[#066383] uppercase font-bold tracking-wider">LinkedIn</p>
                                         <p className="font-bold text-[#013A57] text-sm truncate">{distributorInfo.socialMedia.linkedin}</p>
                                     </div>
                                 </a>
@@ -188,7 +189,7 @@ export const MyInfoView = ({ user }) => {
                                 <div className="bg-slate-50 rounded-2xl p-4 text-center"><p className="text-2xl font-black text-[#013A57]">{distributorInfo.stats.sales}</p><p className="text-[10px] text-slate-400 uppercase font-bold">Ventas</p></div>
                                 <div className="bg-slate-50 rounded-2xl p-4 text-center"><p className="text-2xl font-black text-[#75CBB3]">{distributorInfo.stats.revenue}</p><p className="text-[10px] text-slate-400 uppercase font-bold">Ingresos</p></div>
                                 <div className="bg-slate-50 rounded-2xl p-4 text-center"><p className="text-2xl font-black text-[#013A57]">{distributorInfo.stats.subDist}</p><p className="text-[10px] text-slate-400 uppercase font-bold">Sub Dist.</p></div>
-                                <div className="bg-slate-50 rounded-2xl p-4 text-center"><p className="text-2xl font-black text-emerald-500">{distributorInfo.stats.satisfaction}</p><p className="text-[10px] text-slate-400 uppercase font-bold">Satisfacción</p></div>
+                                <div className="bg-slate-50 rounded-2xl p-4 text-center"><p className="text-2xl font-black text-[#75CBB3]">{distributorInfo.stats.satisfaction}</p><p className="text-[10px] text-slate-400 uppercase font-bold">Satisfacción</p></div>
                             </div>
                         </div>
                     </div>
@@ -219,7 +220,7 @@ export const MyInfoView = ({ user }) => {
                     </div>
                 )}
 
-                <button className="mt-6 bg-[#75CBB3] text-[#013A57] px-6 py-3 rounded-xl font-black uppercase tracking-widest text-xs flex items-center gap-2 hover:brightness-110 transition-all"><Edit className="w-4 h-4" />Editar Información</button>
+                <button className="mt-6 bg-[#75CBB3] text-[#013A57] px-6 py-3 rounded-full font-black uppercase tracking-widest text-xs flex items-center gap-2 hover:brightness-110 transition-all"><Edit className="w-4 h-4" />Editar Información</button>
             </div>
         </div>
     );
@@ -241,14 +242,14 @@ export const DistOrdersView = () => {
                 <div className="mb-10"><h1 className="text-3xl font-black text-[#013A57] uppercase tracking-tight flex items-center gap-3 mb-2"><ShoppingBag className="text-[#75CBB3]" /> Pedidos</h1><p className="text-slate-500">Gestión de pedidos recibidos</p></div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                     <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Total</p><p className="text-3xl font-black text-[#013A57]">{distOrdersData.length}</p></div>
-                    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Pendientes</p><p className="text-3xl font-black text-amber-500">{distOrdersData.filter(o => o.status === 'pending').length}</p></div>
-                    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Enviados</p><p className="text-3xl font-black text-blue-500">{distOrdersData.filter(o => o.status === 'shipped').length}</p></div>
+                    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Pendientes</p><p className="text-3xl font-black text-[#C5A96A]">{distOrdersData.filter(o => o.status === 'pending').length}</p></div>
+                    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Enviados</p><p className="text-3xl font-black text-[#066383]">{distOrdersData.filter(o => o.status === 'shipped').length}</p></div>
                     <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Ventas</p><p className="text-3xl font-black text-[#75CBB3]">₡{(distOrdersData.reduce((s, o) => s + o.total, 0) / 1000).toFixed(0)}K</p></div>
                 </div>
                 <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
                     <table className="w-full">
-                        <thead className="bg-slate-900 text-white"><tr><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Pedido</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Cliente</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Canal</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Fecha</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Items</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Total</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Estado</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Acciones</th></tr></thead>
-                        <tbody>{distOrdersData.map(o => (<tr key={o.id} className="border-b border-slate-100 hover:bg-slate-50"><td className="px-6 py-4 font-black text-[#013A57]">{o.id}</td><td className="px-6 py-4 font-bold text-slate-700">{o.client}</td><td className="px-6 py-4">{o.subDistributor ? <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-purple-500/20 text-purple-400">{o.subDistributor}</span> : <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-emerald-500/20 text-emerald-400">Venta Directa</span>}</td><td className="px-6 py-4 text-slate-500"><Calendar className="w-4 h-4 inline mr-1" />{o.date}</td><td className="px-6 py-4 text-slate-600">{o.items}</td><td className="px-6 py-4 font-black text-[#75CBB3]">₡{o.total.toLocaleString()}</td><td className="px-6 py-4"><StatusBadge status={o.status} /></td><td className="px-6 py-4"><button onClick={() => handleTrack(o.id, o.tracking)} className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-xs uppercase transition-colors"><Navigation className="w-4 h-4" />Rastrear</button></td></tr>))}</tbody>
+                        <thead className="bg-[#013A57] text-white"><tr><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Pedido</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Cliente</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Canal</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Fecha</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Items</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Total</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Estado</th><th className="text-left px-6 py-4 text-[10px] font-black uppercase">Acciones</th></tr></thead>
+                        <tbody>{distOrdersData.map(o => (<tr key={o.id} className="border-b border-slate-100 hover:bg-slate-50"><td className="px-6 py-4 font-black text-[#013A57]">{o.id}</td><td className="px-6 py-4 font-bold text-slate-700">{o.client}</td><td className="px-6 py-4">{o.subDistributor ? <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-[#7B2DBF]/20 text-[#7B2DBF]">{o.subDistributor}</span> : <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-[#75CBB3]/20 text-[#066383]">Venta Directa</span>}</td><td className="px-6 py-4 text-slate-500"><Calendar className="w-4 h-4 inline mr-1" />{o.date}</td><td className="px-6 py-4 text-slate-600">{o.items}</td><td className="px-6 py-4 font-black text-[#75CBB3]">₡{o.total.toLocaleString()}</td><td className="px-6 py-4"><StatusBadge status={o.status} /></td><td className="px-6 py-4"><button onClick={() => handleTrack(o.id, o.tracking)} className="flex items-center gap-2 bg-[#066383] hover:bg-[#013A57] text-white px-4 py-2 rounded-full font-bold text-xs uppercase transition-colors"><Navigation className="w-4 h-4" />Rastrear</button></td></tr>))}</tbody>
                     </table>
                 </div>
                 <div className="mb-12">

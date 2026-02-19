@@ -8,13 +8,14 @@ const TechDetailView = ({ techId, navigate }) => {
 
     return (
         <div className="py-24 animate-fadeIn">
+            {/* Compliance: Rana Walk Design System v2.8 — Adecuado 2026-02-18 */}
             <div className="container mx-auto px-6 max-w-5xl">
                 <button onClick={() => navigate('tech')} className="flex items-center gap-2 text-slate-400 hover:text-[#013A57] mb-12 font-black uppercase text-xs tracking-[0.3em] transition-colors">
                     <ArrowLeft className="w-4 h-4" /> Portafolio de Ciencia
                 </button>
 
                 <div className="flex items-center gap-8 mb-16">
-                    <div className="w-24 h-24 bg-slate-900 rounded-[2rem] flex items-center justify-center text-[#75CBB3] shadow-2xl group">
+                    <div className="w-24 h-24 bg-[#0F172A] rounded-[2rem] flex items-center justify-center text-[#75CBB3] shadow-2xl group">
                         {React.cloneElement(tech.icon, { size: 40 })}
                     </div>
                     <div>
@@ -60,14 +61,14 @@ const TechDetailView = ({ techId, navigate }) => {
                     </div>
                 </div>
 
-                <div className="bg-slate-900 p-16 rounded-[4rem] text-center text-white relative overflow-hidden shadow-2xl shadow-[#013A57]/20">
+                <div className="bg-[#0F172A] p-16 rounded-[4rem] text-center text-white relative overflow-hidden shadow-2xl shadow-[#013A57]/20">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-[#75CBB3]/10 rounded-full -mr-32 -mt-32 blur-[100px]"></div>
                     <Zap className="mx-auto text-[#75CBB3] mb-8" size={48} />
                     <h3 className="text-3xl font-black mb-6 uppercase tracking-tight">¿Quieres ver esta tecnología en acción?</h3>
                     <p className="text-slate-400 mb-12 max-w-2xl mx-auto text-lg leading-relaxed font-medium">
                         {tech.name} no actúa de forma aislada. Forma parte de un ecosistema biomecánico diseñado para sostener tu rendimiento en jornadas críticas.
                     </p>
-                    <button onClick={() => navigate('systems')} className="bg-[#75CBB3] text-[#013A57] px-12 py-5 rounded-2xl font-black uppercase tracking-[0.3em] hover:bg-white hover:scale-105 transition-all shadow-xl shadow-[#75CBB3]/20">
+                    <button onClick={() => navigate('systems')} className="bg-[#75CBB3] text-[#013A57] px-12 py-5 rounded-full font-black uppercase tracking-[0.3em] hover:bg-white hover:scale-105 transition-all shadow-xl shadow-[#75CBB3]/20">
                         Explorar Sistemas Integrados
                     </button>
                 </div>

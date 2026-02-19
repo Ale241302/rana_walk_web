@@ -13,6 +13,7 @@ const SystemDetailView = ({ systemId, navigate, addToCart }) => {
     return (
         <>
             <div className="animate-fadeIn">
+                {/* Compliance: Rana Walk Design System v2.8 — Adecuado 2026-02-18 */}
                 <div className="bg-slate-50 py-16 border-b border-slate-100">
                     <div className="container mx-auto px-6">
                         <button onClick={() => navigate('systems')} className="flex items-center gap-2 text-slate-400 hover:text-[#013A57] mb-10 font-black transition-colors uppercase text-xs tracking-widest">
@@ -49,12 +50,12 @@ const SystemDetailView = ({ systemId, navigate, addToCart }) => {
                                         </div>
                                         <div className="text-right">
                                             <span className="font-black text-[#75CBB3] uppercase text-[10px] tracking-widest block mb-1">Disponibilidad</span>
-                                            <span className="text-sm font-bold text-emerald-400">En Inventario</span>
+                                            <span className="text-sm font-bold text-[#75CBB3]">En Inventario</span>
                                         </div>
                                     </div>
                                     <button
                                         onClick={() => setIsModalOpen(true)}
-                                        className="w-full py-5 bg-[#75CBB3] text-[#013A57] rounded-xl font-black uppercase tracking-[0.2em] hover:bg-white hover:scale-[1.02] transition-all shadow-xl shadow-[#75CBB3]/10"
+                                        className="w-full py-5 bg-[#75CBB3] text-[#013A57] rounded-full font-black uppercase tracking-[0.2em] hover:bg-white hover:scale-[1.02] transition-all shadow-xl shadow-[#75CBB3]/10"
                                     >
                                         Implementar en mi calzado
                                     </button>
@@ -138,11 +139,11 @@ const SystemDetailView = ({ systemId, navigate, addToCart }) => {
                                 </div>
                             </div>
 
-                            <div className="bg-emerald-50 p-10 rounded-[2.5rem] border border-emerald-100 relative group">
+                            <div className="bg-[#E6FFFB] p-10 rounded-[2.5rem] border border-[#75CBB3]/20 relative group">
 
                                 {/* Beneficios del Sistema */}
                                 {system.beneficiosSistema && (
-                                    <div className="border-t border-emerald-200 pt-6 mt-6">
+                                    <div className="border-t border-[#75CBB3]/30 pt-6 mt-6">
                                         <h4 className="text-xs font-black text-[#013A57] uppercase tracking-widest mb-4">Beneficios del Sistema</h4>
                                         <div className="space-y-3">
                                             {[
@@ -171,15 +172,10 @@ const SystemDetailView = ({ systemId, navigate, addToCart }) => {
                                     </div>
                                 )}
 
-                                <p className="mt-6 text-sm text-emerald-800 font-medium leading-relaxed italic border-t border-emerald-200 pt-6">"{system.idealIf}"</p>
+                                <p className="mt-6 text-sm text-[#066383] font-medium leading-relaxed italic border-t border-[#75CBB3]/30 pt-6">"{system.idealIf}"</p>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                {/* Size Conversion Chart Section */}
-                <div className="bg-white py-24 border-t border-slate-100">
-                    <SizeConversionChart />
                 </div>
             </div>
             <AddToCartModal

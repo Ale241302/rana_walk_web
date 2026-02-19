@@ -4,6 +4,7 @@ import SectionHeader from '../components/common/SectionHeader';
 
 const AboutUsView = () => (
     <div className="animate-fadeIn">
+        {/* Compliance: Rana Walk Design System v2.8 — Adecuado 2026-02-18 */}
         <section className="py-24 bg-white">
             <div className="container mx-auto px-6">
                 {/* Nuestra Génesis */}

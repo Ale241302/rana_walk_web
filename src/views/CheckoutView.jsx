@@ -11,6 +11,7 @@ const CheckoutView = ({ cartItems, navigate }) => {
 
     return (
         <div className="py-24 animate-fadeIn">
+            {/* Compliance: Rana Walk Design System v2.8 — Adecuado 2026-02-18 */}
             <div className="container mx-auto px-6 max-w-6xl">
                 <button onClick={() => navigate('home')} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-[#013A57] transition-colors mb-10">
                     <ChevronLeft className="w-4 h-4" /> Volver a la tienda
@@ -106,12 +107,12 @@ const CheckoutView = ({ cartItems, navigate }) => {
 
                         {/* Distribuidor Seleccionado */}
                         {selectedDistributor && (
-                            <div className="mb-6 p-4 bg-purple-500/20 rounded-xl border border-purple-500/30">
-                                <p className="text-[10px] text-purple-300 uppercase font-bold tracking-widest mb-1 flex items-center gap-2">
+                            <div className="mb-6 p-4 bg-[#7B2DBF]/20 rounded-xl border border-[#7B2DBF]/30">
+                                <p className="text-[10px] text-[#7B2DBF]/60 uppercase font-bold tracking-widest mb-1 flex items-center gap-2">
                                     <Users className="w-3 h-3" /> Punto de Venta Seleccionado
                                 </p>
                                 <p className="font-bold text-white">{selectedDistributor.name}</p>
-                                <p className="text-xs text-purple-300">{selectedDistributor.region} • {selectedDistributor.type === 'distributor' ? 'Punto de Venta' : 'Punto de Venta Asociado'}</p>
+                                <p className="text-xs text-[#7B2DBF]/60">{selectedDistributor.region} • {selectedDistributor.type === 'distributor' ? 'Punto de Venta' : 'Punto de Venta Asociado'}</p>
                             </div>
                         )}
 
@@ -137,7 +138,7 @@ const CheckoutView = ({ cartItems, navigate }) => {
                                 <span className="text-[#75CBB3]">GRATIS</span>
                             </div>
                             {paymentMethod === 'redemption' && redemptionCode && (
-                                <div className="flex justify-between text-xs font-bold text-purple-400 uppercase tracking-widest">
+                                <div className="flex justify-between text-xs font-bold text-[#7B2DBF] uppercase tracking-widest">
                                     <span>Código</span>
                                     <span>{redemptionCode}</span>
                                 </div>
@@ -148,7 +149,7 @@ const CheckoutView = ({ cartItems, navigate }) => {
                             </div>
                         </div>
 
-                        <button className="w-full mt-10 py-5 bg-[#75CBB3] text-[#013A57] rounded-xl font-black uppercase tracking-widest hover:brightness-110 transition-all flex items-center justify-center gap-3">
+                        <button className="w-full mt-10 py-5 bg-[#75CBB3] text-[#013A57] rounded-full font-black uppercase tracking-widest hover:brightness-110 transition-all flex items-center justify-center gap-3">
                             {paymentMethod === 'redemption' ? 'Canjear Código' : 'Pagar Ahora'} <ShieldCheck className="w-5 h-5" />
                         </button>
 

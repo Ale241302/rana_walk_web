@@ -3,6 +3,7 @@ import SectionHeader from '../components/common/SectionHeader';
 
 const LegalView = () => (
     <div className="py-24 animate-fadeIn bg-slate-50">
+        {/* Compliance: Rana Walk Design System v2.8 — Adecuado 2026-02-18 */}
         <div className="container mx-auto px-6 max-w-5xl">
             <SectionHeader sub="Legal" title="Marco Legal y Propiedad Intelectual" />
 

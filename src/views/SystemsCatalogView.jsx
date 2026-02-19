@@ -4,6 +4,7 @@ import SectionHeader from '../components/common/SectionHeader';
 
 const SystemsCatalogView = ({ navigate }) => (
     <div className="py-20 animate-fadeIn">
+        {/* Compliance: Rana Walk Design System v2.8 — Adecuado 2026-02-18 */}
         <div className="container mx-auto px-6 text-center mb-16">
             <SectionHeader sub="SISTEMAS DE BIO-MIMETISMO" title="Cuatro ecosistemas de movimiento. Cuatro respuestas de la naturaleza." />
             <p className="text-slate-500 max-w-3xl mx-auto mb-10 text-xl leading-relaxed">
@@ -56,7 +57,7 @@ const SystemsCatalogView = ({ navigate }) => (
 
                             <button
                                 onClick={() => navigate('systemDetail', s.id)}
-                                className="w-full py-3 bg-slate-900 text-white rounded-xl font-bold uppercase text-xs tracking-widest hover:bg-[#013A57] transition-colors"
+                                className="w-full py-3 bg-[#013A57] text-white rounded-full font-bold uppercase text-xs tracking-widest hover:bg-[#066383] transition-colors"
                             >
                                 Ver Especificaciones
                             </button>

@@ -5,10 +5,11 @@ import SectionHeader from '../components/common/SectionHeader';
 
 const HomeView = ({ navigate }) => (
     <div className="animate-fadeIn">
+        {/* Compliance: Rana Walk Design System v2.8 — Adecuado 2026-02-18 */}
         {/* Hero Principal */}
-        <section className="relative h-[90vh] flex items-center bg-slate-900 overflow-hidden">
+        <section className="relative h-[90vh] flex items-center bg-[#0F172A] overflow-hidden">
             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1556103330-d5b932f7970a?auto=format&fit=crop&q=80&w=2000')] bg-cover bg-center opacity-40"></div>
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/80 to-transparent"></div>
 
             <div className="container mx-auto px-6 relative z-10 text-white pt-24 md:pt-0">
                 <div className="max-w-4xl">
@@ -25,10 +26,10 @@ const HomeView = ({ navigate }) => (
                         No diseñamos accesorios; creamos sistemas validados bajo carga física real de hasta 110 kg y jornadas de +8 horas. Inspirados en la naturaleza y certificados en el Costa Rica MedTech Hub, el ecosistema de dispositivos médicos más avanzado de la región.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-5">
-                        <button onClick={() => navigate('systems')} className="bg-[#75CBB3] text-[#013A57] px-8 py-4 rounded-lg font-black uppercase tracking-wider hover:bg-[#066383] transition-all flex items-center justify-center gap-2">
+                        <button onClick={() => navigate('systems')} className="bg-[#75CBB3] text-[#013A57] px-8 py-4 rounded-full font-black uppercase tracking-wider hover:bg-[#066383] transition-all flex items-center justify-center gap-2">
                             Explorar Sistemas <ArrowRight className="w-5 h-5" />
                         </button>
-                        <button onClick={() => navigate('consultor')} className="border-2 border-white/30 text-white px-8 py-4 rounded-lg font-black uppercase tracking-wider hover:bg-white/10 transition-all">
+                        <button onClick={() => navigate('consultor')} className="border-2 border-white/30 text-white px-8 py-4 rounded-full font-black uppercase tracking-wider hover:bg-white/10 transition-all">
                             ¿Cuál es mi sistema? (Consultor IA)
                         </button>
                     </div>

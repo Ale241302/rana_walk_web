@@ -33,6 +33,7 @@ const DistributorsView = () => {
 
   return (
     <div className="animate-fadeIn">
+      {/* Compliance: Rana Walk Design System v2.8 — Adecuado 2026-02-18 */}
       {/* Hero Section */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6">
@@ -47,13 +48,13 @@ const DistributorsView = () => {
           <div className="flex flex-wrap justify-center gap-4 mb-20">
             <button
               onClick={scrollToForm}
-              className="px-8 py-4 bg-[#013A57] text-white rounded-xl font-black uppercase tracking-widest hover:bg-slate-800 transition-colors shadow-xl"
+              className="px-8 py-4 bg-[#013A57] text-white rounded-full font-black uppercase tracking-widest hover:bg-[#066383] transition-colors shadow-xl"
             >
               Solicitar Dossier Comercial
             </button>
             <button
               onClick={scrollToForm}
-              className="px-8 py-4 bg-[#75CBB3] text-[#013A57] rounded-xl font-black uppercase tracking-widest hover:bg-[#5db89f] transition-colors shadow-xl"
+              className="px-8 py-4 bg-[#75CBB3] text-[#013A57] rounded-full font-black uppercase tracking-widest hover:brightness-110 transition-colors shadow-xl"
             >
               Contactar a un Consultor B2B
             </button>
@@ -171,13 +172,13 @@ const DistributorsView = () => {
             <div className="flex flex-wrap justify-center gap-4">
               <button
                 onClick={scrollToForm}
-                className="px-8 py-4 bg-[#75CBB3] text-[#013A57] rounded-xl font-black uppercase tracking-widest hover:bg-white transition-colors shadow-xl"
+                className="px-8 py-4 bg-[#75CBB3] text-[#013A57] rounded-full font-black uppercase tracking-widest hover:bg-white transition-colors shadow-xl"
               >
                 Solicitar Dossier Comercial
               </button>
               <button
                 onClick={scrollToForm}
-                className="px-8 py-4 bg-white/10 text-white border border-white/30 rounded-xl font-black uppercase tracking-widest hover:bg-white/20 transition-colors"
+                className="px-8 py-4 bg-white/10 text-white border border-white/30 rounded-full font-black uppercase tracking-widest hover:bg-white/20 transition-colors"
               >
                 Contactar Consultor B2B
               </button>
@@ -268,8 +269,8 @@ const DistributorsView = () => {
                     <label
                       key={sector.id}
                       className={`flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all ${formData.sectores.includes(sector.id)
-                          ? 'bg-[#e6fffb] border-[#75CBB3] text-[#013A57]'
-                          : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-[#75CBB3]/50'
+                        ? 'bg-[#e6fffb] border-[#75CBB3] text-[#013A57]'
+                        : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-[#75CBB3]/50'
                         }`}
                     >
                       <input
@@ -297,7 +298,7 @@ const DistributorsView = () => {
 
               <button
                 type="submit"
-                className="w-full py-5 bg-[#013A57] text-white rounded-xl font-black uppercase tracking-[0.2em] hover:bg-slate-800 transition-colors shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transform transition-all"
+                className="w-full py-5 bg-[#013A57] text-white rounded-full font-black uppercase tracking-[0.2em] hover:bg-[#066383] transition-colors shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transform transition-all"
               >
                 Solicitar Acceso al Dossier Técnico
               </button>
@@ -363,7 +364,7 @@ const DistributorsView = () => {
               <p className="text-[#75CBB3] font-bold italic mb-8">"Name it, leap forward."</p>
               <button
                 onClick={() => setShowModal(false)}
-                className="w-full py-4 bg-[#013A57] text-white rounded-xl font-black uppercase tracking-widest hover:bg-slate-800 transition-colors"
+                className="w-full py-4 bg-[#013A57] text-white rounded-full font-black uppercase tracking-widest hover:bg-[#066383] transition-colors"
               >
                 Entendido
               </button>

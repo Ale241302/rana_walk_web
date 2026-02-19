@@ -42,7 +42,7 @@ const clientOrdersData = [
 ];
 
 const StatusBadge = ({ status }) => {
-    const styles = { delivered: 'bg-emerald-500/20 text-emerald-400', shipped: 'bg-blue-500/20 text-blue-400', processing: 'bg-purple-500/20 text-purple-400', pending: 'bg-amber-500/20 text-amber-400' };
+    const styles = { delivered: 'bg-[#75CBB3]/20 text-[#066383]', shipped: 'bg-[#066383]/20 text-[#066383]', processing: 'bg-[#066383]/20 text-[#066383]', pending: 'bg-[#C5A96A]/20 text-[#C5A96A]' };
     const labels = { delivered: 'Entregado', shipped: 'Enviado', processing: 'Procesando', pending: 'Pendiente' };
     const icons = { delivered: <CheckCircle className="w-3 h-3" />, shipped: <Truck className="w-3 h-3" />, processing: <Clock className="w-3 h-3" />, pending: <Clock className="w-3 h-3" /> };
     return <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase flex items-center gap-1 w-fit ${styles[status]}`}>{icons[status]}{labels[status]}</span>;
@@ -60,6 +60,7 @@ export const MyOrdersView = () => {
 
     return (
         <div className="py-12 animate-fadeIn">
+            {/* Compliance: Rana Walk Design System v2.8 — Adecuado 2026-02-18 */}
             <div className="container mx-auto px-6 max-w-5xl">
                 <div className="mb-10">
                     <h1 className="text-3xl font-black text-[#013A57] uppercase tracking-tight flex items-center gap-3 mb-2"><ShoppingBag className="text-[#75CBB3]" /> Mis Pedidos</h1>
@@ -67,8 +68,8 @@ export const MyOrdersView = () => {
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                     <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Total</p><p className="text-3xl font-black text-[#013A57]">{clientOrdersData.length}</p></div>
-                    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Entregados</p><p className="text-3xl font-black text-emerald-500">{clientOrdersData.filter(o => o.status === 'delivered').length}</p></div>
-                    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">En Camino</p><p className="text-3xl font-black text-blue-500">{clientOrdersData.filter(o => o.status === 'shipped').length}</p></div>
+                    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Entregados</p><p className="text-3xl font-black text-[#75CBB3]">{clientOrdersData.filter(o => o.status === 'delivered').length}</p></div>
+                    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">En Camino</p><p className="text-3xl font-black text-[#066383]">{clientOrdersData.filter(o => o.status === 'shipped').length}</p></div>
                     <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"><p className="text-slate-400 text-xs font-bold uppercase mb-2">Total Gastado</p><p className="text-3xl font-black text-[#75CBB3]">₡{(clientOrdersData.reduce((s, o) => s + o.total, 0) / 1000).toFixed(0)}K</p></div>
                 </div>
                 <div className="space-y-4">
@@ -83,7 +84,7 @@ export const MyOrdersView = () => {
                                     <StatusBadge status={order.status} />
                                     <button
                                         onClick={() => handleTrack(order.id, order.tracking)}
-                                        className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-xs uppercase transition-colors"
+                                        className="flex items-center gap-2 bg-[#066383] hover:bg-[#013A57] text-white px-4 py-2 rounded-full font-bold text-xs uppercase transition-colors"
                                     >
                                         <Navigation className="w-4 h-4" />Rastrear
                                     </button>
@@ -91,8 +92,8 @@ export const MyOrdersView = () => {
                             </div>
 
                             {/* Información del Distribuidor Asignado */}
-                            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-4 mb-4 border border-blue-100">
-                                <p className="text-[10px] text-blue-400 uppercase font-black tracking-widest mb-2 flex items-center gap-2">
+                            <div className="bg-gradient-to-r from-[#E6FFFB] to-[#E6FFFB] rounded-2xl p-4 mb-4 border border-[#75CBB3]/20">
+                                <p className="text-[10px] text-[#066383] uppercase font-black tracking-widest mb-2 flex items-center gap-2">
                                     <Users className="w-3 h-3" /> Distribuidor Asignado
                                 </p>
                                 {order.distributor ? (
@@ -149,14 +150,14 @@ export const ClientProfileView = ({ user, onLogout }) => (
             <div className="mb-10"><h1 className="text-3xl font-black text-[#013A57] uppercase tracking-tight flex items-center gap-3 mb-2"><User className="text-[#75CBB3]" /> Mi Perfil</h1><p className="text-slate-500">Gestiona tu información personal</p></div>
             <div className="grid md:grid-cols-3 gap-8">
                 {/* Sidebar */}
-                <div className="bg-slate-900 rounded-3xl p-8 text-white text-center">
+                <div className="bg-[#0F172A] rounded-3xl p-8 text-white text-center">
                     <div className="w-24 h-24 bg-[#75CBB3] rounded-full mx-auto mb-6 flex items-center justify-center text-[#013A57] text-3xl font-black">JC</div>
                     <h2 className="text-xl font-black uppercase mb-1">Juan Cliente</h2>
                     <p className="text-slate-400 text-xs mb-6">Cliente Rana Walk®</p>
                     <div className="space-y-2">
                         <button className="w-full flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 text-white font-bold text-xs uppercase hover:bg-white/10 transition-all"><span className="flex items-center gap-3"><ShoppingBag className="w-4 h-4 text-[#75CBB3]" />Mis Pedidos</span><ChevronRight className="w-4 h-4" /></button>
                         <button className="w-full flex items-center justify-between p-4 bg-transparent rounded-xl text-slate-400 font-bold text-xs uppercase hover:text-white transition-all"><span className="flex items-center gap-3"><MapPin className="w-4 h-4" />Direcciones</span><ChevronRight className="w-4 h-4" /></button>
-                        <button onClick={onLogout} className="w-full flex items-center gap-3 p-4 text-red-400 font-bold text-xs uppercase mt-8 hover:text-red-300 transition-all"><LogOut className="w-4 h-4" />Cerrar Sesión</button>
+                        <button onClick={onLogout} className="w-full flex items-center gap-3 p-4 text-[#EF4E54] font-bold text-xs uppercase mt-8 hover:text-[#EF4E54]/80 transition-all"><LogOut className="w-4 h-4" />Cerrar Sesión</button>
                     </div>
                 </div>
                 {/* Content */}
@@ -169,7 +170,7 @@ export const ClientProfileView = ({ user, onLogout }) => (
                             <div><p className="text-[10px] text-slate-400 uppercase font-bold mb-2">Teléfono</p><p className="font-bold text-[#013A57] flex items-center gap-2"><Phone className="w-4 h-4 text-[#75CBB3]" />+506 8888-9999</p></div>
                             <div><p className="text-[10px] text-slate-400 uppercase font-bold mb-2">Miembro desde</p><p className="font-bold text-[#013A57] flex items-center gap-2"><Calendar className="w-4 h-4 text-[#75CBB3]" />Enero 2024</p></div>
                         </div>
-                        <button className="mt-6 bg-[#75CBB3] text-[#013A57] px-6 py-3 rounded-xl font-black uppercase tracking-widest text-xs flex items-center gap-2"><Edit className="w-4 h-4" />Editar</button>
+                        <button className="mt-6 bg-[#75CBB3] text-[#013A57] px-6 py-3 rounded-full font-black uppercase tracking-widest text-xs flex items-center gap-2"><Edit className="w-4 h-4" />Editar</button>
                     </div>
                     <div className="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
                         <h3 className="text-lg font-black text-[#013A57] uppercase mb-6 flex items-center gap-2"><MapPin className="text-[#75CBB3]" />Dirección Principal</h3>

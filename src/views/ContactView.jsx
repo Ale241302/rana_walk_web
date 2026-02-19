@@ -4,6 +4,7 @@ import SectionHeader from '../components/common/SectionHeader';
 
 const ContactView = () => (
     <div className="py-24 animate-fadeIn">
+        {/* Compliance: Rana Walk Design System v2.8 — Adecuado 2026-02-18 */}
         <div className="container mx-auto px-6">
             <SectionHeader sub="Hablemos de Bio-Ingeniería" title="¿Cómo podemos ayudarte?" center={false} />
 
@@ -70,7 +71,7 @@ const ContactView = () => (
                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Mensaje</label>
                             <textarea rows="4" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-3 text-[#013A57] focus:outline-none focus:border-[#75CBB3] transition-colors resize-none"></textarea>
                         </div>
-                        <button className="w-full py-4 bg-[#013A57] text-white rounded-xl font-black uppercase tracking-widest hover:bg-[#75CBB3] hover:text-[#013A57] transition-all flex items-center justify-center gap-3 shadow-lg">
+                        <button className="w-full py-4 bg-[#013A57] text-white rounded-full font-black uppercase tracking-widest hover:bg-[#75CBB3] hover:text-[#013A57] transition-all flex items-center justify-center gap-3 shadow-lg">
                             Enviar Mensaje <Send className="w-4 h-4" />
                         </button>
                     </form>
